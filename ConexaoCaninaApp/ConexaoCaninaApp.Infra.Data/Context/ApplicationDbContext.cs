@@ -5,12 +5,15 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using ConexaoCaninaApp.Domain.Models;
+using Microsoft.EntityFrameworkCore.Design;
 
 namespace ConexaoCaninaApp.Infra.Data.Context
 {
     public class ApplicationDbContext : DbContext
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
+
+        public ApplicationDbContext() { }
 
         public DbSet<Cao> Caes { get; set; }
         public DbSet<Proprietario> Proprietarios { get; set; }
