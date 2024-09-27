@@ -6,4 +6,9 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\ConexaoCaninaApp.Domain\ConexaoCaninaApp.Domain.csproj" />
+    <ProjectReference Include="..\ConexaoCaninaApp.Infra.Data\ConexaoCaninaApp.Infra.Data.csproj" />
+  </ItemGroup>
+
 </Project>
