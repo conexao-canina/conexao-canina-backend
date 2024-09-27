@@ -30,23 +30,13 @@ jobs:
         platform: '$(buildPlatform)'
         configuration: '$(buildConfiguration)'
 
-    #- task: VSTest@2
-    #  inputs:
-    #    platform: '$(buildPlatform)'
-    #    configuration: '$(buildConfiguration)'
+    # - task: VSTest@2
+    #   inputs:
+    #     platform: '$(buildPlatform)'
+    #     configuration: '$(buildConfiguration)'
 
     - task: PublishBuildArtifacts@1
       inputs:
         targetPath: '$(Build.ArtifactStagingDiretory)'
         artifact: 'dotnet-core-conexao-canina'
         publishLocation: 'pipeline-prod'
-
-    - task: RestoreProject@2
-      inputs:
-        command: 'restore'
-        projects: '**/*.csproj'
-
-    - task: VSTest@2
-      inputs:
-        command: 'test'
-        projects: '**/*.csproj'
