@@ -7,6 +7,20 @@ using System.Threading.Tasks;
 
 namespace ConexaoCaninaApp.Domain.Models
 {
+
+    public enum StatusCao
+    {
+        Pendente,
+        Aprovado
+    }
+
+    public enum TamanhoCao
+    {
+        Pequeno,
+        Medio,
+        Grande
+    }
+
     public class Cao
     {
         public int CaoId { get; set; }
@@ -27,8 +41,15 @@ namespace ConexaoCaninaApp.Domain.Models
         [Required(ErrorMessage = "O gênero do cão é obrigatório.")]
         public int Genero { get; set; } // 1-M | 2-F
 
-        // chave estrangeira
-        public int ProprietarioId { get; set; }
+        [Required(ErrorMessage = "O tamanho do cão é obrigatório")]
+        public TamanhoCao Tamanho { get; set; }
+
+        public string? CaracteristicasUnicas { get; set; }
+
+        public StatusCao Status { get; set; } = StatusCao.Pendente;
+
+		// chave estrangeira
+		public int ProprietarioId { get; set; }
 
         // propriedade de navegação
         public Proprietario? Proprietario { get; set; }
