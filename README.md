@@ -20,5 +20,9 @@
 
 
 ## Tasks Feitas 
+### Criação Básica de Perfil (backend)
+### Inclusão de Fotos no Perfil (backend)
+### Atualização e Edição de Perfil (backend)
+###
 
 
