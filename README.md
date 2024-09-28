@@ -12,6 +12,7 @@
  Entrar em Boards -> work itens para vizualizar todas as tasks 
 
  Entrar em sprints -> entrar em cada sprint 
+[Link das sprints](https://dev.azure.com/conexao-canina/Conexao%20Canina/_sprints/taskboard/Conexao%20Canina%20Team/Conexao%20Canina/Iteration%201%20-%20Gerenciamento%20de%20Perfis)
 
 ## Sprint I
 
