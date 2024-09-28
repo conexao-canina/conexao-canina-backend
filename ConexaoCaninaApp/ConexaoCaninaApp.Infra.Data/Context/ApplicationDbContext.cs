@@ -19,6 +19,7 @@ namespace ConexaoCaninaApp.Infra.Data.Context
         public DbSet<Proprietario> Proprietarios { get; set; }
         public DbSet<Localizacao> Localizacoes { get; set; }
         public DbSet<Usuario> Usuarios { get; set; }
+        public DbSet<Foto> Fotos { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

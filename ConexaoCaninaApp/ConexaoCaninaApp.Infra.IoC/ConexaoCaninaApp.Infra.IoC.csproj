@@ -7,6 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Hosting" Version="2.2.7" />
+    <PackageReference Include="Microsoft.AspNetCore.Hosting.Abstractions" Version="2.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\ConexaoCaninaApp.API\ConexaoCaninaApp.API.csproj" />
     <ProjectReference Include="..\ConexaoCaninaApp.Application\ConexaoCaninaApp.Application.csproj" />
     <ProjectReference Include="..\ConexaoCaninaApp.Domain.Test\ConexaoCaninaApp.Domain.Test.csproj" />
