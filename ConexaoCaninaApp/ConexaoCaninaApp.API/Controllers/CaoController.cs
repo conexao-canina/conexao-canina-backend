@@ -48,5 +48,24 @@ namespace ConexaoCaninaApp.API.Controllers
 			await _caoService.AtualizarCao(editarCaoDto);
 			return Ok();
 		}
+
+		[HttpPut("publicar/{id}")]
+		public async Task<IActionResult> PublicarCao(int id)
+		{
+			await _caoService.PublicarCao(id);
+			return Ok();
+		}
+
+		[HttpGet("verificar-permissao/{caoId}/{usuarioId}")]
+		public async Task<IActionResult> VerificarPermissao(int caoId, int usuarioId)
+		{
+			var temPermissao = await _caoService.VerificarPerimissaoEdicao(caoId, usuarioId);
+			if (!temPermissao)
+			{
+				return Forbid(); // caso o usuario nao tiver permissao
+			}
+
+			return Ok();
+		}
 	}
 }
