@@ -40,6 +40,13 @@ namespace ConexaoCaninaApp.API.Controllers
 		{
 			await _caoService.AprovarCao(id);
 			return NoContent();
-		}		
+		}
+
+		[HttpPut("editar")]
+		public async Task<IActionResult> EditarCao([FromBody] EditarCaoDto editarCaoDto)
+		{
+			await _caoService.AtualizarCao(editarCaoDto);
+			return Ok();
+		}
 	}
 }
