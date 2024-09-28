@@ -163,10 +163,60 @@ namespace ConexaoCaninaApp.Domain.Test
 			await _caoService.AtualizarCao(editarCaoDto);
 
 			// ASSERT
+
 			_mockCaoRepository.Verify(repo => repo.Atualizar
 			(It.Is<Cao>(c => c.Status == StatusCao.Pendente)), Times.Once);
 			_mockNotificacaoService.Verify(serv => serv.EnviarNotificacaoParaAdministrador
 			(It.IsAny<Cao>()), Times.Once);
+
+		}
+
+		[Fact]
+		public async Task VerificarPermissaoEdicao_Deve_Retornar_Verdadeiro_Se_Usuario_For_Proprietario()
+		{
+			// ARRANGE
+			var cao = new Cao
+			{
+				CaoId = 1,
+				Nome = "Comandante General da Ordem PHG",
+				ProprietarioId = 1234
+			};
+
+			_mockCaoRepository.Setup(repo => repo.ObterPorId(cao.CaoId))
+				.ReturnsAsync(cao);
+
+			// ACT
+
+			var temPermissao = await _caoService.VerificarPerimissaoEdicao(cao.CaoId, 1234);
+
+			// ASSERT
+
+			Assert.True(temPermissao);
+		}
+
+		[Fact]
+		public async Task PublicarCao_Deve_Mudar_Status_Para_Publicado_Se_Estiver_Aprovado()
+		{
+			// ARRANGE
+
+			var cao = new Cao
+			{
+				CaoId = 1,
+				Nome = "Comandante General da Ordem PHG",
+				Status = StatusCao.Aprovado
+			};
+
+			_mockCaoRepository.Setup(repo => repo.ObterPorId(cao.CaoId))
+				.ReturnsAsync(cao);
+
+			// ACT
+
+			await _caoService.PublicarCao(cao.CaoId);
+
+			// ASSERT
+
+			_mockCaoRepository.Verify(repo => repo.Atualizar
+			(It.Is<Cao>(c => c.Status == StatusCao.Publicado)), Times.Once);
 
 		}
 	}

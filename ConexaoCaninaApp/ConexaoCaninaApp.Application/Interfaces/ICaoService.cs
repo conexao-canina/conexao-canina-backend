@@ -14,5 +14,7 @@ namespace ConexaoCaninaApp.Application.Interfaces
 		Task AprovarCao(int caoId);
 		Task<Cao> ObterPorId(int id);
 		Task AtualizarCao(EditarCaoDto editarCaoDto);
+		Task PublicarCao(int id);
+		Task<bool> VerificarPerimissaoEdicao(int caoId, int usuarioId);
 	}
 }

@@ -11,7 +11,8 @@ namespace ConexaoCaninaApp.Domain.Models
     public enum StatusCao
     {
         Pendente,
-        Aprovado
+        Aprovado,
+        Publicado
     }
 
     public enum TamanhoCao
