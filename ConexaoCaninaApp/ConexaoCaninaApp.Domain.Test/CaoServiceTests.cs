@@ -134,6 +134,41 @@ namespace ConexaoCaninaApp.Domain.Test
 			_mockNotificacaoService.Verify(notif => notif.EnviarNotificacaoParaUsuario(It.IsAny<Cao>()), Times.Once);
 			Assert.Equal(StatusCao.Aprovado, caoExistente.Status);
 		}
+
+		[Fact]
+		public async Task EditarPerfil_Deve_Definir_Status_Pendente_E_Notificar_Administrador()
+		{
+			// ARRANGE
+			var editarCaoDto = new EditarCaoDto
+			{
+				CaoId = 1,
+				Idade = 5,
+				Descricao = "Lindo, forte e adoravel",
+				CaracteristicasUnicas = "Forte"
+			};
+
+			var caoExistente = new Cao
+			{
+				CaoId = 1,
+				Nome = "General PHG",
+				Idade = 3,
+				Status = StatusCao.Aprovado
+			};
+
+			_mockCaoRepository.Setup(repo => repo.ObterPorId(editarCaoDto.CaoId))
+				.ReturnsAsync(caoExistente);
+
+			// ACT
+
+			await _caoService.AtualizarCao(editarCaoDto);
+
+			// ASSERT
+			_mockCaoRepository.Verify(repo => repo.Atualizar
+			(It.Is<Cao>(c => c.Status == StatusCao.Pendente)), Times.Once);
+			_mockNotificacaoService.Verify(serv => serv.EnviarNotificacaoParaAdministrador
+			(It.IsAny<Cao>()), Times.Once);
+
+		}
 	}
 }
 

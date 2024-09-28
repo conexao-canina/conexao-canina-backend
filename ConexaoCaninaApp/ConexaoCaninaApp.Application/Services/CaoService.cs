@@ -55,5 +55,23 @@ namespace ConexaoCaninaApp.Application.Services
 		{
 			return await _caoRepository.ObterPorId(id);
 		}
+
+		public async Task AtualizarCao(EditarCaoDto editarCaoDto)
+		{
+			var cao = await _caoRepository.ObterPorId(editarCaoDto.CaoId);
+
+			if (cao !=  null)
+			{
+				cao.Idade = editarCaoDto.Idade;
+				cao.Descricao = editarCaoDto.Descricao;
+				cao.CaracteristicasUnicas = editarCaoDto.CaracteristicasUnicas;
+
+				cao.Status = StatusCao.Pendente;
+
+				await _caoRepository.Atualizar(cao);
+
+				await _notificacaoService.EnviarNotificacaoParaAdministrador(cao);
+			}
+		}
 	}
 }
