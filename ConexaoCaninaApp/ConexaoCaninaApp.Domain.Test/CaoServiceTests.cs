@@ -195,6 +195,31 @@ namespace ConexaoCaninaApp.Domain.Test
 		}
 
 		[Fact]
+		public async Task VerificarPermissaoEdicao_Deve_Retornar_Falso_Se_Usuario_Nao_For_Proprietario()
+		{
+			// ARRANGE
+
+			var cao = new Cao
+			{
+				CaoId = 1,
+				Nome = "Comandante General da Ordem PHG",
+				ProprietarioId = 1234
+			};
+
+			_mockCaoRepository.Setup(repo => repo.ObterPorId(cao.CaoId))
+				.ReturnsAsync(cao);
+
+			// ACT
+
+			var temPermissao = await _caoService.VerificarPerimissaoEdicao(cao.CaoId, 456);
+
+			// ASSERT
+
+			Assert.False(temPermissao);
+
+		}
+
+			[Fact]
 		public async Task PublicarCao_Deve_Mudar_Status_Para_Publicado_Se_Estiver_Aprovado()
 		{
 			// ARRANGE

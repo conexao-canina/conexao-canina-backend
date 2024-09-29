@@ -15,21 +15,33 @@ namespace ConexaoCaninaApp.Application.Services
 	{
 		private readonly IFotoRepository _fotoRepository;
 		private readonly IArmazenamentoService _armazenamentoService;
+		private readonly ICaoRepository _caoRepository;
 
 
-		public FotoService(IFotoRepository fotoRepository, IArmazenamentoService armazenamentoService)
+		public FotoService(IFotoRepository fotoRepository, IArmazenamentoService armazenamentoService, ICaoRepository caoRepository)
 		{
 			_fotoRepository = fotoRepository;
 			_armazenamentoService = armazenamentoService;
+			_caoRepository = caoRepository;
 		}
 
 		public async Task<IEnumerable<FotoDto>> UploadFotosAsync(List<IFormFile> arquivos, int caoId)
 		{
 			var fotosDto = new List<FotoDto>();
 
+			var cao = await _caoRepository.ObterPorId(caoId);
+
+			if (cao == null)
+			{
+				throw new Exception("Cão não encontrado");
+			}
+			
+			var proprietarioId = cao.ProprietarioId;
+
 			foreach (var arquivo in arquivos)
 			{
-				var caminhoArquivo = await _armazenamentoService.SalvarArquivoAsync(arquivo);
+				
+				var caminhoArquivo = await _armazenamentoService.SalvarArquivoAsync(arquivo, proprietarioId);
 
 				var foto = new Foto
 				{
