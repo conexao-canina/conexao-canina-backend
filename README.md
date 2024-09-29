@@ -15,6 +15,7 @@
 [Link das sprints](https://dev.azure.com/conexao-canina/Conexao%20Canina/_sprints/taskboard/Conexao%20Canina%20Team/Conexao%20Canina/Iteration%201%20-%20Gerenciamento%20de%20Perfis)
 
 ## Sprint I
+### Criação de Perfil de Cachorro -> finalizado
 
 ![image](https://github.com/user-attachments/assets/ab702e47-de18-4cc9-a33a-d0a7bb8e6f01)
 
@@ -24,7 +25,9 @@
 ### Inclusão de Fotos no Perfil (backend)
 ### Atualização e Edição de Perfil (backend)
 ### Interface e Usabilidade (backend)
-###
+### Segurança e Privacidade (backend)
+
+
 ###
 ###
 ###
