@@ -21,12 +21,15 @@ namespace ConexaoCaninaApp.Domain.Test
 		private readonly FotoService _fotoService;
 		private readonly Mock<IFotoRepository> _mockFotoRepository;
 		private readonly Mock<IArmazenamentoService> _mockArmazenamentoService;
+		private readonly Mock<ICaoRepository> _mockCaoRepository;
 
 		public FotoServiceTests()
 		{
 			_mockFotoRepository = new Mock<IFotoRepository>();
 			_mockArmazenamentoService = new Mock<IArmazenamentoService>();
-			_fotoService = new FotoService(_mockFotoRepository.Object, _mockArmazenamentoService.Object);
+			_mockCaoRepository = new Mock<ICaoRepository>();
+
+			_fotoService = new FotoService(_mockFotoRepository.Object, _mockArmazenamentoService.Object, _mockCaoRepository.Object);
 		}
 
 		[Fact]
@@ -39,7 +42,10 @@ namespace ConexaoCaninaApp.Domain.Test
 				CriarArquivoMock("foto2.jpg")
 			};
 
-			_mockArmazenamentoService.Setup(s => s.SalvarArquivoAsync(It.IsAny<IFormFile>()))
+
+			_mockCaoRepository.Setup(r => r.ObterPorId(It.IsAny<int>()))
+				.ReturnsAsync(new Cao { CaoId = 1, ProprietarioId = 1 });
+			_mockArmazenamentoService.Setup(s => s.SalvarArquivoAsync(It.IsAny<IFormFile>(), It.IsAny<int>()))
 				.ReturnsAsync("/uploads/foto1.jpg");
 
 			_mockFotoRepository.Setup(r => r.ObterProximaOrdemAsync(It.IsAny<int>()))

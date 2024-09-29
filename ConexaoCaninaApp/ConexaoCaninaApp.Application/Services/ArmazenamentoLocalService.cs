@@ -18,13 +18,22 @@ namespace ConexaoCaninaApp.Application.Services
 			_environment = environment;
 		}
 
-		public async Task<string> SalvarArquivoAsync(IFormFile arquivo)
+		public async Task<string> SalvarArquivoAsync(IFormFile arquivo, int proprietarioId)
 		{
 			if (arquivo == null || arquivo.Length == 0)
 			
 				throw new ArgumentNullException("Arquivo invalido...");
-			
-			var caminhoUpload = Path.Combine(_environment.WebRootPath, "uploads");
+
+			var extensoesPermitidas = new[] { ".jpg", ".jpeg", ".png" };
+			var extensaoArquivo = Path.GetExtension(arquivo.FileName).ToLower();
+
+			if (!extensoesPermitidas.Contains(extensaoArquivo))
+			{
+				throw new ArgumentException("Tipo de arquivo nao permitido.");
+			}
+
+			var caminhoUpload = Path.Combine
+				(_environment.WebRootPath, "uploads", "proprietario", proprietarioId.ToString());
 
 			if (!Directory.Exists(caminhoUpload))
 			{
@@ -39,7 +48,7 @@ namespace ConexaoCaninaApp.Application.Services
 				await arquivo.CopyToAsync(stream);
 			}
 
-			return $"/uploads/{nomeArquivo}"; // retorna o caminho para armazenar no banco
+			return $"/uploads/proprietario/{proprietarioId}/{nomeArquivo}"; // retorna o caminho para armazenar no banco
 		}
 
 		public Task ExcluirArquivoAsync(string caminhoArquivo)

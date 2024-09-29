@@ -9,7 +9,7 @@ namespace ConexaoCaninaApp.Application.Interfaces
 {
 	public interface IArmazenamentoService
 	{
-		Task<string> SalvarArquivoAsync(IFormFile arquivo);
+		Task<string> SalvarArquivoAsync(IFormFile arquivo, int proprietarioId);
 		Task ExcluirArquivoAsync(string caminhoArquivo);
 
 	}
