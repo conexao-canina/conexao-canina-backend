@@ -18,12 +18,19 @@ namespace ConexaoCaninaApp.Domain.Test
 		private readonly CaoService _caoService;
 		private readonly Mock<ICaoRepository> _mockCaoRepository;
 		private readonly Mock<INotificacaoService> _mockNotificacaoService;
+		private readonly Mock<IFotoRepository> _mockFotoRepository;
+		private readonly Mock<IArmazenamentoService> _mockArmazenamentoService;
 
 		public CaoServiceTests()
 		{
 			_mockCaoRepository = new Mock<ICaoRepository>();
 			_mockNotificacaoService = new Mock<INotificacaoService>();
-			_caoService = new CaoService(_mockCaoRepository.Object, _mockNotificacaoService.Object);
+			_mockFotoRepository = new Mock<IFotoRepository>();
+			_mockArmazenamentoService = new Mock<IArmazenamentoService>();
+
+			_caoService = new CaoService(
+				_mockCaoRepository.Object, _mockNotificacaoService.Object, 
+				_mockFotoRepository.Object, _mockArmazenamentoService.Object);
 		}
 
 		[Fact]
@@ -219,7 +226,7 @@ namespace ConexaoCaninaApp.Domain.Test
 
 		}
 
-			[Fact]
+		[Fact]
 		public async Task PublicarCao_Deve_Mudar_Status_Para_Publicado_Se_Estiver_Aprovado()
 		{
 			// ARRANGE
@@ -243,6 +250,34 @@ namespace ConexaoCaninaApp.Domain.Test
 			_mockCaoRepository.Verify(repo => repo.Atualizar
 			(It.Is<Cao>(c => c.Status == StatusCao.Publicado)), Times.Once);
 
+		}
+
+		[Fact]
+		public async Task ExcluirCao_Deve_Excluir_Cao_E_Fotos_Associadas()
+		{
+			var caoId = 1;
+			var cao = new Cao
+			{
+				// ARRANGE
+				CaoId = caoId,
+				Fotos = new List<Foto>
+				{
+					new Foto { FotoId = 1, CaminhoArquivo = "/uploads/foto1.jpg" },
+					new Foto { FotoId = 2, CaminhoArquivo = "/uploads/foto2.jpg" }
+				}
+			};
+
+			_mockCaoRepository.Setup(r => r.ObterPorId(caoId)).ReturnsAsync(cao);
+
+			// ACT
+
+			await _caoService.ExcluirCao(caoId);
+
+			// ASSERT 
+
+			_mockCaoRepository.Verify(r => r.Remover(cao), Times.Once);
+			_mockArmazenamentoService.Verify(s => s.ExcluirArquivoAsync("/uploads/foto1.jpg"), Times.Once);
+			_mockArmazenamentoService.Verify(s => s.ExcluirArquivoAsync("/uploads/foto2.jpg"), Times.Once);
 		}
 	}
 }

@@ -14,11 +14,17 @@ namespace ConexaoCaninaApp.Application.Services
 	{
 		private readonly ICaoRepository _caoRepository;
 		private readonly INotificacaoService _notificacaoService;
+		private readonly IFotoRepository _fotoRepository;
+		private readonly IArmazenamentoService _armazenamentoService;
 
-		public CaoService(ICaoRepository caoRepository, INotificacaoService notificacaoService)
+		public CaoService(ICaoRepository caoRepository, INotificacaoService notificacaoService,
+			IFotoRepository fotoRepository, IArmazenamentoService armazenamentoService)
 		{
 			_caoRepository = caoRepository;
 			_notificacaoService = notificacaoService;
+			_fotoRepository = fotoRepository;
+			_armazenamentoService = armazenamentoService;
+			
 		}
 
 		public async Task<Cao> AdicionarCao(CaoDto caoDto)
@@ -94,6 +100,24 @@ namespace ConexaoCaninaApp.Application.Services
 			}
 
 			return cao.ProprietarioId == usuarioId; // para que apenas o proprietarioId edite
+		}
+
+		public async Task ExcluirCao(int id)
+		{
+			var cao = await _caoRepository.ObterPorId(id);
+
+			if (cao == null)
+			{
+				throw new Exception("Cão não encontrado");
+			}
+
+			foreach (var foto in cao.Fotos)
+			{
+				await _fotoRepository.Remover(foto);
+				await _armazenamentoService.ExcluirArquivoAsync(foto.CaminhoArquivo);
+			}
+
+			await _caoRepository.Remover(cao);
 		}
 	}
 }

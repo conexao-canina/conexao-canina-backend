@@ -54,10 +54,12 @@ namespace ConexaoCaninaApp.Application.Services
 		public Task ExcluirArquivoAsync(string caminhoArquivo)
 		{
 			var caminhoCompleto = Path.Combine(_environment.WebRootPath, caminhoArquivo.TrimStart('/'));
+
 			if (File.Exists(caminhoCompleto))
 			{
 				File.Delete(caminhoCompleto);
 			}
+
 			return Task.CompletedTask;
 		}
 	}
