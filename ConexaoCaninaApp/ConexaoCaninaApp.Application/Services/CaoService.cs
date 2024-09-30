@@ -118,6 +118,9 @@ namespace ConexaoCaninaApp.Application.Services
 			}
 
 			await _caoRepository.Remover(cao);
+
+			await _notificacaoService.EnviarNotificacaoDeExclusaoParaUsuario
+				(cao.Proprietario.Email, cao.Nome);
 		}
 	}
 }

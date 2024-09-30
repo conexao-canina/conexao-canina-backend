@@ -260,11 +260,13 @@ namespace ConexaoCaninaApp.Domain.Test
 			{
 				// ARRANGE
 				CaoId = caoId,
+				Nome = "Imperador Supremo PHG",
 				Fotos = new List<Foto>
 				{
 					new Foto { FotoId = 1, CaminhoArquivo = "/uploads/foto1.jpg" },
 					new Foto { FotoId = 2, CaminhoArquivo = "/uploads/foto2.jpg" }
-				}
+				},
+				Proprietario = new Proprietario { Email = "dono@teste.com"}
 			};
 
 			_mockCaoRepository.Setup(r => r.ObterPorId(caoId)).ReturnsAsync(cao);
@@ -278,6 +280,8 @@ namespace ConexaoCaninaApp.Domain.Test
 			_mockCaoRepository.Verify(r => r.Remover(cao), Times.Once);
 			_mockArmazenamentoService.Verify(s => s.ExcluirArquivoAsync("/uploads/foto1.jpg"), Times.Once);
 			_mockArmazenamentoService.Verify(s => s.ExcluirArquivoAsync("/uploads/foto2.jpg"), Times.Once);
+			_mockNotificacaoService.Verify(n => n.EnviarNotificacaoDeExclusaoParaUsuario
+			(cao.Proprietario.Email, cao.Nome), Times.Once);
 		}
 	}
 }

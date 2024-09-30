@@ -39,6 +39,15 @@ namespace ConexaoCaninaApp.Application.Services
 			await EnviarEmailAsync(emailUsuario, assunto, mensagem);
 		}
 
+		public async Task EnviarNotificacaoDeExclusaoParaUsuario(string emailUsuario, string nomeDoCao)
+		{
+			var assunto = "Exclusão de perfil concluida";
+			var mensagem = $"o perfil do cão {nomeDoCao} foi excluído com sucesso! " +
+				$"Caso precise de mais informações ou suporte, entre em contato conosco";
+
+			await EnviarEmailAsync(emailUsuario, assunto, mensagem);
+		}
+
 		private async Task EnviarEmailAsync(string email, string assunto, string mensagem)
 		{
 			var smtpClient = new SmtpClient(_configuration["EmailSettings:SmtpServer"])
