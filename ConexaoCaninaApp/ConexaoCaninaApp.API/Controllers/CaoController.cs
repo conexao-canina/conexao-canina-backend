@@ -1,6 +1,7 @@
 ﻿using ConexaoCaninaApp.Application.Dto;
 using ConexaoCaninaApp.Application.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using System.Reflection.PortableExecutable;
 
 namespace ConexaoCaninaApp.API.Controllers
 {
@@ -26,6 +27,42 @@ namespace ConexaoCaninaApp.API.Controllers
 			}
 			return Ok(cao);
 			
+		}
+
+		[HttpGet("{id}/detalhes")]
+		public async Task<IActionResult> ObterDetalhesCao(int id)
+		{
+			var cao = await _caoService.ObterPorId(id);
+
+			if (cao == null)
+			{
+				return NotFound();
+			}
+
+			var detalhes = new
+			{
+				Nome = cao.Nome,
+				Raca = cao.Raca,
+				Idade = cao.Idade,
+				Sexo = cao.Genero,
+				Caracteristicas = cao.CaracteristicasUnicas,
+				Descricao = cao.Descricao
+			};
+
+			return Ok(detalhes);
+		}
+		
+
+		[HttpGet("verificar-permissao/{caoId}/{usuarioId}")]
+		public async Task<IActionResult> VerificarPermissao(int caoId, int usuarioId)
+		{
+			var temPermissao = await _caoService.VerificarPerimissaoEdicao(caoId, usuarioId);
+			if (!temPermissao)
+			{
+				return Forbid(); // caso o usuario nao tiver permissao
+			}
+
+			return Ok();
 		}
 
 		[HttpPost]
@@ -55,19 +92,6 @@ namespace ConexaoCaninaApp.API.Controllers
 			await _caoService.PublicarCao(id);
 			return Ok();
 		}
-
-		[HttpGet("verificar-permissao/{caoId}/{usuarioId}")]
-		public async Task<IActionResult> VerificarPermissao(int caoId, int usuarioId)
-		{
-			var temPermissao = await _caoService.VerificarPerimissaoEdicao(caoId, usuarioId);
-			if (!temPermissao)
-			{
-				return Forbid(); // caso o usuario nao tiver permissao
-			}
-
-			return Ok();
-		}
-
 		[HttpDelete("{id}")]
 		[ProducesResponseType(StatusCodes.Status200OK)]
 		[ProducesResponseType(StatusCodes.Status404NotFound)]
