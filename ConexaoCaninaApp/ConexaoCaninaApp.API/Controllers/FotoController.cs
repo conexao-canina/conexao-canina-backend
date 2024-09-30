@@ -35,5 +35,16 @@ namespace ConexaoCaninaApp.API.Controllers
 			await _fotoService.ExcluirFotoAsync(fotoId);
 			return NoContent();
 		}
+
+		[HttpGet("{caoId}/galeria")]
+		public async Task<IActionResult> ObterFotosPorCaoId(int caoId)
+		{
+			var fotos = await _fotoService.ObterFotosPorCaoId(caoId);
+			if (fotos == null || !fotos.Any())
+			{
+				return NotFound("Nenhuma foto foi encontrada nesse perfil");
+			}
+			return Ok(fotos);
+		}
 	}
 }

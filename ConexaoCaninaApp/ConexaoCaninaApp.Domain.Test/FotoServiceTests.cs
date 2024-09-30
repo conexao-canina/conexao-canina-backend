@@ -63,6 +63,31 @@ namespace ConexaoCaninaApp.Domain.Test
 
 		}
 
+		[Fact]
+		public async Task ObterGaleriaFotos_Deve_Retornar_Fotos_Quando_Existirem()
+		{
+			// ARRANGE
+
+			var caoId = 1;
+			var fotosEsperadas = new List<Foto>
+			{
+				new Foto { FotoId = 1, CaminhoArquivo = "/uploads/foto1.jpg", CaoId = caoId },
+								new Foto { FotoId = 2, CaminhoArquivo = "/uploads/foto2.jpg", CaoId = caoId }
+			};
+
+			_mockFotoRepository.Setup(r => r.ObterFotosPorCaoId(caoId)).ReturnsAsync(fotosEsperadas);
+
+			// ACT
+
+			var result = await _fotoService.ObterFotosPorCaoId(caoId);
+
+			// ASSERT 
+			
+			Assert.NotNull(result);
+			Assert.Equal(2, result.Count());
+			_mockFotoRepository.Verify(r => r.ObterFotosPorCaoId(caoId), Times.Once);
+		}
+
 		private IFormFile CriarArquivoMock(string nomeArquivo)
 		{
 			var content = "Fake content";
