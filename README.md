@@ -38,7 +38,8 @@
 ### Enviar Notificação de Exclusão (Backend)
 ### Informar sobre a Política de Exclusão (Backend)
 ---
-### Visualização de Perfis de Cachorro
+## Visualização de Perfis de Cachorro
+
 ### Visualização Básica do Perfil (backend)
 ### Visualização de Fotos (backend)
 ### Visualização de Histórico de Saúde (backend) -> Em Processo
