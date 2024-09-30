@@ -15,8 +15,9 @@
 [Link das sprints](https://dev.azure.com/conexao-canina/Conexao%20Canina/_sprints/taskboard/Conexao%20Canina%20Team/Conexao%20Canina/Iteration%201%20-%20Gerenciamento%20de%20Perfis)
 
 ## Sprint I
-### Criação de Perfil de Cachorro -> finalizado
-###  Exclusão de Perfil de Cachorro -> Em processo 
+### Criação de Perfil de Cachorro -> Finalizado
+###  Exclusão de Perfil de Cachorro -> Finalizado
+### Visualização de Perfis de Cachorro -> Em Processo
 
 ![image](https://github.com/user-attachments/assets/ab702e47-de18-4cc9-a33a-d0a7bb8e6f01)
 
@@ -35,13 +36,15 @@
 
 ### Implementar Funcionalidade de Exclusão do Perfil (Backend)
 ### Enviar Notificação de Exclusão (Backend)
-###
-###
-###
-###
-###
-###
-###
+### Informar sobre a Política de Exclusão (Backend)
+---
+### Visualização de Perfis de Cachorro
+### I
+### II
+### III
+### IV
+### V
+---
 ###
 ###
 ###
