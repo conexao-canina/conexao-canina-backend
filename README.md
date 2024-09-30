@@ -16,19 +16,24 @@
 
 ## Sprint I
 ### Criação de Perfil de Cachorro -> finalizado
+###  Exclusão de Perfil de Cachorro -> Em processo 
 
 ![image](https://github.com/user-attachments/assets/ab702e47-de18-4cc9-a33a-d0a7bb8e6f01)
 
 
 ## Tasks Feitas 
+## Sprint I
+##  Criação de Perfil de Cachorro
+
 ### Criação Básica de Perfil (backend)
 ### Inclusão de Fotos no Perfil (backend)
 ### Atualização e Edição de Perfil (backend)
 ### Interface e Usabilidade (backend)
 ### Segurança e Privacidade (backend)
+---
+## Exclusão de Perfil de Cachorro
 
-
-###
+### Implementar Funcionalidade de Exclusão do Perfil (Backend)
 ###
 ###
 ###
