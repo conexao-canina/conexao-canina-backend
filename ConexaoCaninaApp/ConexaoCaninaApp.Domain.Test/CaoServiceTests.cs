@@ -281,7 +281,34 @@ namespace ConexaoCaninaApp.Domain.Test
 			_mockArmazenamentoService.Verify(s => s.ExcluirArquivoAsync("/uploads/foto1.jpg"), Times.Once);
 			_mockArmazenamentoService.Verify(s => s.ExcluirArquivoAsync("/uploads/foto2.jpg"), Times.Once);
 			_mockNotificacaoService.Verify(n => n.EnviarNotificacaoDeExclusaoParaUsuario
-			(cao.Proprietario.Email, cao.Nome), Times.Once);
+			(cao.Proprietario.Email, cao.Nome,
+			"A exclusão do perfil é permanente. Caso deseje retornar,será necessário criar um novo perfil."), Times.Once);
+		}
+
+		[Fact]
+		public async Task ExcluirCao_Deve_Enviar_Notificacao_Para_Usuario()
+		{
+			var caoId = 1;
+			var cao = new Cao
+			{
+				// ARRANGE 
+				CaoId = caoId,
+				Nome = "Imperador Supremo PHG",
+				Proprietario = new Proprietario { Email = "dono@teste.com" }
+			};
+
+			_mockCaoRepository.Setup(r => r.ObterPorId(caoId)).ReturnsAsync(cao);
+
+			// ACT 
+
+			await _caoService.ExcluirCao(caoId);
+
+			// ASSERT 
+
+			_mockCaoRepository.Verify(r => r.Remover(cao), Times.Once);
+			_mockNotificacaoService.Verify(n => n.EnviarNotificacaoDeExclusaoParaUsuario
+			(cao.Proprietario.Email, cao.Nome,
+			"A exclusão do perfil é permanente. Caso deseje retornar,será necessário criar um novo perfil."), Times.Once);
 		}
 	}
 }

@@ -111,16 +111,21 @@ namespace ConexaoCaninaApp.Application.Services
 				throw new Exception("Cão não encontrado");
 			}
 
-			foreach (var foto in cao.Fotos)
+			if (cao.Fotos != null)
 			{
-				await _fotoRepository.Remover(foto);
-				await _armazenamentoService.ExcluirArquivoAsync(foto.CaminhoArquivo);
+				foreach (var foto in cao.Fotos)
+				{
+					await _fotoRepository.Remover(foto);
+					await _armazenamentoService.ExcluirArquivoAsync(foto.CaminhoArquivo);
+				}
 			}
 
 			await _caoRepository.Remover(cao);
 
 			await _notificacaoService.EnviarNotificacaoDeExclusaoParaUsuario
-				(cao.Proprietario.Email, cao.Nome);
+				(cao.Proprietario.Email, cao.Nome,
+				"A exclusão do perfil é permanente. Caso deseje retornar,será necessário criar um novo perfil."
+				);
 		}
 	}
 }
