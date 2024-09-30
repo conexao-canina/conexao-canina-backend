@@ -34,7 +34,7 @@
 ## Exclusão de Perfil de Cachorro
 
 ### Implementar Funcionalidade de Exclusão do Perfil (Backend)
-###
+### Enviar Notificação de Exclusão (Backend)
 ###
 ###
 ###
