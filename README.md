@@ -40,10 +40,10 @@
 ---
 ### Visualização de Perfis de Cachorro
 ### Visualização Básica do Perfil (backend)
-### II
-### III
-### IV
-### V
+### Visualização de Fotos (backend)
+### Visualização de Histórico de Saúde (backend) -> Em Processo
+### Interface e Usabilidade (backend) -> A Fazer
+### Segurança e Privacidade (backend) -> A Fazer
 ---
 ###
 ###
