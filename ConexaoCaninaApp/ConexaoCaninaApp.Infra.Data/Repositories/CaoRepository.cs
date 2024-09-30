@@ -1,6 +1,7 @@
 ﻿using ConexaoCaninaApp.Domain.Models;
 using ConexaoCaninaApp.Infra.Data.Context;
 using ConexaoCaninaApp.Infra.Data.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,7 +26,10 @@ namespace ConexaoCaninaApp.Infra.Data.Repositories
 
 		public async Task<Cao> ObterPorId(int id)
 		{
-			return await _context.Caes.FindAsync(id);
+			return await _context.Caes
+				.Include(c => c.Fotos)
+				.Include(c => c.Proprietario)
+				.FirstOrDefaultAsync(c => c.CaoId == id);
 		}
 
 		public async Task Atualizar(Cao cao)

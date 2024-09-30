@@ -310,6 +310,42 @@ namespace ConexaoCaninaApp.Domain.Test
 			(cao.Proprietario.Email, cao.Nome,
 			"A exclusão do perfil é permanente. Caso deseje retornar,será necessário criar um novo perfil."), Times.Once);
 		}
+
+		[Fact]
+		public async Task ObterDetalhesCao_Deve_Retornar_Informacoes_Completas()
+		{
+			// ARRANGE 
+
+			var caoId = 1;
+			var cao = new Cao
+			{
+				// ARRANGE
+				CaoId = caoId,
+				Nome = "Imperador Supremo PHG",
+				Raca = "Pastor Alemão",
+				Idade = 5,
+				Genero = 1,
+				CaracteristicasUnicas = "Bruto e forte tal como uma pedra",
+				Descricao = "Lindo, belo, amigavel"
+			};
+
+			_mockCaoRepository.Setup(r => r.ObterPorId (caoId)).ReturnsAsync(cao);
+
+				// ACT
+
+			var result = await _caoService.ObterPorId(caoId);
+
+				// ASSERT 
+
+			Assert.NotNull(result);
+			Assert.Equal(cao.Nome, result.Nome);
+			Assert.Equal(cao.Raca, result.Raca);
+			Assert.Equal(cao.Idade, result.Idade);
+			Assert.Equal(cao.Genero, result.Genero);
+			Assert.Equal(cao.CaracteristicasUnicas , result.CaracteristicasUnicas);
+			Assert.Equal(cao.Descricao, result.Descricao);
+
+		}
 	}
 }
 
