@@ -12,10 +12,10 @@ namespace ConexaoCaninaApp.Application.Interfaces
 	{
 		Task<Cao> AdicionarCao(CaoDto caoDto);
 		Task AprovarCao(int caoId);
-		Task<Cao> ObterPorId(int id);
+		Task<Cao> ObterPorId(int caoID);
 		Task AtualizarCao(EditarCaoDto editarCaoDto);
-		Task PublicarCao(int id);
+		Task PublicarCao(int caoId);
 		Task<bool> VerificarPerimissaoEdicao(int caoId, int usuarioId);
-		Task ExcluirCao(int id);
+		Task ExcluirCao(int caoId);
 	}
 }
