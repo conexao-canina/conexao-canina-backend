@@ -12,5 +12,6 @@ namespace ConexaoCaninaApp.Infra.Data.Interfaces
 		Task Adicionar (Cao cao);
 		Task<Cao> ObterPorId (int  id);	
 		Task Atualizar (Cao cao);
+		Task Remover (Cao cao);
 	}
 }

@@ -67,5 +67,12 @@ namespace ConexaoCaninaApp.API.Controllers
 
 			return Ok();
 		}
+
+		[HttpDelete("{id}")]
+		public async Task<IActionResult> ExcluirCao(int id)
+		{
+			await _caoService.ExcluirCao(id);
+			return NoContent();
+		}
 	}
 }

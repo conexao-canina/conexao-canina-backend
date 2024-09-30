@@ -33,5 +33,11 @@ namespace ConexaoCaninaApp.Infra.Data.Repositories
 			_context.Caes.Update(cao);
 			await _context.SaveChangesAsync();
 		}
+
+		public async Task Remover(Cao cao)
+		{
+			_context.Caes.Remove(cao);
+			await _context.SaveChangesAsync();
+		}
 	}
 }
