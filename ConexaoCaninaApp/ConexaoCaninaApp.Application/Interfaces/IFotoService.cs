@@ -1,4 +1,5 @@
 ﻿using ConexaoCaninaApp.Application.Dto;
+using ConexaoCaninaApp.Domain.Models;
 using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
@@ -13,5 +14,6 @@ namespace ConexaoCaninaApp.Application.Interfaces
 		Task<IEnumerable<FotoDto>> UploadFotosAsync(List<IFormFile> arquivos, int caoId);
 		Task ExcluirFotoAsync(int fotoId);
 		Task ReordenarFotosAsync(IEnumerable<FotoDto> fotos);
+		Task<IEnumerable<FotoDto>> ObterFotosPorCaoId(int caoId);	
 	}
 }

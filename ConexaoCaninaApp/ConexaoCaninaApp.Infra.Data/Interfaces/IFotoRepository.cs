@@ -11,6 +11,7 @@ namespace ConexaoCaninaApp.Infra.Data.Interfaces
 	{
 		Task Adicionar(Foto foto);
 		Task<Foto> ObterPorId(int id);
+		Task<IEnumerable<Foto>> ObterFotosPorCaoId(int caoId);	
 		Task Remover(Foto foto);
 		Task Atualizar(Foto foto);
 		Task<int> ObterProximaOrdemAsync(int caoId); // vai calcular a proxima ordem

@@ -29,6 +29,13 @@ namespace ConexaoCaninaApp.Infra.Data.Repositories
 		{
 			return await _context.Fotos.FindAsync(id);
 		}
+		 
+		public async Task<IEnumerable<Foto>> ObterFotosPorCaoId(int caoId)
+		{
+			return await _context.Fotos
+				.Where(f => f.CaoId == caoId)	
+				.ToListAsync();
+		}
 
 		public async Task Remover(Foto foto)
 		{

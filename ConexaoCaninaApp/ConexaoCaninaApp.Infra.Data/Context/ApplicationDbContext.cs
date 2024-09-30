@@ -41,6 +41,13 @@ namespace ConexaoCaninaApp.Infra.Data.Context
             modelBuilder.Entity<Usuario>()
                 .HasIndex(u => u.Email)
                 .IsUnique();
-        }
-    }
+
+            modelBuilder.Entity<Cao>()
+                .HasMany(c => c.Fotos)
+                .WithOne(f => f.Cao)
+				.HasForeignKey(f => f.CaoId);
+
+
+		}
+	}
 }

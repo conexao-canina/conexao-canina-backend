@@ -87,5 +87,17 @@ namespace ConexaoCaninaApp.Application.Services
 				}
 			}
 		}
+
+		public async Task<IEnumerable<FotoDto>> ObterFotosPorCaoId(int caoId)
+		{
+			var fotos = await _fotoRepository.ObterFotosPorCaoId(caoId);
+
+			return fotos.Select(f => new FotoDto
+			{
+				FotoId = f.FotoId,
+				CaminhoArquivo = f.CaminhoArquivo,
+				Ordem = f.Ordem
+			});
+		}
 	}
 }
