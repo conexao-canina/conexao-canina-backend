@@ -69,10 +69,15 @@ namespace ConexaoCaninaApp.API.Controllers
 		}
 
 		[HttpDelete("{id}")]
+		[ProducesResponseType(StatusCodes.Status200OK)]
+		[ProducesResponseType(StatusCodes.Status404NotFound)]
+
 		public async Task<IActionResult> ExcluirCao(int id)
 		{
 			await _caoService.ExcluirCao(id);
-			return NoContent();
+			return Ok(new { message =
+				"Perfil excluído com sucesso. A exclusão é permanente"
+			});
 		}
 	}
 }
