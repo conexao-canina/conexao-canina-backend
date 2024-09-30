@@ -39,7 +39,7 @@
 ### Informar sobre a Política de Exclusão (Backend)
 ---
 ### Visualização de Perfis de Cachorro
-### I
+### Visualização Básica do Perfil (backend)
 ### II
 ### III
 ### IV
