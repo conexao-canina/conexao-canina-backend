@@ -20,8 +20,10 @@ namespace ConexaoCaninaApp.Infra.Data.Context
         public DbSet<Localizacao> Localizacoes { get; set; }
         public DbSet<Usuario> Usuarios { get; set; }
         public DbSet<Foto> Fotos { get; set; }
+        public DbSet<HistoricoSaude> HistoricosDeSaude { get; set; }
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
+
+		protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             // configurando relacionamento um-para-muitos entre Proprietário e Cão
             modelBuilder.Entity<Proprietario>() 
@@ -46,6 +48,15 @@ namespace ConexaoCaninaApp.Infra.Data.Context
                 .HasMany(c => c.Fotos)
                 .WithOne(f => f.Cao)
 				.HasForeignKey(f => f.CaoId);
+
+            modelBuilder.Entity<HistoricoSaude>()
+                .HasOne(h => h.Cao)
+                .WithMany(c => c.HistoricosDeSaude)
+                .HasForeignKey(h => h.CaoId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            base .OnModelCreating(modelBuilder);
+
 
 
 		}

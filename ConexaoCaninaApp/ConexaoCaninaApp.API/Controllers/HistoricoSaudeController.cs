@@ -1,0 +1,39 @@
+﻿using ConexaoCaninaApp.Application.Dto;
+using ConexaoCaninaApp.Application.Interfaces;
+using Microsoft.AspNetCore.Mvc;
+
+namespace ConexaoCaninaApp.API.Controllers
+{
+	[ApiController]
+	[Route("api/[controller]")]
+	public class HistoricoSaudeController : ControllerBase
+	{
+		private readonly IHistoricoSaudeService _historicoSaudeService;
+
+		public HistoricoSaudeController(IHistoricoSaudeService historicoSaudeService)
+		{
+			_historicoSaudeService = historicoSaudeService;
+		}
+
+		[HttpGet("{caoId}")]
+		public async Task<IActionResult> ObterHistoricoSaude(int caoId)
+		{
+			var historico = await _historicoSaudeService.ObterHistoricoSaudePorCaoId(caoId);
+
+			if (historico == null)
+			{
+				return NotFound();
+			}
+
+			return Ok(historico);
+		}
+
+		[HttpPost]
+		public async Task<IActionResult> AdicionarHistoricoSaude([FromBody] HistoricoSaudeDto historicoSaudeDto)
+		{
+			await _historicoSaudeService.AdicionarHistoricoSaude(historicoSaudeDto);
+
+			return Ok();
+		}
+	}
+}
