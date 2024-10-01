@@ -56,5 +56,7 @@ namespace ConexaoCaninaApp.Domain.Models
 
         // propriedade de navegação
         public Proprietario? Proprietario { get; set; }
+
+        public ICollection<HistoricoSaude> HistoricosDeSaude { get; set; }
     }
 }
