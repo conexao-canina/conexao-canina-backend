@@ -1,9 +1,11 @@
 ﻿using ConexaoCaninaApp.Application.Dto;
 using ConexaoCaninaApp.Application.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ConexaoCaninaApp.API.Controllers
 {
+	[Authorize(Policy = "RegisteredUserOnly")]
 	[ApiController]
 	[Route("api/[controller]")]
 	public class HistoricoSaudeController : ControllerBase
