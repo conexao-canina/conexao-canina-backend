@@ -42,8 +42,8 @@
 
 ### Visualização Básica do Perfil (backend)
 ### Visualização de Fotos (backend)
-### Visualização de Histórico de Saúde (backend) -> Em Processo
-### Interface e Usabilidade (backend) -> A Fazer
+### Visualização de Histórico de Saúde (backend) 
+### Interface e Usabilidade (backend) -> Em Processo
 ### Segurança e Privacidade (backend) -> A Fazer
 ---
 ###
