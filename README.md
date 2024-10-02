@@ -17,7 +17,9 @@
 ## Sprint I
 ### Criação de Perfil de Cachorro -> Finalizado
 ###  Exclusão de Perfil de Cachorro -> Finalizado
-### Visualização de Perfis de Cachorro -> Em Processo
+### Visualização de Perfis de Cachorro -> Finalizado
+### Gerenciamento de Perfil -> Em Processo
+### Criação de Álbum de Fotos -> A Fazer
 
 ![image](https://github.com/user-attachments/assets/ab702e47-de18-4cc9-a33a-d0a7bb8e6f01)
 
@@ -54,11 +56,12 @@
 ###  Interface e Usabilidade (backend) -> A Fazer
 ###  Segurança e Privacidade (backend) -> A Fazer
 ---
-###
-###
-###
-###
-###
+## Criação de Álbum de Fotos 
+### Desenvolver Funcionalidade para Criar Álbum de Fotos (Backend) -> A Fazer
+### Adicionar Funcionalidades de Gerenciamento do Álbum (Backend) -> A Fazer
+### Configuração de Privacidade do Álbum de Fotos (Backend) -> A Fazer
+---
+## Sprint II
 ###
 ###
 ###
