@@ -35,8 +35,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-// Server=tcp:sqlserverconexaocanina.database.windows.net,1433;Initial Catalog=sql_conexaocanina;Persist Security Info=False;User ID=conexaocaninaadmin;Password={your_password};
-// MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;
+
 app.UseHttpsRedirection();
 
 app.UseAuthentication();
