@@ -20,14 +20,21 @@ namespace ConexaoCaninaApp.API.Controllers
 		[HttpGet("{caoId}")]
 		public async Task<IActionResult> ObterHistoricoSaude(int caoId)
 		{
-			var historico = await _historicoSaudeService.ObterHistoricoSaudePorCaoId(caoId);
-
-			if (historico == null)
+			try
 			{
-				return NotFound();
-			}
+				var historico = await _historicoSaudeService.ObterHistoricoSaudePorCaoId(caoId);
 
-			return Ok(historico);
+				if (historico == null)
+				{
+					return NotFound();
+				}
+
+				return Ok(historico);
+			}
+			catch (UnauthorizedAccessException ex)
+			{
+				return Forbid(ex.Message);
+			}
 		}
 
 		[HttpPost]

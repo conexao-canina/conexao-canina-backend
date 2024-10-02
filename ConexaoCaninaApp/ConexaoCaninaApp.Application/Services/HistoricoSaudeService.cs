@@ -21,9 +21,16 @@ namespace ConexaoCaninaApp.Application.Services
 
 		public async Task<IEnumerable<HistoricoSaudeDto>> ObterHistoricoSaudePorCaoId(int caoId)
 		{
-			var historicos = await _historicoSaudeRepository.ObterHistoricoPorCaoId(caoId);
+			var consentimentoDono = await _historicoSaudeRepository.VerificarConsentimentoDono(caoId);
 
-			return historicos.Select(h => new HistoricoSaudeDto
+			if (!consentimentoDono)
+			{
+				throw new UnauthorizedAccessException("O dono nao consentiu com o fornecimento");
+			}
+
+			var historico = await _historicoSaudeRepository.ObterHistoricoPorCaoId(caoId);
+
+			return historico.Select(h => new HistoricoSaudeDto
 			{
 				CaoId = h.CaoId,
 				Exame = h.Exame,
@@ -41,10 +48,17 @@ namespace ConexaoCaninaApp.Application.Services
 				Exame = historicoSaudeDto.Exame,
 				Vacinas = historicoSaudeDto.Vacinas,
 				CondicoesDeSaude = historicoSaudeDto.CondicoesDeSaude,
-				Data = historicoSaudeDto.Data
+				Data = historicoSaudeDto.Data,
+				ConsentimentoDono = true
+				
 			};
 
 			await _historicoSaudeRepository.AdicionarHistorico(historico);
+		}
+
+		public async Task<bool> VerificarConsentimento(int caoId)
+		{
+			return await _historicoSaudeRepository.VerificarConsentimentoDono(caoId);
 		}
 	}
 }
