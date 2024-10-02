@@ -44,14 +44,15 @@
 ### Visualização de Fotos (backend)
 ### Visualização de Histórico de Saúde (backend) 
 ### Interface e Usabilidade (backend) 
-### Segurança e Privacidade (backend) -> Em Processo
+### Segurança e Privacidade (backend) 
 ---
-###
-###
-###
-###
-###
-###
+## Gerenciamento de Perfil
+
+### Atualização de Informações Básicas (backend) -> A Fazer
+### Adição ou Remoção de Fotos (backend) -> A Fazer
+### Atualização de Histórico de Saúde (backend) -> A Fazer
+###  Interface e Usabilidade (backend) -> A Fazer
+###  Segurança e Privacidade (backend) -> A Fazer
 ###
 ###
 ###
