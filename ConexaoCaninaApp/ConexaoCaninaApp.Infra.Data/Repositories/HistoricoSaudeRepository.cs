@@ -31,5 +31,12 @@ namespace ConexaoCaninaApp.Infra.Data.Repositories
 			_context.HistoricosDeSaude.Add(historicoSaude);
 			await _context.SaveChangesAsync();
 		}
+
+		public async Task<bool> VerificarConsentimentoDono(int caoId)
+		{
+			return await _context.HistoricosDeSaude
+				.AnyAsync(
+				h => h.CaoId == caoId && h.ConsentimentoDono);
+		}
 	}
 }

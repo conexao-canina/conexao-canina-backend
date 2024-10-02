@@ -11,5 +11,6 @@ namespace ConexaoCaninaApp.Application.Interfaces
 	{
 		Task<IEnumerable<HistoricoSaudeDto>> ObterHistoricoSaudePorCaoId(int caoId);	
 		Task AdicionarHistoricoSaude(HistoricoSaudeDto historicoSaudeDto);
+		Task<bool> VerificarConsentimento(int caoId);	
 	}
 }

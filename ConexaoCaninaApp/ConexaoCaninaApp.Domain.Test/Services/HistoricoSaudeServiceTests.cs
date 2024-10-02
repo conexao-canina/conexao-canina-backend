@@ -45,7 +45,7 @@ namespace ConexaoCaninaApp.Domain.Test.Services
         }
 
         [Fact]
-        public async Task ObterHistoricoSaude_Deve_Retornar_Historico()
+        public async Task ObterHistoricoSaude_Deve_Retornar_Historico_Se_Consentimento_Existe()
         {
             var caoId = 1;
             var historicoEsperado = new List<HistoricoSaude>
@@ -58,7 +58,10 @@ namespace ConexaoCaninaApp.Domain.Test.Services
                 }
             };
 
-            _mockHistoricoSaudeRepository.Setup(r => r.ObterHistoricoPorCaoId
+            _mockHistoricoSaudeRepository.Setup(r => r.VerificarConsentimentoDono(caoId))
+                .ReturnsAsync(true);
+
+			_mockHistoricoSaudeRepository.Setup(r => r.ObterHistoricoPorCaoId
             (caoId)).ReturnsAsync(historicoEsperado);
 
             var result = await _historicoSaudeService.ObterHistoricoSaudePorCaoId(caoId);
@@ -66,5 +69,24 @@ namespace ConexaoCaninaApp.Domain.Test.Services
             Assert.NotNull(result);
             Assert.Equal(1, result.Count());
         }	
+
+        [Fact]
+        public async Task ObterHistoricoSaude_Deve_Retornar_Forbid_Se_Consentimento_Nao_Existe()
+        {
+            // ARRANGE
+
+            var caoId = 1;
+
+            _mockHistoricoSaudeRepository.Setup(r => r.VerificarConsentimentoDono(caoId))
+                .ReturnsAsync(false);
+
+            // ACT & ASSERT 
+
+            await Assert.ThrowsAsync<UnauthorizedAccessException>(async () =>
+            {
+                await _historicoSaudeService.ObterHistoricoSaudePorCaoId(caoId);
+            });
+
+		}
 	}
 }
