@@ -80,6 +80,25 @@ namespace ConexaoCaninaApp.Application.Services
 			}
 		}
 
+		public async Task AtualizarInformacoesBasicas(int caoId, AtualizarInformacoesBasicasDto dto)
+		{
+			var cao = await _caoRepository.ObterPorId(caoId);
+
+			if (cao == null)
+			{
+				throw new Exception("Cão não encontrado");
+			}
+
+			cao.Nome = dto.Nome;
+			cao.Idade = dto.Idade;
+			cao.Raca = dto.Raca;
+			cao.Genero = dto.Genero;
+			cao.CaracteristicasUnicas = dto.CaracteristicasUnicas;
+
+			await _caoRepository.Atualizar(cao);
+			
+		}
+
 		public async Task PublicarCao(int caoId)
 		{
 			var cao = await _caoRepository.ObterPorId(caoId);
