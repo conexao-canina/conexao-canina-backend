@@ -346,6 +346,36 @@ namespace ConexaoCaninaApp.Domain.Test.Services
             Assert.Equal(cao.Descricao, result.Descricao);
 
         }
-    }
+
+        [Fact]
+        public async Task AtualizarInformacoesBasicas_Deve_Atualizar_Cao()
+        {
+            var caoId = 1;
+            var cao = new Cao
+            {
+                CaoId = caoId,
+                Nome = "Comandante General PHG",
+                Idade = 4,
+            };
+
+            _mockCaoRepository.Setup(r => r.ObterPorId(caoId)).ReturnsAsync(cao);
+
+            var dto = new AtualizarInformacoesBasicasDto
+            {
+                Nome = "Deus Imperador PHG",
+                Idade = 9,
+                Raca = "BIG",
+                Genero = 1,
+                CaracteristicasUnicas = "Forte, bruto mas fofo.."
+            };
+
+            await _caoService.AtualizarInformacoesBasicas(caoId, dto);
+
+            _mockCaoRepository.Verify(r => r.Atualizar(It.IsAny<Cao>()), Times.Once);
+            Assert.Equal("Deus Imperador PHG", cao.Nome);
+            Assert.Equal(9, cao.Idade);
+		}
+
+	}
 }
 

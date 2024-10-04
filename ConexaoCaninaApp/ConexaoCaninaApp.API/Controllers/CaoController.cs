@@ -86,6 +86,20 @@ namespace ConexaoCaninaApp.API.Controllers
 			return Ok();
 		}
 
+		[HttpPut("{id}/atualizar-informacoes")]
+		public async Task<IActionResult> AtualizarInformacoesBasicas(int id, [FromBody] AtualizarInformacoesBasicasDto dto)
+		{
+			try
+			{
+				await _caoService.AtualizarInformacoesBasicas(id, dto);
+				return NoContent(); // essa é a resposta padrão para as atualizações
+			}
+			catch (Exception ex)
+			{
+				return BadRequest(ex.Message);
+			}
+		}
+
 		[HttpPut("publicar/{id}")]
 		public async Task<IActionResult> PublicarCao(int id)
 		{
