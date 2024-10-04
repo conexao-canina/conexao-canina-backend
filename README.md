@@ -14,18 +14,10 @@
  Entrar em sprints -> entrar em cada sprint 
 [Link das sprints](https://dev.azure.com/conexao-canina/Conexao%20Canina/_sprints/taskboard/Conexao%20Canina%20Team/Conexao%20Canina/Iteration%201%20-%20Gerenciamento%20de%20Perfis)
 
-## Sprint I
-### Criação de Perfil de Cachorro -> Finalizado
-###  Exclusão de Perfil de Cachorro -> Finalizado
-### Visualização de Perfis de Cachorro -> Finalizado
-### Gerenciamento de Perfil -> Em Processo
-### Criação de Álbum de Fotos -> A Fazer
-
 ![image](https://github.com/user-attachments/assets/ab702e47-de18-4cc9-a33a-d0a7bb8e6f01)
 
 
 ## Tasks Feitas 
-## Sprint I
 ##  Criação de Perfil de Cachorro
 
 ### Criação Básica de Perfil (backend)
@@ -50,7 +42,7 @@
 ---
 ## Gerenciamento de Perfil
 
-### Atualização de Informações Básicas (backend) -> A Fazer
+### Atualização de Informações Básicas (backend)
 ### Adição ou Remoção de Fotos (backend) -> A Fazer
 ### Atualização de Histórico de Saúde (backend) -> A Fazer
 ###  Interface e Usabilidade (backend) -> A Fazer
@@ -61,7 +53,7 @@
 ### Adicionar Funcionalidades de Gerenciamento do Álbum (Backend) -> A Fazer
 ### Configuração de Privacidade do Álbum de Fotos (Backend) -> A Fazer
 ---
-## Sprint II
+## 
 ###
 ###
 ###
