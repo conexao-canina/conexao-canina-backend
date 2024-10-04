@@ -92,7 +92,55 @@ namespace ConexaoCaninaApp.Domain.Test.Services
             _mockFotoRepository.Verify(r => r.ObterFotosPorCaoId(caoId), Times.Once);
         }
 
-        private IFormFile CriarArquivoMock(string nomeArquivo)
+        [Fact]
+        public async Task ObterGaleriaFotos_Deve_Retornar_Lista_Vazia_Se_Nao_Existirem_Fotos()
+        {
+            // ARRANGE
+
+            var caoId = 1;
+            var fotosEsperadas = new List<Foto>();
+
+            _mockFotoRepository.Setup(r => r.ObterFotosPorCaoId(caoId)).ReturnsAsync(fotosEsperadas);
+
+            // ACT 
+
+            var result = await _fotoService.ObterFotosPorCaoId(caoId);
+
+            // ASSERT
+
+            Assert.NotNull(result);
+            Assert.Empty(result);
+        }
+
+        [Fact]
+        public async Task ExcluirFotoAsync_Deve_ExcluirFoto()
+        {
+            // ARRANGE
+
+            var fotoId = 1;
+            var foto = new Foto
+            {
+                FotoId = fotoId,
+                CaminhoArquivo = "/uploads/foto.jpg"
+			};
+
+            _mockFotoRepository.Setup(r => r.ObterPorId(fotoId)).ReturnsAsync(foto);    
+
+            // ACT
+
+            await _fotoService.ExcluirFotoAsync(fotoId);
+
+            // ASSERT
+
+            _mockFotoRepository.Verify(r => r.Remover(foto), Times.Once);
+			_mockArmazenamentoService.Verify(s => 
+            s.ExcluirArquivoAsync(foto.CaminhoArquivo), Times.Once);
+
+		}
+
+
+
+		private IFormFile CriarArquivoMock(string nomeArquivo)
         {
             var content = "Fake content";
             var fileName = nomeArquivo;

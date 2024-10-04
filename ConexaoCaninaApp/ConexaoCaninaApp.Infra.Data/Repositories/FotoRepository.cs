@@ -46,6 +46,7 @@ namespace ConexaoCaninaApp.Infra.Data.Repositories
 		public async Task Atualizar(Foto foto)
 		{
 			_context.Fotos.Update(foto);
+			await _context.SaveChangesAsync();
 		}
 
 		public async Task<int> ObterProximaOrdemAsync(int caoId)
