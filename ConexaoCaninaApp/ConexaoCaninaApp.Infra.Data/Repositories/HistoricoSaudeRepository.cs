@@ -38,5 +38,17 @@ namespace ConexaoCaninaApp.Infra.Data.Repositories
 				.AnyAsync(
 				h => h.CaoId == caoId && h.ConsentimentoDono);
 		}
+
+		public async Task Atualizar(HistoricoSaude historicoSaude)
+		{
+			_context.HistoricosDeSaude.Update(historicoSaude);
+			await _context.SaveChangesAsync();
+		}
+
+		public async Task<HistoricoSaude> ObterPorId(int id)
+		{
+			return await _context.HistoricosDeSaude
+				.FirstOrDefaultAsync(h => h.HistoricoSaudeId == id);
+		}
 	}
 }
