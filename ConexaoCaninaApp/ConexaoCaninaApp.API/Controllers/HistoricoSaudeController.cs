@@ -44,5 +44,12 @@ namespace ConexaoCaninaApp.API.Controllers
 
 			return Ok();
 		}
+
+		[HttpPut]
+		public async Task<IActionResult> AtualizarHistoricoSaude([FromBody] AtualizarHistoricoSaudeDto atualizarHistoricoSaudeDto)
+		{
+			await _historicoSaudeService.AtualizarHistoricoSaude(atualizarHistoricoSaudeDto);
+			return Ok();
+		}
 	}
 }

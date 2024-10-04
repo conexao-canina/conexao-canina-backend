@@ -60,5 +60,23 @@ namespace ConexaoCaninaApp.Application.Services
 		{
 			return await _historicoSaudeRepository.VerificarConsentimentoDono(caoId);
 		}
+
+		public async Task AtualizarHistoricoSaude(AtualizarHistoricoSaudeDto atualizarHistoricoSaudeDto)
+		{
+			var historico = await _historicoSaudeRepository.ObterPorId(atualizarHistoricoSaudeDto.HistoricoSaudeId);
+
+			if (historico == null)
+			{
+				throw new Exception("Histórico de saúde não encontrado");
+			}
+
+			historico.Exame = atualizarHistoricoSaudeDto.Exame;
+			historico.Vacinas = atualizarHistoricoSaudeDto.Vacinas;
+			historico.CondicoesDeSaude = atualizarHistoricoSaudeDto.CondicoesDeSaude;
+			historico.Data = atualizarHistoricoSaudeDto.Data;
+
+			await _historicoSaudeRepository.Atualizar(historico);
+
+		}
 	}
 }

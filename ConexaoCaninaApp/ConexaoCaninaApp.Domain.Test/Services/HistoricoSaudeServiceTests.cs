@@ -88,5 +88,43 @@ namespace ConexaoCaninaApp.Domain.Test.Services
             });
 
 		}
+
+        [Fact]
+        public async Task AtualizarHistoricoSaude_Deve_Atualizar_Informacoes_Existentes()
+        {
+            // ARRANGE
+
+            var atualizarHistoricoSaudeDto = new AtualizarHistoricoSaudeDto
+            {
+                HistoricoSaudeId = 1,
+                Exame = "Exame atualizado",
+                Vacinas = "Vacina atualizadas",
+                CondicoesDeSaude = "Condição atualizada, cachorro esta bem",
+                Data = DateTime.Now
+            };
+
+            var historicoSaude = new HistoricoSaude
+            {
+                HistoricoSaudeId = 1,
+                CaoId = 1,
+                Exame = "Exame antigo",
+                Vacinas = "Vacina antiga",
+                CondicoesDeSaude = "Condição antiga, cachorro esta mal",
+            };
+
+            _mockHistoricoSaudeRepository.Setup(r => 
+            r.ObterPorId(1)).ReturnsAsync(historicoSaude);
+
+			// ACT
+
+			await _historicoSaudeService.AtualizarHistoricoSaude(atualizarHistoricoSaudeDto);
+
+            // ASSERT
+
+            _mockHistoricoSaudeRepository.Verify(
+                r => r.Atualizar(It.IsAny<HistoricoSaude>()), Times.Once);
+
+            Assert.Equal("Exame atualizado", historicoSaude.Exame);
+		}
 	}
 }
