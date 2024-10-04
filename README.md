@@ -43,7 +43,7 @@
 ## Gerenciamento de Perfil
 
 ### Atualização de Informações Básicas (backend)
-### Adição ou Remoção de Fotos (backend) -> A Fazer
+### Adição ou Remoção de Fotos (backend)
 ### Atualização de Histórico de Saúde (backend) -> A Fazer
 ###  Interface e Usabilidade (backend) -> A Fazer
 ###  Segurança e Privacidade (backend) -> A Fazer
