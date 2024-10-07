@@ -411,6 +411,24 @@ namespace ConexaoCaninaApp.Domain.Test.Services
             Assert.Equal("Você não tem permissão para editar este perfil.", exception.Message);
         }
 
+        [Fact]
+        public async Task ExcluirCao_Deve_Lancar_Excecao_Se_Cao_Nao_Existe()
+        {
+            // ARRANGE
+
+            var caoId = 1123;
+
+            _mockCaoRepository.Setup(repo => repo.ObterPorId(caoId))
+                .ReturnsAsync((Cao)null);
+
+            // ACT & ASSERT 
+
+            var exception = await Assert.ThrowsAsync<Exception>(() =>
+            _caoService.ExcluirCao(caoId));
+
+            Assert.Equal("Cão não encontrado", exception.Message);
+
+		}
 	}
 }
 
