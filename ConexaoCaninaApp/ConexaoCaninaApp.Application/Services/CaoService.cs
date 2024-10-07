@@ -16,15 +16,17 @@ namespace ConexaoCaninaApp.Application.Services
 		private readonly INotificacaoService _notificacaoService;
 		private readonly IFotoRepository _fotoRepository;
 		private readonly IArmazenamentoService _armazenamentoService;
+		private readonly IUserContextService _userContextService;
 
 		public CaoService(ICaoRepository caoRepository, INotificacaoService notificacaoService,
-			IFotoRepository fotoRepository, IArmazenamentoService armazenamentoService)
+			IFotoRepository fotoRepository, IArmazenamentoService armazenamentoService,
+			IUserContextService userContextService)
 		{
 			_caoRepository = caoRepository;
 			_notificacaoService = notificacaoService;
 			_fotoRepository = fotoRepository;
 			_armazenamentoService = armazenamentoService;
-			
+			_userContextService = userContextService;
 		}
 
 		public async Task<Cao> AdicionarCao(CaoDto caoDto)
@@ -87,6 +89,13 @@ namespace ConexaoCaninaApp.Application.Services
 			if (cao == null)
 			{
 				throw new Exception("Cão não encontrado");
+			}
+
+			var userId = _userContextService.GetUserId();
+
+			if (userId != cao.ProprietarioId.ToString())
+			{
+				throw new UnauthorizedAccessException("Você não tem permissão para editar este perfil.");
 			}
 
 			cao.Nome = dto.Nome;
