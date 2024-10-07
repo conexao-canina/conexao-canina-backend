@@ -20,6 +20,7 @@ namespace ConexaoCaninaApp.Domain.Test.Services
         private readonly Mock<INotificacaoService> _mockNotificacaoService;
         private readonly Mock<IFotoRepository> _mockFotoRepository;
         private readonly Mock<IArmazenamentoService> _mockArmazenamentoService;
+        private readonly Mock<IUserContextService> _mockUserContextService;
 
         public CaoServiceTests()
         {
@@ -27,10 +28,12 @@ namespace ConexaoCaninaApp.Domain.Test.Services
             _mockNotificacaoService = new Mock<INotificacaoService>();
             _mockFotoRepository = new Mock<IFotoRepository>();
             _mockArmazenamentoService = new Mock<IArmazenamentoService>();
+            _mockUserContextService = new Mock<IUserContextService>();
 
             _caoService = new CaoService(
                 _mockCaoRepository.Object, _mockNotificacaoService.Object,
-                _mockFotoRepository.Object, _mockArmazenamentoService.Object);
+                _mockFotoRepository.Object, _mockArmazenamentoService.Object,
+                _mockUserContextService.Object);
         }
 
         [Fact]
@@ -356,6 +359,7 @@ namespace ConexaoCaninaApp.Domain.Test.Services
                 CaoId = caoId,
                 Nome = "Comandante General PHG",
                 Idade = 4,
+                ProprietarioId = 1
             };
 
             _mockCaoRepository.Setup(r => r.ObterPorId(caoId)).ReturnsAsync(cao);
@@ -369,12 +373,43 @@ namespace ConexaoCaninaApp.Domain.Test.Services
                 CaracteristicasUnicas = "Forte, bruto mas fofo.."
             };
 
-            await _caoService.AtualizarInformacoesBasicas(caoId, dto);
+            _mockUserContextService.Setup(s => s.GetUserId()).Returns("1");
+
+			await _caoService.AtualizarInformacoesBasicas(caoId, dto);
 
             _mockCaoRepository.Verify(r => r.Atualizar(It.IsAny<Cao>()), Times.Once);
             Assert.Equal("Deus Imperador PHG", cao.Nome);
             Assert.Equal(9, cao.Idade);
 		}
+
+
+
+        [Fact]
+        public async Task AtualizarInformacoesBasicas_Deve_Lancar_Excecao_Se_Usuario_Nao_Tiver_Permissao()
+        {
+            var caoId = 1;
+            var dto = new AtualizarInformacoesBasicasDto
+            {
+                Nome = "Deus Imperador PHG",
+                Idade = 9,
+                Raca = "Hec",
+                Genero = 1,
+                CaracteristicasUnicas = "Lindoooo"
+            };
+
+            _mockCaoRepository.Setup(repo => repo.ObterPorId(caoId))
+                .ReturnsAsync(new Cao
+                {
+                    CaoId = caoId,
+                    Nome = "Imperador PHG",
+                    ProprietarioId = 1234,
+                });
+
+            var exception = await Assert.ThrowsAsync<UnauthorizedAccessException>(() => 
+            _caoService.AtualizarInformacoesBasicas(caoId, dto));
+
+            Assert.Equal("Você não tem permissão para editar este perfil.", exception.Message);
+        }
 
 	}
 }
