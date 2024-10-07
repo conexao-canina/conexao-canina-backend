@@ -46,7 +46,7 @@
 ### Atualização de Informações Básicas (backend)
 ### Adição ou Remoção de Fotos (backend)
 ### Atualização de Histórico de Saúde (backend) 
-###  Interface e Usabilidade (backend) -> A Fazer
+###  Interface e Usabilidade (backend) 
 ###  Segurança e Privacidade (backend) -> A Fazer
 ---
 ## Criação de Álbum de Fotos 
