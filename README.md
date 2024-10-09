@@ -92,7 +92,7 @@ adicionar a referencia do repositorio e coloque o pull request feito
 ---
 ## Criação de Álbum de Fotos 
 ### Desenvolver Funcionalidade para Criar Álbum de Fotos (Backend) 
-### Adicionar Funcionalidades de Gerenciamento do Álbum (Backend) -> A Fazer
+### Adicionar Funcionalidades de Gerenciamento do Álbum (Backend) 
 ### Configuração de Privacidade do Álbum de Fotos (Backend) -> A Fazer
 ---
 ## 
