@@ -39,7 +39,16 @@ namespace ConexaoCaninaApp.Domain.Test.Services
 			{
 				UsuarioId = 1,
 				CaoId = 1,
-				Mensagem = "Gostaria de levar meu super cachorro ao encontro do cachorro de seu marido"
+				Mensagem = "Gostaria de levar meu super cachorro ao encontro do cachorro de seu marido",
+
+				Cao = new Cao // Adicionando objeto Cao no DTO
+				{
+					Nome = "Rex",
+					Proprietario = new Proprietario
+					{
+						Email = "proprietario@teste.com"
+					}
+				}
 			};
 
 			_mockSolicitacaoRepository
