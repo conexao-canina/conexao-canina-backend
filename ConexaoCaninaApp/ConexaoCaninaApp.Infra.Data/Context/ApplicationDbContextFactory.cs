@@ -15,7 +15,7 @@ namespace ConexaoCaninaApp.Infra.Data.Context
             var optionsBuilder = new DbContextOptionsBuilder<ApplicationDbContext>();
 
             // Define your connection string or get it from a configuration
-            optionsBuilder.UseSqlServer("Server=sqlserverconexaocanina.database.windows.net,1433;Initial Catalog=sql_conexaocanina;Persist Security Info=False;User ID=conexaocaninaadmin;Password={password};MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
+            optionsBuilder.UseSqlServer("Server=sqlserverconexaocanina.database.windows.net,1433;Initial Catalog=sql_conexaocanina;Persist Security Info=False;User ID=conexaocaninaadmin;Password=Canina#2024!;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
 
             return new ApplicationDbContext(optionsBuilder.Options);
         }
