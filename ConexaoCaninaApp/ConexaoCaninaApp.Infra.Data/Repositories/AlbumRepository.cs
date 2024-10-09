@@ -24,5 +24,17 @@ namespace ConexaoCaninaApp.Infra.Data.Repositories
 
 			await _context.SaveChangesAsync();
 		}
+
+		public async Task Atualizar(Album album)
+		{
+			_context.Albuns.Update(album);
+
+			await _context.SaveChangesAsync();
+		}
+
+		public async Task<Album> ObterPorId(int albumId)
+		{
+			return await _context.Albuns.FindAsync(albumId);
+		}
 	}
 }

@@ -48,5 +48,21 @@ namespace ConexaoCaninaApp.API.Controllers
 			}
 			return Ok(fotos);
 		}
+
+		[HttpPut("{albumId}/atualizar-fotos")]
+		public async Task<IActionResult> AtualizarOrdemEAdicionarFotos
+			(int albumId, [FromForm] List<IFormFile> novasFotos,
+			[FromBody] List<FotoDto> fotosExistentes)
+		{
+			await _fotoService.AtualizarOrdemEAdicionarFotosAsync(albumId, novasFotos, fotosExistentes);
+			return NoContent();
+		}
+
+		[HttpDelete("{fotoId}")]
+		public async Task<IActionResult> RemoverFotoDoAlbum(int fotoId)
+		{
+			await _fotoService.RemoverFotoDoAlbumAsync(fotoId);
+			return NoContent();
+		}
 	}
 }

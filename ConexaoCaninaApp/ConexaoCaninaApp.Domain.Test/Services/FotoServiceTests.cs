@@ -27,6 +27,7 @@ namespace ConexaoCaninaApp.Domain.Test.Services
         private readonly Mock<IArmazenamentoService> _mockArmazenamentoService;
         private readonly Mock<ICaoRepository> _mockCaoRepository;
 
+
         public FotoServiceTests(WebApplicationFactory<Program> factory)
         {
             _factory = factory;
@@ -190,6 +191,50 @@ namespace ConexaoCaninaApp.Domain.Test.Services
 
             Assert.Equal(2, result.Count());
 			Assert.Equal("/path/to/file1.jpg", result.First().CaminhoArquivo);
+		}
+
+        [Fact]
+        public async Task AtualizarOrdemEAdicionarFotos_Deve_AtualizarOrdemDasFotosExistentes_E_AdicionarNovasFotos()
+        {
+            var novasFotos = new List<IFormFile>
+            {
+                CriarArquivoMock("foto1.jpg"),
+                CriarArquivoMock("foto2.jpg")
+            };
+
+            var fotosExistentes = new List<FotoDto>
+            {
+                new FotoDto { FotoId = 1, Ordem = 1 },
+                new FotoDto { FotoId = 2, Ordem = 2 }
+            };
+
+            _mockFotoRepository.Setup(r => r.ObterPorId(It.IsAny<int>()))
+                .ReturnsAsync(new Foto { FotoId = 1, Ordem = 1 });
+
+            _mockFotoRepository.Setup(r => r.ObterProximaOrdemAsync(It.IsAny<int>()))
+                .ReturnsAsync(3);
+
+
+            await _fotoService.AtualizarOrdemEAdicionarFotosAsync(1, novasFotos, fotosExistentes);
+
+            _mockFotoRepository.Verify(r => r.Atualizar(It.IsAny<Foto>()), Times.Exactly(fotosExistentes.Count));
+            _mockFotoRepository.Verify(r => r.Adicionar(It.IsAny<Foto>()), Times.Exactly(novasFotos.Count));
+
+		}
+
+        [Fact]
+        public async Task RemoverFotoDoAlbum_Deve_RemoverFotoDoBancoDeDados_E_ExcluirArquivoFisico()
+        {
+            var fotoId = 1;
+            var foto = new Foto { FotoId = fotoId, CaminhoArquivo = "/uploads/foto1.jpg" };
+
+            _mockFotoRepository.Setup(r => r.ObterPorId(fotoId)).ReturnsAsync(foto);
+
+            await _fotoService.RemoverFotoDoAlbumAsync(fotoId);
+
+            _mockFotoRepository.Verify(r => r.Remover(foto), Times.Once);
+			_mockArmazenamentoService.Verify(s => s.ExcluirArquivoAsync(foto.CaminhoArquivo), Times.Once);
+
 		}
 
 

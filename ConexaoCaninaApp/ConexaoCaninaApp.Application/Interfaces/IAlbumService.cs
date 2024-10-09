@@ -10,5 +10,7 @@ namespace ConexaoCaninaApp.Application.Interfaces
 	public interface IAlbumService
 	{
 		Task CriarAlbum(AlbumDto albumDto);
+		Task EditarAlbumAsync(int albumId, AlbumDto albumDto);
+		Task<bool> ValidarProprietarioDoAlbum(int albumId);
 	}
 }
