@@ -48,6 +48,14 @@ namespace ConexaoCaninaApp.Application.Services
 			await EnviarEmailAsync(emailUsuario, assunto, mensagem);
 		}
 
+		public async Task EnviarNotificacaoSolicitacaoCruzamento(string emailUsuario, string nomeDoCao, string mensagem)
+		{
+			var assunto = "Nova Solicitação de Cruzamento";
+			var mensagemParaUsuario = $"Você recebeu uma solicitação de cruzamento para o cão {nomeDoCao}. {mensagem}";
+
+			await EnviarEmailAsync(emailUsuario, assunto, mensagemParaUsuario);
+		}
+
 		private async Task EnviarEmailAsync(string email, string assunto, string mensagem)
 		{
 			var smtpClient = new SmtpClient(_configuration["EmailSettings:SmtpServer"])
