@@ -6,13 +6,10 @@ using System.Threading.Tasks;
 
 namespace ConexaoCaninaApp.Application.Dto
 {
-	public class FotoDto
+	public class AlbumDto
 	{
-		public int FotoId { get; set; }
-		public string CaminhoArquivo { get; set; }
-		public string Descricao { get; set; }
-		public int Ordem { get; set; }
-		public int CaoId { get; set; }
 		public int AlbumId { get; set; }
+		public string Nome { get; set; }
+		public string Descricao { get; set; }
 	}
 }

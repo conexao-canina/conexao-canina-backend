@@ -1,4 +1,5 @@
-﻿using ConexaoCaninaApp.Application.Interfaces;
+﻿using ConexaoCaninaApp.Application.Dto;
+using ConexaoCaninaApp.Application.Interfaces;
 using ConexaoCaninaApp.Application.Services;
 using ConexaoCaninaApp.Domain.Models;
 using ConexaoCaninaApp.Infra.Data.Interfaces;
@@ -58,7 +59,7 @@ namespace ConexaoCaninaApp.Domain.Test.Services
 
             // act
 
-            var result = await _fotoService.UploadFotosAsync(arquivos, 1);
+            var result = await _fotoService.UploadFotosAsync(arquivos, 1, 1);
 
             // assert
 
@@ -136,6 +137,59 @@ namespace ConexaoCaninaApp.Domain.Test.Services
 			_mockArmazenamentoService.Verify(s => 
             s.ExcluirArquivoAsync(foto.CaminhoArquivo), Times.Once);
 
+		}
+
+        [Fact] async Task ReordenarFotosAsync_Deve_Atualizar_Ordem()
+        {
+            // ARRANGE 
+
+            var fotos = new List<FotoDto>
+            {
+                new FotoDto { FotoId= 1, Ordem = 2 },
+				new FotoDto { FotoId= 2, Ordem = 1 }
+			};
+
+            var foto1 = new Foto { FotoId = 1, Ordem = 1 };
+            var foto2 = new Foto { FotoId = 2, Ordem = 2 };
+
+            _mockFotoRepository.Setup(repo => repo.ObterPorId(1)).ReturnsAsync(foto1);
+            _mockFotoRepository.Setup(repo => repo.ObterPorId(2)).ReturnsAsync(foto2);
+
+
+			// ACT
+
+            await _fotoService.ReordenarFotosAsync(fotos);
+
+            // ASSERT
+
+            Assert.Equal(2, foto1.Ordem);
+            Assert.Equal(1, foto2.Ordem);
+
+
+            _mockFotoRepository.Verify(repo => repo.Atualizar(foto1), Times.Once);
+			_mockFotoRepository.Verify(repo => repo.Atualizar(foto2), Times.Once);
+		}
+
+		[Fact]
+		async Task ObterFotosPorCaoId_Deve_Retornar_Fotos()
+		{
+			// ARRANGE 
+
+			var fotos = new List<Foto>
+			{
+				new Foto { FotoId= 1, CaminhoArquivo = "/path/to/file1.jpg"},
+				new Foto { FotoId= 2, CaminhoArquivo = "/path/to/file2.jpg"},
+			};
+
+            _mockFotoRepository.Setup(repo => repo.ObterFotosPorCaoId(1)).ReturnsAsync(fotos);
+            // ACT
+
+            var result = await _fotoService.ObterFotosPorCaoId(1);
+
+			// ASSERT
+
+            Assert.Equal(2, result.Count());
+			Assert.Equal("/path/to/file1.jpg", result.First().CaminhoArquivo);
 		}
 
 

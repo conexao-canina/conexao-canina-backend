@@ -21,6 +21,7 @@ namespace ConexaoCaninaApp.Infra.Data.Context
         public DbSet<Usuario> Usuarios { get; set; }
         public DbSet<Foto> Fotos { get; set; }
         public DbSet<HistoricoSaude> HistoricosDeSaude { get; set; }
+        public DbSet<Album> Albuns { get; set; }
 
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder)

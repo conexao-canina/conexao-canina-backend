@@ -18,9 +18,9 @@ namespace ConexaoCaninaApp.API.Controllers
 		}
 
 		[HttpPost("{caoId}/upload")]
-		public async Task<IActionResult> UploadFotos([FromRoute] int caoId, [FromForm] List<IFormFile> arquivos)
+		public async Task<IActionResult> UploadFotos([FromRoute] int caoId, int albumId, [FromForm] List<IFormFile> arquivos)
 		{
-			var fotos = await _fotoService.UploadFotosAsync(arquivos, caoId);
+			var fotos = await _fotoService.UploadFotosAsync(arquivos, caoId, albumId);
 			return Ok(fotos);
 		}
 

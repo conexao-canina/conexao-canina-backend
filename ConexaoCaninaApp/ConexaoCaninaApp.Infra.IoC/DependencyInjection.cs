@@ -21,6 +21,8 @@ namespace ConexaoCaninaApp.Infra.IoC
 			services.AddScoped<IFotoService, FotoService>();
 			services.AddScoped<IArmazenamentoService, ArmazenamentoLocalService>();
 			services.AddScoped<IFotoRepository, FotoRepository>();
+			services.AddScoped<IAlbumRepository, AlbumRepository>();
+			services.AddScoped<IAlbumService, AlbumService>();
 
 			return services;
 		}

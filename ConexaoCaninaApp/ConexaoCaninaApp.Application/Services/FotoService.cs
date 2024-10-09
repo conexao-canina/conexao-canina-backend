@@ -25,7 +25,7 @@ namespace ConexaoCaninaApp.Application.Services
 			_caoRepository = caoRepository;
 		}
 
-		public async Task<IEnumerable<FotoDto>> UploadFotosAsync(List<IFormFile> arquivos, int caoId)
+		public async Task<IEnumerable<FotoDto>> UploadFotosAsync(List<IFormFile> arquivos, int caoId, int albumId)
 		{
 			var fotosDto = new List<FotoDto>();
 
@@ -47,6 +47,7 @@ namespace ConexaoCaninaApp.Application.Services
 				{
 					CaminhoArquivo = caminhoArquivo,
 					CaoId = caoId,
+					AlbumId = albumId,
 					Ordem = await _fotoRepository.ObterProximaOrdemAsync(caoId)
 				};
 
@@ -57,6 +58,7 @@ namespace ConexaoCaninaApp.Application.Services
 					FotoId = foto.FotoId,
 					CaminhoArquivo =caminhoArquivo,
 					CaoId = caoId,
+					AlbumId = albumId,
 					Ordem = foto.Ordem
 				});
 			}
