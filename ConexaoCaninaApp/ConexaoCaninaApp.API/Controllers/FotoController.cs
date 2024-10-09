@@ -31,12 +31,12 @@ namespace ConexaoCaninaApp.API.Controllers
 			return NoContent();
 		}
 
-		[HttpDelete("{fotoId}")]
-		public async Task<IActionResult> ExcluirFoto(int fotoId)
-		{
-			await _fotoService.ExcluirFotoAsync(fotoId);
-			return NoContent();
-		}
+		//[HttpDelete("{fotoId}")]
+		//public async Task<IActionResult> ExcluirFoto(int fotoId)
+		//{
+		//	await _fotoService.ExcluirFotoAsync(fotoId);
+		//	return NoContent();
+		//}
 
 		[HttpGet("{caoId}/galeria")]
 		public async Task<IActionResult> ObterFotosPorCaoId(int caoId)
