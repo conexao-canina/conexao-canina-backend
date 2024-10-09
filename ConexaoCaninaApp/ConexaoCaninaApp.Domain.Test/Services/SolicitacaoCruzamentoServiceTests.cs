@@ -18,6 +18,7 @@ namespace ConexaoCaninaApp.Domain.Test.Services
 		private readonly SolicitacaoCruzamentoService _solicitacaoService;
 		private readonly Mock<ISolicitacaoCruzamentoRepository> _mockSolicitacaoRepository;
 		private readonly Mock<INotificacaoService> _mockNotificacaoService;
+		private readonly Mock<ICaoRepository> _mockCaoRepository;
 
 
 
@@ -25,10 +26,12 @@ namespace ConexaoCaninaApp.Domain.Test.Services
 		{
 			_mockNotificacaoService = new Mock<INotificacaoService>();
 			_mockSolicitacaoRepository = new Mock<ISolicitacaoCruzamentoRepository>();
+			_mockCaoRepository = new Mock<ICaoRepository>();
 
 			_solicitacaoService = new SolicitacaoCruzamentoService(
 				_mockSolicitacaoRepository.Object,
-				_mockNotificacaoService.Object);
+				_mockNotificacaoService.Object,
+				_mockCaoRepository.Object);
 		}
 
 
@@ -39,29 +42,31 @@ namespace ConexaoCaninaApp.Domain.Test.Services
 			{
 				UsuarioId = 1,
 				CaoId = 1,
-				Mensagem = "Gostaria de levar meu super cachorro ao encontro do cachorro de seu marido",
+				Mensagem = "Gostaria de levar meu super cachorro ao encontro do cachorro de seu marido"
+			};
 
-				Cao = new Cao // Adicionando objeto Cao no DTO
+			var cao = new Cao 
+			{
+				Nome = "Rex",
+				Proprietario = new Proprietario
 				{
-					Nome = "Rex",
-					Proprietario = new Proprietario
-					{
-						Email = "proprietario@teste.com"
-					}
+					Email = "proprietario@teste.com"
 				}
 			};
+
+			
+			_mockCaoRepository.Setup(r => r.ObterPorId(solicitacaoDto.CaoId)).ReturnsAsync(cao);
 
 			_mockSolicitacaoRepository
 				.Setup(r => r.Adicionar(It.IsAny<SolicitacaoCruzamento>()))
 				.Returns(Task.CompletedTask);
 
-
 			await _solicitacaoService.EnviarSolicitacaoAsync(solicitacaoDto);
 
-
-			_mockSolicitacaoRepository .Verify(r => r.Adicionar(It.IsAny<SolicitacaoCruzamento>()), Times.Once);
-
+			_mockSolicitacaoRepository.Verify(r => r.Adicionar(It.IsAny<SolicitacaoCruzamento>()), Times.Once);
+			_mockNotificacaoService.Verify(n => n.EnviarNotificacaoSolicitacaoCruzamento(cao.Proprietario.Email, cao.Nome, solicitacaoDto.Mensagem), Times.Once);
 		}
+
 
 		[Fact]
 		public async Task EnviarSolicitacao_ComMensagemVazia_DeveSalvarMesmoAssim()
@@ -72,15 +77,30 @@ namespace ConexaoCaninaApp.Domain.Test.Services
 				CaoId = 1,
 				Mensagem = string.Empty
 			};
+			var cao = new Cao
+			{
+				CaoId = 1,
+				Nome = "Cão Teste",
+				Proprietario = new Proprietario { Email = "dono@teste.com" }
+			};
 
 			_mockSolicitacaoRepository
 				.Setup(r => r.Adicionar(It.IsAny<SolicitacaoCruzamento>()))
 				.Returns(Task.CompletedTask);
 
+			_mockCaoRepository
+				.Setup(r => r.ObterPorId(solicitacaoDto.CaoId))
+				.ReturnsAsync(cao);
+				
+
+
+
 			await _solicitacaoService.EnviarSolicitacaoAsync(solicitacaoDto);
 
 
 			_mockSolicitacaoRepository.Verify(r => r.Adicionar(It.IsAny<SolicitacaoCruzamento>()), Times.Once);
+			_mockNotificacaoService.Verify(n => n.EnviarNotificacaoSolicitacaoCruzamento(cao.Proprietario.Email, cao.Nome, solicitacaoDto.Mensagem), Times.Once);
+
 		}
 
 		[Fact]
@@ -90,21 +110,31 @@ namespace ConexaoCaninaApp.Domain.Test.Services
 			{
 				UsuarioId = 1,
 				CaoId = 1,
-				Mensagem = "Gostaria de cruzar os cães",
-				Cao = new Cao
+				Mensagem = "Gostaria de cruzar os cães"
+			};
+
+			
+			var cao = new Cao
+			{
+				CaoId = 1,
+				Nome = "PHG",
+				Proprietario = new Proprietario
 				{
-					Nome = "PHG",
-					Proprietario = new Proprietario { Email = "dono@teste.com" }
+					Email = "dono@teste.com"
 				}
 			};
 
+			_mockCaoRepository
+				.Setup(r => r.ObterPorId(solicitacaoDto.CaoId))
+				.ReturnsAsync(cao);
+
 			await _solicitacaoService.EnviarSolicitacaoAsync(solicitacaoDto);
 
-
 			_mockNotificacaoService.Verify(n => n.EnviarNotificacaoSolicitacaoCruzamento(
-				solicitacaoDto.Cao.Proprietario.Email,
-				solicitacaoDto.Cao.Nome,
+				cao.Proprietario.Email,
+				cao.Nome,
 				solicitacaoDto.Mensagem), Times.Once);
 		}
+
 	}
 }

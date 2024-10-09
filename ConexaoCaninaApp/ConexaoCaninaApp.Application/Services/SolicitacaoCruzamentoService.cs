@@ -14,16 +14,26 @@ namespace ConexaoCaninaApp.Application.Services
 	{
 		private readonly ISolicitacaoCruzamentoRepository _solicitacaoRepository;
 		private readonly INotificacaoService _notificacaoService;
+		private readonly ICaoRepository _caoRepository;
 
 
-		public SolicitacaoCruzamentoService(ISolicitacaoCruzamentoRepository solicitacaoRepository, INotificacaoService notificacaoService)
+
+		public SolicitacaoCruzamentoService(ISolicitacaoCruzamentoRepository solicitacaoRepository, 
+			INotificacaoService notificacaoService, ICaoRepository caoRepository)
 		{
 			_solicitacaoRepository = solicitacaoRepository;
 			_notificacaoService = notificacaoService;
+			_caoRepository = caoRepository;
 		}
 
 		public async Task EnviarSolicitacaoAsync(SolicitacaoCruzamentoDto solicitacaoDto)
 		{
+			var cao = await _caoRepository.ObterPorId(solicitacaoDto.CaoId);
+			if (cao == null)
+			{
+				throw new NullReferenceException("O objeto Cao está nulo.");
+
+			}
 			var solicitacao = new SolicitacaoCruzamento
 			{
 				UsuarioId = solicitacaoDto.UsuarioId,
@@ -34,14 +44,6 @@ namespace ConexaoCaninaApp.Application.Services
 
 			await _solicitacaoRepository.Adicionar(solicitacao);
 
-			var cao = solicitacaoDto.Cao;
-			if (cao == null)
-			{
-				throw new NullReferenceException("O objeto Cao está nulo.");
-
-			}
-
-			
 			var emailUsuario = cao.Proprietario.Email;
 			var nomeDoCao = cao.Nome;
 
