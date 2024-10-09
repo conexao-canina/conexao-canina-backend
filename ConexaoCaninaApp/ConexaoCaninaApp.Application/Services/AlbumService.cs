@@ -70,6 +70,36 @@ namespace ConexaoCaninaApp.Application.Services
 			return true;
 		}
 
+		public async Task<bool> VerificarAcessoAoAlbum(int albumId)
+		{
+			var album = await _albumRepository.ObterPorId(albumId);
+
+			if (album == null)
+			{
+				throw new Exception("Album não encontrado");
+			}
+
+			var userId = _userContextService.GetUserId();
+
+			if (album.Privacidade == "Publico") return true;
+
+			if(album.Privacidade == "Registrados")
+			{
+				if (string.IsNullOrEmpty(userId))
+				{
+					throw new UnauthorizedAccessException
+						("Apenas usuários registrados podem acessar este álbum.");
+				}
+				return true;
+			}
+
+
+			if (album.Privacidade == "Especifico" && album.UsuariosPermitidos
+				.Any(u => u.UsuarioId == int.Parse(userId)))
+				return true;
+
+			return false;
+		}
 
 	}
 }

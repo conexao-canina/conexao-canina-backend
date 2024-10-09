@@ -32,5 +32,18 @@ namespace ConexaoCaninaApp.API.Controllers
 			await _albumService.EditarAlbumAsync(albumId, albumDto);
 			return NoContent();
 		}
+
+		[HttpGet("{albumId}/verificar-acesso")]
+		public async Task<IActionResult> VerificarAcessoAoAlbum(int albumId)
+		{
+			var possuiAcesso = await _albumService.VerificarAcessoAoAlbum(albumId);
+
+			if (!possuiAcesso)
+			{
+				return Forbid("Permissao para acessar album negada");
+			}
+
+			return Ok("Acesso Permitido");
+		}
 	}
 }

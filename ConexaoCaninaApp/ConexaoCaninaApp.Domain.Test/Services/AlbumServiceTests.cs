@@ -7,6 +7,7 @@ using Moq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.AccessControl;
 using System.Text;
 using System.Threading.Tasks;
 using Xunit;
@@ -120,6 +121,43 @@ namespace ConexaoCaninaApp.Domain.Test.Services
 			_mockAlbumRepository.Verify(r => r.Atualizar(It.Is<Album>(a => a.Nome == albumDto.Nome && a.Descricao ==
 			albumDto.Descricao)),  Times.Once);
 
+		}
+
+		[Fact]
+		public async Task VerificarAcessoAoAlbum_Deve_Permitir_Acesso_Se_Publico()
+		{
+			var albumId = 1;
+			var album = new Album
+			{
+				AlbumId = albumId,
+				Privacidade = "Publico"
+			};
+			_mockAlbumRepository.Setup(repo => repo.ObterPorId(albumId)).ReturnsAsync(album);
+
+			var result = await _albumService.VerificarAcessoAoAlbum(albumId);
+
+
+			Assert.True(result);
+
+		}
+
+		[Fact]
+		public async Task VerificarAcessoAoAlbum_Deve_Bloquear_Acesso_Se_Usuario_Nao_Registrado()
+		{
+			var albumId = 1;
+			var album = new Album
+			{
+				AlbumId = albumId,
+				Privacidade = "Registrados"
+			};
+
+			_mockAlbumRepository.Setup(repo => repo.ObterPorId(albumId)).ReturnsAsync(album);
+			_mockUserContextService.Setup(service => service.GetUserId()).Returns((string)null);
+
+			await Assert.ThrowsAsync<UnauthorizedAccessException>(async () =>
+			{
+				await _albumService.VerificarAcessoAoAlbum(albumId);
+			});
 		}
 	}	
 }
