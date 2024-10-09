@@ -97,7 +97,7 @@ adicionar a referencia do repositorio e coloque o pull request feito
 ---
 ## Envio de Solicitações de Cruzamento
 ### Implementar a Funcionalidade de Envio de Solicitação de Cruzamento (Backend) 
-### Implementar Notificação ao Dono do Cachorro (Backend) -> A fazer 
+### Implementar Notificação ao Dono do Cachorro (Backend)
 ---
 ## Gerenciamento de Solicitações de Cruzamento e Perfis de Usuários
 ###  Implementar Notificação para Moderação de Perfis de Cães (Backend) -> A fazer
