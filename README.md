@@ -54,7 +54,7 @@
 ###  Segurança e Privacidade (backend) 
 ---
 ## Criação de Álbum de Fotos 
-### Desenvolver Funcionalidade para Criar Álbum de Fotos (Backend) -> A Fazer
+### Desenvolver Funcionalidade para Criar Álbum de Fotos (Backend) 
 ### Adicionar Funcionalidades de Gerenciamento do Álbum (Backend) -> A Fazer
 ### Configuração de Privacidade do Álbum de Fotos (Backend) -> A Fazer
 ---
