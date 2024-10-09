@@ -12,6 +12,5 @@ namespace ConexaoCaninaApp.Application.Interfaces
 		Task EnviarNotificacaoParaAdministrador(Cao cao);
 		Task EnviarNotificacaoParaUsuario(Cao cao);
 		Task EnviarNotificacaoDeExclusaoParaUsuario(string emailUsuario, string NomeDoCao, string mensagem);
-		Task EnviarNotificacaoSolicitacaoCruzamento(string emailUsuario, string nomeDoCao, string mensagem);
 	}
 }
