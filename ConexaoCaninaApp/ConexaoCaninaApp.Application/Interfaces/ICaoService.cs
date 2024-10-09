@@ -10,13 +10,14 @@ namespace ConexaoCaninaApp.Application.Interfaces
 {
 	public interface ICaoService
 	{
-		Task<Cao> AdicionarCao(CaoDto caoDto);
+		Task<Cao> AdicionarCao(CaoDto caoDto, ModerarPerfilDto moderarPerfilDto);
 		Task AprovarCao(int caoId);
 		Task<Cao> ObterPorId(int caoID);
-		Task AtualizarCao(EditarCaoDto editarCaoDto);
+		Task AtualizarCao(EditarCaoDto editarCaoDto, ModerarPerfilDto moderarPerfilDto);
 		Task AtualizarInformacoesBasicas(int caoId, AtualizarInformacoesBasicasDto dto);
 		Task PublicarCao(int caoId);
 		Task<bool> VerificarPerimissaoEdicao(int caoId, int usuarioId);
 		Task ExcluirCao(int caoId);
+		Task ModerarPerfil(int caoId, ModerarPerfilDto moderarPerfilDto);
 	}
 }

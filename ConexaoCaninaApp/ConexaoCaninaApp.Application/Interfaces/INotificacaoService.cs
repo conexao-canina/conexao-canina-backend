@@ -9,7 +9,7 @@ namespace ConexaoCaninaApp.Application.Interfaces
 {
 	public interface INotificacaoService
 	{
-		Task EnviarNotificacaoParaAdministrador(Cao cao);
+		Task EnviarNotificacaoParaAdministrador(Cao cao, string observacao);
 		Task EnviarNotificacaoParaUsuario(Cao cao);
 		Task EnviarNotificacaoDeExclusaoParaUsuario(string emailUsuario, string NomeDoCao, string mensagem);
 		Task EnviarNotificacaoSolicitacaoCruzamento(string emailUsuario, string nomeDoCao, string mensagem);

@@ -95,7 +95,12 @@ namespace ConexaoCaninaApp.Domain.Test.Services
                 ProprietarioId = 1
             };
 
-            var novoCao = new Cao
+			var moderarPerfilDto = new ModerarPerfilDto
+			{
+				Observacao = "Perfil precisa de mais detalhes"
+			};
+
+			var novoCao = new Cao
             {
                 Nome = caoDto.Nome,
                 Raca = caoDto.Raca,
@@ -106,15 +111,15 @@ namespace ConexaoCaninaApp.Domain.Test.Services
                 Status = StatusCao.Pendente
             };
 
-            // ACT
+			// ACT
 
-            var result = await _caoService.AdicionarCao(caoDto);
+			var result = await _caoService.AdicionarCao(caoDto, moderarPerfilDto);
 
-            // ASSERT
+			// ASSERT
 
-            _mockCaoRepository.Verify(repo => repo.Adicionar(It.IsAny<Cao>()), Times.Once);
-            _mockNotificacaoService.Verify(notif => notif.EnviarNotificacaoParaAdministrador(It.IsAny<Cao>()), Times.Once);
-            Assert.NotNull(result);
+			_mockCaoRepository.Verify(repo => repo.Adicionar(It.IsAny<Cao>()), Times.Once);
+            _mockNotificacaoService.Verify(notif => notif.EnviarNotificacaoParaAdministrador(It.IsAny<Cao>(), It.IsAny<string>()), Times.Once);
+			Assert.NotNull(result);
             Assert.Equal(StatusCao.Pendente, result.Status);
         }
 
@@ -157,7 +162,12 @@ namespace ConexaoCaninaApp.Domain.Test.Services
                 CaracteristicasUnicas = "Forte"
             };
 
-            var caoExistente = new Cao
+			var moderarPerfilDto = new ModerarPerfilDto
+			{
+				Observacao = "Perfil precisa de mais detalhes"
+			};
+
+			var caoExistente = new Cao
             {
                 CaoId = 1,
                 Nome = "General PHG",
@@ -170,18 +180,18 @@ namespace ConexaoCaninaApp.Domain.Test.Services
 
             // ACT
 
-            await _caoService.AtualizarCao(editarCaoDto);
+            await _caoService.AtualizarCao(editarCaoDto, moderarPerfilDto);
 
             // ASSERT
 
             _mockCaoRepository.Verify(repo => repo.Atualizar
             (It.Is<Cao>(c => c.Status == StatusCao.Pendente)), Times.Once);
-            _mockNotificacaoService.Verify(serv => serv.EnviarNotificacaoParaAdministrador
-            (It.IsAny<Cao>()), Times.Once);
+			_mockNotificacaoService.Verify(notif => notif.EnviarNotificacaoParaAdministrador(It.IsAny<Cao>(), It.IsAny<string>()), Times.Once);
 
-        }
 
-        [Fact]
+		}
+
+		[Fact]
         public async Task VerificarPermissaoEdicao_Deve_Retornar_Verdadeiro_Se_Usuario_For_Proprietario()
         {
             // ARRANGE
@@ -428,6 +438,58 @@ namespace ConexaoCaninaApp.Domain.Test.Services
 
             Assert.Equal("Cão não encontrado", exception.Message);
 
+		}
+
+        [Fact]
+        public async Task ModerarPerfil_Deve_AprovarCaoEEnviarNotificacao()
+        {
+            var cao = new Cao
+            {
+                CaoId = 1,
+                Nome = "Deus Imperador PHG",
+                Status = StatusCao.Pendente
+            };
+
+            var moderarPerfilDto = new ModerarPerfilDto { Aprovado = true };
+
+
+            _mockCaoRepository.Setup(r => r.ObterPorId(1)).ReturnsAsync(cao);
+            _mockNotificacaoService.Setup(n => n.EnviarNotificacaoParaUsuario
+            (It.IsAny<Cao>())).Returns(Task.CompletedTask);
+
+            await _caoService.ModerarPerfil(1, moderarPerfilDto);
+
+
+            Assert.Equal(StatusCao.Aprovado, cao.Status);
+            _mockNotificacaoService.Verify(n => n.EnviarNotificacaoParaUsuario(cao), Times.Once);
+
+
+		}
+
+		[Fact]
+		public async Task ModerarPerfil_Deve_RejeitarCaoEEnviarNotificacaoAoAdministrador()
+		{
+			var cao = new Cao
+			{
+				CaoId = 1,
+				Nome = "Deus Imperador PHG",
+				Status = StatusCao.Pendente
+			};
+
+			var moderarPerfilDto = new ModerarPerfilDto { Aprovado = false, Observacao = "Faltam fotos." };
+
+
+			_mockCaoRepository.Setup(r => r.ObterPorId(1)).ReturnsAsync(cao);
+
+			_mockNotificacaoService.Setup(n => n.EnviarNotificacaoParaAdministrador
+            (It.IsAny<Cao>(), It.IsAny<string>())).Returns(Task.CompletedTask);
+
+
+			await _caoService.ModerarPerfil(1, moderarPerfilDto);
+
+
+            Assert.Equal(StatusCao.Pendente, cao.Status);
+            _mockNotificacaoService.Verify(n => n.EnviarNotificacaoParaAdministrador(cao, "Faltam fotos."), Times.Once);
 		}
 	}
 }

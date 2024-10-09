@@ -20,7 +20,7 @@ namespace ConexaoCaninaApp.Application.Services
 			_configuration = configuration;
 		}
 
-		public async Task EnviarNotificacaoParaAdministrador(Cao cao)
+		public async Task EnviarNotificacaoParaAdministrador(Cao cao, string observacao)
 		{
 			var emailAdministrador = _configuration["EmailSettings:AdminEmail"];
 			var assunto = "Novo perfil de cachorro pendente";

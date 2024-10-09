@@ -66,9 +66,9 @@ namespace ConexaoCaninaApp.API.Controllers
 		}
 
 		[HttpPost]
-		public async Task<IActionResult> AdicionarCao(CaoDto caoDto)
+		public async Task<IActionResult> AdicionarCao(CaoDto caoDto, ModerarPerfilDto moderarPerfilDto)
 		{
-			var cao = await _caoService.AdicionarCao(caoDto);
+			var cao = await _caoService.AdicionarCao(caoDto, moderarPerfilDto);
 			return CreatedAtAction(nameof(ObterCao), new { id = cao.CaoId }, cao);
 		}
 
@@ -80,9 +80,9 @@ namespace ConexaoCaninaApp.API.Controllers
 		}
 
 		[HttpPut("editar")]
-		public async Task<IActionResult> EditarCao([FromBody] EditarCaoDto editarCaoDto)
+		public async Task<IActionResult> EditarCao([FromBody] EditarCaoDto editarCaoDto, ModerarPerfilDto moderarPerfilDto)
 		{
-			await _caoService.AtualizarCao(editarCaoDto);
+			await _caoService.AtualizarCao(editarCaoDto, moderarPerfilDto);
 			return Ok();
 		}
 
@@ -116,6 +116,13 @@ namespace ConexaoCaninaApp.API.Controllers
 			return Ok(new { message =
 				"Perfil excluído com sucesso. A exclusão é permanente"
 			});
+		}
+
+		[HttpPut("{id}/moderar")]
+		public async Task<IActionResult> ModerarPerfilCao(int id, [FromBody] ModerarPerfilDto moderarPerfilDto)
+		{
+			await _caoService.ModerarPerfil(id, moderarPerfilDto);
+			return NoContent();
 		}
 	}
 }
