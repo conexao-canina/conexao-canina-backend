@@ -29,7 +29,7 @@ namespace ConexaoCaninaApp.Application.Services
 			_userContextService = userContextService;
 		}
 
-		public async Task<Cao> AdicionarCao(CaoDto caoDto)
+		public async Task<Cao> AdicionarCao(CaoDto caoDto, ModerarPerfilDto moderarPerfilDto)
 		{
 			var cao = new Cao
 			{
@@ -45,7 +45,7 @@ namespace ConexaoCaninaApp.Application.Services
 			};
 
 			await _caoRepository.Adicionar(cao);
-			await _notificacaoService.EnviarNotificacaoParaAdministrador(cao);
+			await _notificacaoService.EnviarNotificacaoParaAdministrador(cao, moderarPerfilDto.Observacao);
 
 			return cao;
 		}
@@ -64,7 +64,7 @@ namespace ConexaoCaninaApp.Application.Services
 			return await _caoRepository.ObterPorId(id);
 		}
 
-		public async Task AtualizarCao(EditarCaoDto editarCaoDto)
+		public async Task AtualizarCao(EditarCaoDto editarCaoDto, ModerarPerfilDto moderarPerfilDto)
 		{
 			var cao = await _caoRepository.ObterPorId(editarCaoDto.CaoId);
 
@@ -78,7 +78,7 @@ namespace ConexaoCaninaApp.Application.Services
 
 				await _caoRepository.Atualizar(cao);
 
-				await _notificacaoService.EnviarNotificacaoParaAdministrador(cao);
+				await _notificacaoService.EnviarNotificacaoParaAdministrador(cao, moderarPerfilDto.Observacao);
 			}
 		}
 
@@ -154,6 +154,32 @@ namespace ConexaoCaninaApp.Application.Services
 				(cao.Proprietario.Email, cao.Nome,
 				"A exclusão do perfil é permanente. Caso deseje retornar,será necessário criar um novo perfil."
 				);
+		}
+
+		public async Task ModerarPerfil(int caoId, ModerarPerfilDto moderarPerfilDto)
+		{
+			var cao = await _caoRepository.ObterPorId(caoId);
+
+			if (cao == null)
+			{
+				throw new Exception("Cão não encontrado");
+			}
+
+			if (moderarPerfilDto.Aprovado)
+			{
+				cao.Status = StatusCao.Aprovado;
+
+				await _notificacaoService.EnviarNotificacaoParaUsuario(cao);
+			}
+			else
+			{
+				cao.Status = StatusCao.Pendente;
+
+
+				await _notificacaoService.EnviarNotificacaoParaAdministrador(cao, moderarPerfilDto.Observacao);
+			}
+
+			await _caoRepository.Atualizar(cao);
 		}
 	}
 }
