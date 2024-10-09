@@ -11,7 +11,7 @@ namespace ConexaoCaninaApp.Application.Interfaces
 {
 	public interface IFotoService
 	{
-		Task<IEnumerable<FotoDto>> UploadFotosAsync(List<IFormFile> arquivos, int caoId);
+		Task<IEnumerable<FotoDto>> UploadFotosAsync(List<IFormFile> arquivos, int caoId, int albumId);
 		Task ExcluirFotoAsync(int fotoId);
 		Task ReordenarFotosAsync(IEnumerable<FotoDto> fotos);
 		Task<IEnumerable<FotoDto>> ObterFotosPorCaoId(int caoId);	
