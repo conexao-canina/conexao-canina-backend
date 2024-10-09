@@ -95,9 +95,27 @@ adicionar a referencia do repositorio e coloque o pull request feito
 ### Adicionar Funcionalidades de Gerenciamento do Álbum (Backend) 
 ### Configuração de Privacidade do Álbum de Fotos (Backend) 
 ---
-## 
-###
-###
-###
+## Envio de Solicitações de Cruzamento
+### Implementar a Funcionalidade de Envio de Solicitação de Cruzamento (Backend) -> A fazer
+### Implementar Notificação ao Dono do Cachorro (Backend) -> A fazer 
+---
+## Gerenciamento de Solicitações de Cruzamento e Perfis de Usuários
+###  Implementar Notificação para Moderação de Perfis de Cães (Backend) -> A fazer
+###  Implementar Sistema de Denúncias e Gerenciamento de Solicitações (Backend) -> A fazer 
+---
+## Aceitar ou Rejeitar Solicitações de Cruzamento
+### Implementar Aceitação de Solicitação de Cruzamento (Backend) -> A fazer
+### Implementar Rejeição de Solicitação de Cruzamento (Backend) -> A fazer 
+---
+## Revisão de Perfis e Denúncias de Solicitações de Cruzamento
+### Implementar Notificação para Revisão de Perfis de Cães (Backend) -> A fazer
+### Implementar Sistema de Revisão de Denúncias (Backend) -> A fazer 
+
+---
+## Notificações por E-mail
+### Implementar Envio de E-mails para Novas Solicitações de Cruzamento (Backend) -> A fazer
+### Implementar Envio de E-mails para Novas Mensagens (Backend) -> A fazer
+### Sincronizar Preferências de Notificação com Backend (Backend) -> A fazer
+---
 
 
