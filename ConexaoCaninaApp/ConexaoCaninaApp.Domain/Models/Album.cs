@@ -14,5 +14,8 @@ namespace ConexaoCaninaApp.Domain.Models
 
 		public int ProprietarioId { get; set; }
 		public ICollection<Foto> Fotos { get; set; } = new List<Foto>();
+
+		public string Privacidade { get; set; }
+		public ICollection<Usuario> UsuariosPermitidos { get; set; }
 	}
 }

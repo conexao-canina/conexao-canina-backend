@@ -12,5 +12,6 @@ namespace ConexaoCaninaApp.Application.Interfaces
 		Task CriarAlbum(AlbumDto albumDto);
 		Task EditarAlbumAsync(int albumId, AlbumDto albumDto);
 		Task<bool> ValidarProprietarioDoAlbum(int albumId);
+		Task<bool> VerificarAcessoAoAlbum(int albumId);
 	}
 }

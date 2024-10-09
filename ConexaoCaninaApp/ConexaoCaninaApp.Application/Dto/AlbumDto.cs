@@ -13,5 +13,9 @@ namespace ConexaoCaninaApp.Application.Dto
 		public string Descricao { get; set; }
 
 		public int ProprietarioId { get; set; }
+
+		public string Privacidade { get; set; }
+		public List<int> UsuariosPermitidosIds { get; set; } = new List<int>(); 
+
 	}
 }
