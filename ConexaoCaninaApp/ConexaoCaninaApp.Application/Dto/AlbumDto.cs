@@ -11,5 +11,7 @@ namespace ConexaoCaninaApp.Application.Dto
 		public int AlbumId { get; set; }
 		public string Nome { get; set; }
 		public string Descricao { get; set; }
+
+		public int ProprietarioId { get; set; }
 	}
 }

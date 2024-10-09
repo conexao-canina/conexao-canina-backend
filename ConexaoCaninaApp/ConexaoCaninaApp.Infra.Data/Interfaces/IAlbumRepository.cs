@@ -10,5 +10,7 @@ namespace ConexaoCaninaApp.Infra.Data.Interfaces
 	public interface IAlbumRepository
 	{
 		Task Adicionar(Album album);
+		Task Atualizar(Album album);
+		Task<Album> ObterPorId(int albumId);
 	}
 }

@@ -25,5 +25,12 @@ namespace ConexaoCaninaApp.API.Controllers
 
 
 		}
+
+		[HttpPut("{albumId}")]
+		public async Task<IActionResult> EditarAlbum(int albumId, [FromBody] AlbumDto albumDto)
+		{
+			await _albumService.EditarAlbumAsync(albumId, albumDto);
+			return NoContent();
+		}
 	}
 }

@@ -5,6 +5,7 @@ using ConexaoCaninaApp.Infra.Data.Interfaces;
 using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -100,6 +101,51 @@ namespace ConexaoCaninaApp.Application.Services
 				CaminhoArquivo = f.CaminhoArquivo,
 				Ordem = f.Ordem
 			});
+		}
+		
+		public async Task AtualizarOrdemEAdicionarFotosAsync
+			(int albumId, List<IFormFile> novasFotos, List<FotoDto> fotosExistentes)
+		{
+			foreach (var fotoDto in fotosExistentes)
+			{
+				var foto = await _fotoRepository.ObterPorId(fotoDto.FotoId);
+
+				if (foto != null)
+				{
+					foto.Ordem = fotoDto.Ordem;
+
+					await _fotoRepository.Atualizar(foto);
+				}
+			}
+
+			if (novasFotos != null && novasFotos.Any())
+			{
+				foreach (var novaFoto in novasFotos)
+				{
+					var caminhoArquivo = await _armazenamentoService.SalvarArquivoAsync(novaFoto, albumId);
+
+					var foto = new Foto
+					{
+						CaminhoArquivo = caminhoArquivo,
+						AlbumId = albumId,
+						Ordem = await _fotoRepository.ObterProximaOrdemAsync(albumId)
+					};
+
+					await _fotoRepository.Adicionar(foto);
+				}
+			}
+		}
+
+		public async Task RemoverFotoDoAlbumAsync(int fotoId)
+		{
+			var foto = await _fotoRepository.ObterPorId(fotoId);
+
+			if (foto != null)
+			{
+				await _armazenamentoService.ExcluirArquivoAsync(foto.CaminhoArquivo);
+
+				await _fotoRepository.Remover(foto);
+			}
 		}
 	}
 }

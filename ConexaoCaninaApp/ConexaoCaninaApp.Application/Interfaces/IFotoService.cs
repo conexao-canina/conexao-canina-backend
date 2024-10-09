@@ -15,5 +15,7 @@ namespace ConexaoCaninaApp.Application.Interfaces
 		Task ExcluirFotoAsync(int fotoId);
 		Task ReordenarFotosAsync(IEnumerable<FotoDto> fotos);
 		Task<IEnumerable<FotoDto>> ObterFotosPorCaoId(int caoId);	
+		Task AtualizarOrdemEAdicionarFotosAsync(int albumId, List<IFormFile> novasFotos, List<FotoDto> fotosExistentes);
+		Task RemoverFotoDoAlbumAsync(int fotoId);
 	}
 }
