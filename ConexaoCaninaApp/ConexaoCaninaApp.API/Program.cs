@@ -23,6 +23,15 @@ builder.Services.AddScoped<ICaoRepository, CaoRepository>();
 builder.Services.AddScoped<IFotoRepository, FotoRepository>();
 builder.Services.AddScoped<IHistoricoSaudeRepository, HistoricoSaudeRepository>();
 
+builder.Services.AddScoped<ISugestaoRepository, SugestaoRepository>();
+builder.Services.AddScoped<ISugestaoService, SugestaoService>();
+
+builder.Services.AddScoped<IRequisitosCruzamentoService, RequisitosCruzamentoService>();
+
+
+builder.Services.AddScoped<ISolicitacaoCruzamentoRepository, SolicitacaoCruzamentoRepository>();
+builder.Services.AddScoped<ISolicitacaoCruzamentoService, SolicitacaoCruzamentoService>();
+
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

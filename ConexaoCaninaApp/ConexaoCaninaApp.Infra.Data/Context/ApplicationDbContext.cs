@@ -25,6 +25,7 @@ namespace ConexaoCaninaApp.Infra.Data.Context
         public DbSet<Album> Albuns { get; set; }
         public DbSet<SolicitacaoCruzamento> SolicitacoesCruzamento { get; set; }
         public DbSet<RequisitosCruzamento> RequisitosCruzamentos { get; set; }
+        public DbSet<Sugestao> Sugestoes { get; set; }
 
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
