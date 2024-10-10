@@ -26,6 +26,18 @@ namespace ConexaoCaninaApp.API.Controllers
 			return Ok("Solicitação de cruzamento enviada com sucesso.");
 		}
 
+		[HttpPost("validar")]
+		public async Task<IActionResult> ValidarSolicitacao([FromBody] SolicitacaoCruzamentoDto solicitacaoDto)
+		{
+			var resultado = await _solicitacaoService.ValidarSolicitacaoAsync(solicitacaoDto);
+
+			if (resultado)
+			{
+				return Ok("Solicitação atende aos requisitos.");
+			}
+			else { return BadRequest("Solicitação rejeitada com base nos requisitos."); }
+		}
+
 		[HttpPost("{caoId}/requisitos")]
 		public async Task<IActionResult> DefinirRequisitos(int caoId, [FromBody] RequisitosCruzamentoDto dto)
 		{

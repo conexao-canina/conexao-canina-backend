@@ -52,6 +52,24 @@ namespace ConexaoCaninaApp.Application.Services
 
 		}
 
+		public async Task<bool> ValidarSolicitacaoAsync(SolicitacaoCruzamentoDto solicitacaoDto)
+		{
+			var cao = await _caoRepository.ObterPorId(solicitacaoDto.CaoId);
+
+			if (cao == null || cao.RequisitosCruzamento == null) 
+			{ throw new Exception("Cão ou requisitos nao encontrados"); }
+
+			var requisitos = cao.RequisitosCruzamento;
+
+			bool atendeRequisitos =
+				solicitacaoDto.Cao.RequisitosCruzamento.Temperamento == requisitos.Temperamento &&
+				solicitacaoDto.Cao.RequisitosCruzamento.Tamanho == requisitos.Tamanho &&
+				solicitacaoDto.Cao.RequisitosCruzamento.CaracteristicasGeneticas == requisitos.CaracteristicasGeneticas;
+
+			return atendeRequisitos;
+
+		}
+
 		public async Task AceitarSolicitacaoAsync(int solicitacaoId)
 		{
 			var solicitacao = await _solicitacaoRepository.ObterPorId(solicitacaoId);
