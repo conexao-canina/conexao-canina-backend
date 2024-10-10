@@ -123,8 +123,8 @@ adicionar a referencia do repositorio e coloque o pull request feito
 ## Requisitos Específicos de Cruzamento
 ### Definir Requisitos Específicos para o Cruzamento (backend)
 ### Notificação de Solicitações Rejeitadas (backend)
-### Filtragem Automática de Solicitações com Base nos Requisitos (backend) -> A fazer 
-### Interface de Usuário e Usabilidade (backend) -> A fazer 
+### Filtragem Automática de Solicitações com Base nos Requisitos (backend) 
+### Interface de Usuário e Usabilidade (backend) 
 ### Persistência e Atualização (backend) -> A fazer 
 
 ---
