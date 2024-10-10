@@ -13,5 +13,7 @@ namespace ConexaoCaninaApp.Application.Dto
 		public Cao Cao { get; set; }
 		public int CaoId { get; set; }
 		public string Mensagem { get; set; }
+
+		public string Status { get; set; }
 	}
 }

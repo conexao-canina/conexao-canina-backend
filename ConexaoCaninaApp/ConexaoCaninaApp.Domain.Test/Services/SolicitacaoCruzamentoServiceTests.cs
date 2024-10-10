@@ -10,6 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Xunit;
+using static ConexaoCaninaApp.Domain.Models.SolicitacaoCruzamento;
 
 namespace ConexaoCaninaApp.Domain.Test.Services
 {
@@ -136,5 +137,74 @@ namespace ConexaoCaninaApp.Domain.Test.Services
 				solicitacaoDto.Mensagem), Times.Once);
 		}
 
+
+
+		[Fact]
+		public async Task AceitarSolicitacao_DeveAtualizarStatusParaAceita()
+		{
+			var solicitacaoId = 1;
+			var solicitacao = new SolicitacaoCruzamento
+			{
+				SolicitacaoId = solicitacaoId,
+				UsuarioId = solicitacaoId,
+				CaoId = 1,
+				Status = StatusSolicitacao.Pendente
+			};
+
+			_mockSolicitacaoRepository
+			  .Setup(r => r.ObterPorId(solicitacaoId))
+			  .ReturnsAsync(solicitacao);
+
+
+			await _solicitacaoService.AceitarSolicitacaoAsync(solicitacaoId);
+
+
+			Assert.Equal(StatusSolicitacao.Aceita, solicitacao.Status);
+			_mockSolicitacaoRepository.Verify(r => r.Atualizar(solicitacao), Times.Once);
+
+		}
+
+		[Fact]
+		public async Task AceitarSolicitacao_SolicitacaoNaoEncontrada_DeveLancarExcecao()
+		{
+			var solicitacaoId = 1;
+
+			_mockSolicitacaoRepository
+				.Setup(r => r.ObterPorId(solicitacaoId))
+				.ReturnsAsync((SolicitacaoCruzamento)null);
+
+
+			await Assert.ThrowsAsync<Exception>(() =>
+			_solicitacaoService.AceitarSolicitacaoAsync(solicitacaoId));
+
+		}
+
+		[Fact]
+		public async Task AceitarSolicitacao_ErroAoAtualizar_DeveLancarExcecao()
+		{
+			var solicitacaoId = 1;
+			var solicitacao = new SolicitacaoCruzamento
+			{
+				SolicitacaoId = solicitacaoId,
+				UsuarioId = solicitacaoId,
+				CaoId = 1,
+				Status = StatusSolicitacao.Pendente
+			};
+
+			_mockSolicitacaoRepository
+			  .Setup(r => r.ObterPorId(solicitacaoId))
+			  .ReturnsAsync(solicitacao);
+
+			_mockSolicitacaoRepository
+				.Setup(r => r.Atualizar(solicitacao))
+				.ThrowsAsync(new Exception("Erro ao atualizar"));
+
+			await Assert.ThrowsAsync<Exception>(() =>
+			_solicitacaoService.AceitarSolicitacaoAsync(solicitacaoId));
+
+
+		}
 	}
+
+
 }

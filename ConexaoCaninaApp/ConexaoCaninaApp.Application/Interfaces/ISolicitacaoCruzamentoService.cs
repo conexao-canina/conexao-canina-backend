@@ -10,5 +10,6 @@ namespace ConexaoCaninaApp.Application.Interfaces
 	public interface ISolicitacaoCruzamentoService
 	{
 		Task EnviarSolicitacaoAsync(SolicitacaoCruzamentoDto solicitacaoDto);
+		Task AceitarSolicitacaoAsync(int solicitacaoId);
 	}
 }

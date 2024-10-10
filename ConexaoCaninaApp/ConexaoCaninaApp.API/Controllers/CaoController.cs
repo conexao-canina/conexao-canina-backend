@@ -66,9 +66,9 @@ namespace ConexaoCaninaApp.API.Controllers
 		}
 
 		[HttpPost]
-		public async Task<IActionResult> AdicionarCao(CaoDto caoDto, ModerarPerfilDto moderarPerfilDto)
+		public async Task<IActionResult> AdicionarCao([FromBody] AdicionarCaoComModerarPerfilDto dto)
 		{
-			var cao = await _caoService.AdicionarCao(caoDto, moderarPerfilDto);
+			var cao = await _caoService.AdicionarCao(dto.CaoDto, dto.ModerarPerfilDto);
 			return CreatedAtAction(nameof(ObterCao), new { id = cao.CaoId }, cao);
 		}
 
@@ -80,9 +80,9 @@ namespace ConexaoCaninaApp.API.Controllers
 		}
 
 		[HttpPut("editar")]
-		public async Task<IActionResult> EditarCao([FromBody] EditarCaoDto editarCaoDto, ModerarPerfilDto moderarPerfilDto)
+		public async Task<IActionResult> EditarCao([FromBody] EditarCaoComModerarPerfilDto dto)
 		{
-			await _caoService.AtualizarCao(editarCaoDto, moderarPerfilDto);
+			await _caoService.AtualizarCao(dto.EditarCaoDto, dto.ModerarPerfilDto);
 			return Ok();
 		}
 
