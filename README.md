@@ -104,7 +104,7 @@ adicionar a referencia do repositorio e coloque o pull request feito
 ###  Implementar Sistema de Denúncias e Gerenciamento de Solicitações (Backend) -> A fazer 
 ---
 ## Aceitar ou Rejeitar Solicitações de Cruzamento
-### Implementar Aceitação de Solicitação de Cruzamento (Backend) -> A fazer
+### Implementar Aceitação de Solicitação de Cruzamento (Backend) 
 ### Implementar Rejeição de Solicitação de Cruzamento (Backend) -> A fazer 
 ---
 ## Revisão de Perfis e Denúncias de Solicitações de Cruzamento
