@@ -65,5 +65,21 @@ namespace ConexaoCaninaApp.Application.Services
 
 			await _solicitacaoRepository.Atualizar(solicitacao);
 		}
+
+		public async Task RejeitarSolicitacaoAsync(int solicitacaoId)
+		{
+			var solicitacao = await _solicitacaoRepository.ObterPorId(solicitacaoId);
+
+			if (solicitacao == null)
+			{
+				throw new Exception("Solicitação não encontrada");
+			}
+
+			solicitacao.Status = StatusSolicitacao.Rejeitada;
+
+			await _solicitacaoRepository.Atualizar(solicitacao);
+
+
+		}
 	}
 }

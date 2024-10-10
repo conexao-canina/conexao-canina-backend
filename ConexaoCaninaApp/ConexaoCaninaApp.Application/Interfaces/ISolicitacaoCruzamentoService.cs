@@ -11,5 +11,6 @@ namespace ConexaoCaninaApp.Application.Interfaces
 	{
 		Task EnviarSolicitacaoAsync(SolicitacaoCruzamentoDto solicitacaoDto);
 		Task AceitarSolicitacaoAsync(int solicitacaoId);
+		Task RejeitarSolicitacaoAsync(int solicitacaoId);
 	}
 }
