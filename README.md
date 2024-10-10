@@ -67,12 +67,14 @@ adicionar a referencia do repositorio e coloque o pull request feito
 ### Atualização e Edição de Perfil (backend)
 ### Interface e Usabilidade (backend)
 ### Segurança e Privacidade (backend)
+
 ---
 ## Exclusão de Perfil de Cachorro
 
 ### Implementar Funcionalidade de Exclusão do Perfil (Backend)
 ### Enviar Notificação de Exclusão (Backend)
 ### Informar sobre a Política de Exclusão (Backend)
+
 ---
 ## Visualização de Perfis de Cachorro
 
@@ -81,6 +83,7 @@ adicionar a referencia do repositorio e coloque o pull request feito
 ### Visualização de Histórico de Saúde (backend) 
 ### Interface e Usabilidade (backend) 
 ### Segurança e Privacidade (backend) 
+
 ---
 ## Gerenciamento de Perfil
 
@@ -89,33 +92,41 @@ adicionar a referencia do repositorio e coloque o pull request feito
 ### Atualização de Histórico de Saúde (backend) 
 ###  Interface e Usabilidade (backend) 
 ###  Segurança e Privacidade (backend) 
+
 ---
 ## Criação de Álbum de Fotos 
 ### Desenvolver Funcionalidade para Criar Álbum de Fotos (Backend) 
 ### Adicionar Funcionalidades de Gerenciamento do Álbum (Backend) 
 ### Configuração de Privacidade do Álbum de Fotos (Backend) 
+
 ---
 ## Envio de Solicitações de Cruzamento
 ### Implementar a Funcionalidade de Envio de Solicitação de Cruzamento (Backend) 
 ### Implementar Notificação ao Dono do Cachorro (Backend)
+
 ---
 ## Gerenciamento de Solicitações de Cruzamento e Perfis de Usuários
 ###  Implementar Notificação para Moderação de Perfis de Cães (Backend)
 ###  Implementar Sistema de Denúncias e Gerenciamento de Solicitações (Backend) -> A fazer 
+
 ---
 ## Aceitar ou Rejeitar Solicitações de Cruzamento
 ### Implementar Aceitação de Solicitação de Cruzamento (Backend) 
 ### Implementar Rejeição de Solicitação de Cruzamento (Backend) 
+
 ---
 ## Revisão de Perfis e Denúncias de Solicitações de Cruzamento
 ### Implementar Notificação para Revisão de Perfis de Cães (Backend) -> A fazer
 ### Implementar Sistema de Revisão de Denúncias (Backend) -> A fazer 
 
 ---
-## Notificações por E-mail
-### Implementar Envio de E-mails para Novas Solicitações de Cruzamento (Backend) -> A fazer
-### Implementar Envio de E-mails para Novas Mensagens (Backend) -> A fazer
-### Sincronizar Preferências de Notificação com Backend (Backend) -> A fazer
+## Requisitos Específicos de Cruzamento
+### Definir Requisitos Específicos para o Cruzamento (backend)
+### Notificação de Solicitações Rejeitadas (backend)
+### Filtragem Automática de Solicitações com Base nos Requisitos (backend) -> A fazer 
+### Interface de Usuário e Usabilidade (backend) -> A fazer 
+### Persistência e Atualização (backend) -> A fazer 
+
 ---
 ## Dar Like em Perfis de Cães
 ### Implementar Funcionalidade de Dar Like (Backend)
