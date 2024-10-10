@@ -19,12 +19,26 @@ namespace ConexaoCaninaApp.Application.Services
 			_sugestaoRepository = sugestaoRepository;
 		}
 
+		public async Task<List<SugestaoDto>> ObterSugestoesPorUsuarioAsync(int usuarioId)
+		{
+			var sugestoes = await _sugestaoRepository.ObterSugestoesPorUsuarioAsync(usuarioId);
+			var sugestoesDto = sugestoes.Select(s => new SugestaoDto
+			{
+				SugestaoId = s.SugestaoId,
+				Descricao = s.Descricao,
+				DataEnvio = s.DataEnvio,
+				Status = s.Status
+			}).ToList();
+
+			return sugestoesDto;
+		}
 		public async Task EnviarSugestaoAsync(SugestaoDto sugestaoDto)
 		{
 			var sugestao = new Sugestao
 			{
 				Descricao = sugestaoDto.Descricao,
 				DataEnvio = DateTime.Now,
+				UsuarioId = sugestaoDto.UsuarioId,
 				Status = "Em Análise"
 			};
 

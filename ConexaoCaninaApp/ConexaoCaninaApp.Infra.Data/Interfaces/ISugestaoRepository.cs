@@ -10,5 +10,6 @@ namespace ConexaoCaninaApp.Infra.Data.Interfaces
 	public interface  ISugestaoRepository
 	{
 		Task AdicionarAsync(Sugestao sugestao);
+		Task<List<Sugestao>> ObterSugestoesPorUsuarioAsync(int usuarioId);
 	}
 }

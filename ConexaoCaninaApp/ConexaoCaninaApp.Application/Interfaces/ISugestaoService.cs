@@ -10,5 +10,6 @@ namespace ConexaoCaninaApp.Application.Interfaces
 	public interface ISugestaoService
 	{
 		Task EnviarSugestaoAsync(SugestaoDto sugestaoDto);
+		Task<List<SugestaoDto>> ObterSugestoesPorUsuarioAsync(int usuarioId);
 	}
 }

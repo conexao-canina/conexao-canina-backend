@@ -15,6 +15,22 @@ namespace ConexaoCaninaApp.API.Controllers
 			_sugestaoService = sugestaoService;
 		}
 
+		[HttpGet("{usuarioId}/sugestoes")]
+
+		public async Task<IActionResult> ConsultarSugestoesPorUsuario(int usuarioId)
+		{
+			try
+			{
+				var sugestoes = await _sugestaoService.ObterSugestoesPorUsuarioAsync(usuarioId);
+				return Ok(sugestoes);
+			}
+			catch (Exception ex)
+			{
+				return BadRequest(ex.Message);
+			}
+		}
+
+
 		[HttpPost]
 		public async Task<IActionResult> EnviarSugestao([FromBody] SugestaoDto sugestaoDto)
 		{
