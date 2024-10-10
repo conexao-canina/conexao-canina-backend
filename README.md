@@ -117,5 +117,7 @@ adicionar a referencia do repositorio e coloque o pull request feito
 ### Implementar Envio de E-mails para Novas Mensagens (Backend) -> A fazer
 ### Sincronizar Preferências de Notificação com Backend (Backend) -> A fazer
 ---
-
+## Dar Like em Perfis de Cães
+### Implementar Funcionalidade de Dar Like (Backend)
+### Atualizar Modelos de Dados e Notificações (Backend) -> A fazer
 
