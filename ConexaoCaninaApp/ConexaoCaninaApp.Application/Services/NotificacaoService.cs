@@ -56,6 +56,21 @@ namespace ConexaoCaninaApp.Application.Services
 			await EnviarEmailAsync(emailUsuario, assunto, mensagemParaUsuario);
 		}
 
+		public async Task EnviarNotificacaoDeLike(string emailUsuario, string nomeDoCao)
+		{
+			var assunto = "Seu cão recebeu um novo Like!";
+			var mensagem = $"O perfil do seu cão {nomeDoCao} acabou de receber um Like!";
+
+			await EnviarEmailAsync(emailUsuario, assunto, mensagem);
+		}
+		public async Task EnviarNotificacaoDeUnlike(string emailUsuario, string nomeDoCao)
+		{
+			var assunto = "Seu cão teve um Like removido!";
+			var mensagem = $"O perfil do seu cão {nomeDoCao} teve um Like removido.";
+
+			await EnviarEmailAsync(emailUsuario, assunto, mensagem);
+		}
+
 		private async Task EnviarEmailAsync(string email, string assunto, string mensagem)
 		{
 			var smtpClient = new SmtpClient(_configuration["EmailSettings:SmtpServer"])

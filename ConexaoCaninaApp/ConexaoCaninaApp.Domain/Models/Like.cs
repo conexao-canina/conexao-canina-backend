@@ -11,6 +11,8 @@ namespace ConexaoCaninaApp.Domain.Models
 		public int LikeId { get; set; }
 		public int CaoId { get; set; }
 		public int UsuarioId { get; set; }
+		public DateTime DataLike { get; set; } = DateTime.Now;
+		public bool IsLike { get; set; }
 		public Cao Cao { get; set; }
 	}
 }
