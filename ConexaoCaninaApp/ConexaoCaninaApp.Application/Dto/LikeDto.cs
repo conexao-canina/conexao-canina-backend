@@ -10,5 +10,7 @@ namespace ConexaoCaninaApp.Application.Dto
 	{
 		public int CaoId { get; set; }
 		public int UsuarioId { get; set; }
+		public DateTime DataLike { get; set; }
+		public bool IsLike { get; set; }
 	}
 }

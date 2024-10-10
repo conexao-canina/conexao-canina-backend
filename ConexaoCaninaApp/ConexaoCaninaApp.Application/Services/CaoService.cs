@@ -201,6 +201,7 @@ namespace ConexaoCaninaApp.Application.Services
 				var like = new Like { CaoId = caoId, UsuarioId = usuarioId };
 				cao.Likes.Add(like);
 
+				await _notificacaoService.EnviarNotificacaoDeLike(cao.Proprietario.Email, cao.Nome);
 				await _caoRepository.Atualizar(cao);
 			}
 
@@ -223,6 +224,7 @@ namespace ConexaoCaninaApp.Application.Services
 				cao.Likes.Remove(like);
 
 
+				await _notificacaoService.EnviarNotificacaoDeUnlike(cao.Proprietario.Email, cao.Nome);
 				await _caoRepository.Atualizar(cao);
 			}
 		}

@@ -506,7 +506,17 @@ namespace ConexaoCaninaApp.Domain.Test.Services
 			var caoId = 1;
 			var usuarioId = 1;
 
-			var cao = new Cao { CaoId = caoId, Likes = new List<Like>() };
+			var cao = new Cao
+			{
+				CaoId = caoId,
+				Likes = new List<Like>(),
+				Proprietario = new Proprietario
+				{
+					Email = "dono@exemplo.com"
+				},
+				Nome = "NomeDoCao"
+			};
+
 			_mockCaoRepository.Setup(repo => repo.ObterPorId(caoId)).ReturnsAsync(cao);
 
 
@@ -514,6 +524,7 @@ namespace ConexaoCaninaApp.Domain.Test.Services
 
 
 			Assert.Contains(cao.Likes, l => l.UsuarioId == usuarioId);
+			_mockNotificacaoService.Verify(n => n.EnviarNotificacaoDeLike(cao.Proprietario.Email, cao.Nome), Times.Once);
 			_mockCaoRepository.Verify(repo => repo.Atualizar(cao), Times.Once);
 		}
 
@@ -523,7 +534,16 @@ namespace ConexaoCaninaApp.Domain.Test.Services
 			var caoId = 1;
 			var usuarioId = 1;
 			var like = new Like { UsuarioId = usuarioId };
-			var cao = new Cao { CaoId = caoId, Likes = new List<Like> { like } };
+			var cao = new Cao
+			{
+				CaoId = caoId,
+				Likes = new List<Like>(),
+				Proprietario = new Proprietario
+				{
+					Email = "dono@exemplo.com"
+				},
+				Nome = "NomeDoCao"
+			};
 
 			_mockCaoRepository.Setup(repo => repo.ObterPorId(caoId)).ReturnsAsync(cao);
 
@@ -532,6 +552,7 @@ namespace ConexaoCaninaApp.Domain.Test.Services
 
 
 			Assert.DoesNotContain(cao.Likes, l => l.UsuarioId == usuarioId);
+			_mockNotificacaoService.Verify(n => n.EnviarNotificacaoDeLike(cao.Proprietario.Email, cao.Nome), Times.Once);
 			_mockCaoRepository.Verify(repo => repo.Atualizar(cao), Times.Once);
 		}
 
@@ -549,6 +570,30 @@ namespace ConexaoCaninaApp.Domain.Test.Services
 			await Assert.ThrowsAsync<InvalidOperationException>
                 (() => _caoService.DarLike(caoId, usuarioId));
 		}
+
+		[Fact]
+		public async Task DarLike_DeveDispararNotificacao()
+		{
+			var caoId = 1;
+			var usuarioId = 1;
+			var cao = new Cao
+			{
+				CaoId = caoId,
+				Likes = new List<Like>(),
+				Proprietario = new Proprietario
+				{
+					Email = "dono@exemplo.com"
+				},
+				Nome = "NomeDoCao"
+			};
+			_mockCaoRepository.Setup(r => r.ObterPorId(caoId)).ReturnsAsync(cao);
+
+			await _caoService.DarLike(caoId, usuarioId);
+
+			_mockNotificacaoService.Verify(n => n.EnviarNotificacaoDeLike(cao.Proprietario.Email, cao.Nome), Times.Once);
+			_mockCaoRepository.Verify(r => r.Atualizar(cao), Times.Once);
+		}
+
 
 		#endregion
 	}
