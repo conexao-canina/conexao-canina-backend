@@ -24,6 +24,7 @@ namespace ConexaoCaninaApp.Infra.Data.Context
         public DbSet<HistoricoSaude> HistoricosDeSaude { get; set; }
         public DbSet<Album> Albuns { get; set; }
         public DbSet<SolicitacaoCruzamento> SolicitacoesCruzamento { get; set; }
+        public DbSet<RequisitosCruzamento> RequisitosCruzamentos { get; set; }
 
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
