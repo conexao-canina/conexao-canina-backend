@@ -173,6 +173,14 @@ namespace ConexaoCaninaApp.Domain.Test.Services
 				SolicitacaoId = solicitacaoId,
 				UsuarioId = 1,
 				CaoId = 1,
+				Usuario = new Usuario
+				{
+					Email = "usuario@exemplo.com"
+				},
+				Cao = new Cao
+				{
+					Nome = "PHG"
+				},
 				Status = StatusSolicitacao.Pendente
 			};
 
@@ -183,6 +191,48 @@ namespace ConexaoCaninaApp.Domain.Test.Services
 			Assert.Equal(StatusSolicitacao.Rejeitada, solicitacao.Status);
 			_mockSolicitacaoRepository.Verify(r => r.Atualizar(solicitacao), Times.Once);
 		}
+
+		[Fact]
+		public async Task RejeitarSolicitacao_DeveDispararNotificacaoRejeicao()
+		{
+			// Arrange
+			var solicitacaoId = 1;
+			var solicitacao = new SolicitacaoCruzamento
+			{
+				SolicitacaoId = solicitacaoId,
+				UsuarioId = 1,
+				CaoId = 1,
+				Usuario = new Usuario
+				{
+					Email = "usuario@exemplo.com"
+				},
+				Cao = new Cao
+				{
+					Nome = "JVP"
+				},
+				Status = StatusSolicitacao.Pendente
+			};
+
+			_mockSolicitacaoRepository.Setup(r => r.ObterPorId(solicitacaoId))
+				.ReturnsAsync(solicitacao); 
+
+			var requisitosNaoAtendidos = "Exemplo: Temperamento não compatível, Tamanho não adequado";
+
+			// Act
+			await _solicitacaoService.RejeitarSolicitacaoAsync(solicitacaoId);
+
+			
+			_mockNotificacaoService.Verify(n =>
+				n.EnviarNotificacaoSolicitacaoRejeitada(
+					solicitacao.Usuario.Email,
+					solicitacao.Cao.Nome,
+					It.Is<string>(msg => msg.Contains(requisitosNaoAtendidos))
+				), Times.Once);
+
+			
+			_mockSolicitacaoRepository.Verify(r => r.Atualizar(solicitacao), Times.Once);
+		}
+
 
 
 		[Fact]

@@ -71,6 +71,14 @@ namespace ConexaoCaninaApp.Application.Services
 			await EnviarEmailAsync(emailUsuario, assunto, mensagem);
 		}
 
+		public async Task EnviarNotificacaoSolicitacaoRejeitada(string emailUsuario, string nomeDoCao, string requisitosNaoAtendidos)
+		{
+			var assunto = "Solicitação de Cruzamento Rejeitada";
+			var mensagem = $"A solicitação de cruzamento para o cão {nomeDoCao} foi rejeitada. Os seguintes requisitos não foram atendidos: {requisitosNaoAtendidos}.";
+
+			await EnviarEmailAsync(emailUsuario, assunto, mensagem);
+		}
+
 		private async Task EnviarEmailAsync(string email, string assunto, string mensagem)
 		{
 			var smtpClient = new SmtpClient(_configuration["EmailSettings:SmtpServer"])

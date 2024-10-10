@@ -16,7 +16,9 @@ namespace ConexaoCaninaApp.Domain.Models
 		}
 		public int SolicitacaoId { get; set; }
 		public int UsuarioId { get; set; }
+		public Usuario Usuario { get; set; }
 		public int CaoId { get; set; }
+		public Cao Cao { get; set; }
 		public string Mensagem { get; set; }
 		public DateTime DataSolicitacao { get; set; }
 		public StatusSolicitacao Status { get; set; }

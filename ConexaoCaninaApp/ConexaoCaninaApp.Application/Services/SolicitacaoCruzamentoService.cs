@@ -77,6 +77,10 @@ namespace ConexaoCaninaApp.Application.Services
 
 			solicitacao.Status = StatusSolicitacao.Rejeitada;
 
+			var requisitosNaoAtendidos = "Exemplo: Temperamento não compatível, Tamanho não adequado"; 
+			await _notificacaoService.EnviarNotificacaoSolicitacaoRejeitada
+				(solicitacao.Usuario.Email, solicitacao.Cao.Nome, requisitosNaoAtendidos);
+
 			await _solicitacaoRepository.Atualizar(solicitacao);
 
 
