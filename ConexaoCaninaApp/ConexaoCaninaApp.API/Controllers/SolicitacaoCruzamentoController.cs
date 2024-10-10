@@ -9,11 +9,13 @@ namespace ConexaoCaninaApp.API.Controllers
 	public class SolicitacaoCruzamentoController : ControllerBase
 	{
 		private readonly ISolicitacaoCruzamentoService _solicitacaoService;
+		private readonly IRequisitosCruzamentoService _requisitosCruzamentoService;
 
 
-		public SolicitacaoCruzamentoController(ISolicitacaoCruzamentoService solicitacaoService)
+		public SolicitacaoCruzamentoController(ISolicitacaoCruzamentoService solicitacaoService, IRequisitosCruzamentoService requisitosCruzamentoService)
 		{
 			_solicitacaoService = solicitacaoService;
+			_requisitosCruzamentoService = requisitosCruzamentoService;
 		}
 
 		[HttpPost]
@@ -22,6 +24,28 @@ namespace ConexaoCaninaApp.API.Controllers
 			await _solicitacaoService.EnviarSolicitacaoAsync(solicitacaoDto);
 
 			return Ok("Solicitação de cruzamento enviada com sucesso.");
+		}
+
+		[HttpPost("{caoId}/requisitos")]
+		public async Task<IActionResult> DefinirRequisitos(int caoId, [FromBody] RequisitosCruzamentoDto dto)
+		{
+			await _requisitosCruzamentoService.DefinirRequisitosCruzamento(caoId, dto);
+
+			return Ok("Requisitos definidos com sucesso");
+		}
+
+		[HttpPut("{caoId}/requisitos")]
+		public async Task<IActionResult> EditarRequisitos(int caoId, [FromBody] RequisitosCruzamentoDto dto)
+		{
+			try
+			{
+				await _requisitosCruzamentoService.EditarRequisitosCruzamento(caoId, dto);
+				return Ok("Requisitos atualizados com sucesso.");
+			}
+			catch (Exception ex)
+			{
+				return BadRequest(ex.Message);
+			}
 		}
 
 		[HttpPut("{id}/aceitar")]
