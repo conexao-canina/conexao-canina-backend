@@ -233,8 +233,6 @@ namespace ConexaoCaninaApp.Domain.Test.Services
 			_mockSolicitacaoRepository.Verify(r => r.Atualizar(solicitacao), Times.Once);
 		}
 
-
-
 		[Fact]
 		public async Task AceitarSolicitacao_SolicitacaoNaoEncontrada_DeveLancarExcecao()
 		{
@@ -275,7 +273,79 @@ namespace ConexaoCaninaApp.Domain.Test.Services
 
 
 		}
+		[Fact]
+		public async Task ValidarSolicitacao_DeveRetornarVerdadeiroSeAtenderRequisitos()
+		{
+			var solicitacaoDto = new SolicitacaoCruzamentoDto
+			{
+				CaoId = 1,
+				Cao = new Cao
+				{
+					RequisitosCruzamento = new RequisitosCruzamento
+					{
+						Temperamento = "Calmo",
+						Tamanho = "Grande",
+						CaracteristicasGeneticas = "Nenhum problema"
+					}
+				},
+				Mensagem = "Solicitação de cruzamento.",
+				UsuarioId = 1
+			};
+			var cao = new Cao
+			{
+				CaoId = 1,
+				RequisitosCruzamento = new RequisitosCruzamento
+				{
+					Temperamento = "Calmo",
+					Tamanho = "Grande",
+					CaracteristicasGeneticas = "Nenhum problema"
+				}
+			};
+
+
+			_mockCaoRepository.Setup(r => r.ObterPorId(solicitacaoDto.CaoId)).ReturnsAsync(cao);
+			var resultado = await _solicitacaoService.ValidarSolicitacaoAsync(solicitacaoDto);
+			Assert.True(resultado);
+			_mockCaoRepository.Verify(r => r.ObterPorId(solicitacaoDto.CaoId), Times.Once);
+		}
+
+
+		[Fact]
+		public async Task ValidarSolicitacao_DeveRetornarFalsoSeNaoAtenderRequisitos()
+		{
+			var solicitacaoDto = new SolicitacaoCruzamentoDto
+			{
+				CaoId = 1,
+				Cao = new Cao
+				{
+					RequisitosCruzamento = new RequisitosCruzamento
+					{
+						Temperamento = "Agitado",
+						Tamanho = "Pequeno",
+						CaracteristicasGeneticas = "Problema de saúde genético"
+					}
+				},
+				Mensagem = "Solicitação de cruzamento",
+				UsuarioId = 1
+			};
+
+			var cao = new Cao
+			{
+				RequisitosCruzamento = new RequisitosCruzamento
+				{
+					Temperamento = "Calmo",
+					Tamanho = "Grande",
+					CaracteristicasGeneticas = "Nenhum problema"
+				}
+			};
+
+			_mockCaoRepository.Setup(r => r.ObterPorId(solicitacaoDto.CaoId)).ReturnsAsync(cao);
+
+			var resultado = await _solicitacaoService.ValidarSolicitacaoAsync(solicitacaoDto);
+
+			Assert.False(resultado);
+			_mockCaoRepository.Verify(r => r.ObterPorId(solicitacaoDto.CaoId), Times.Once);
+
+		}
 	}
-
-
 }
