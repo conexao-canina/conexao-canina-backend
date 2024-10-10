@@ -105,7 +105,7 @@ adicionar a referencia do repositorio e coloque o pull request feito
 ---
 ## Aceitar ou Rejeitar Solicitações de Cruzamento
 ### Implementar Aceitação de Solicitação de Cruzamento (Backend) 
-### Implementar Rejeição de Solicitação de Cruzamento (Backend) -> A fazer 
+### Implementar Rejeição de Solicitação de Cruzamento (Backend) 
 ---
 ## Revisão de Perfis e Denúncias de Solicitações de Cruzamento
 ### Implementar Notificação para Revisão de Perfis de Cães (Backend) -> A fazer
