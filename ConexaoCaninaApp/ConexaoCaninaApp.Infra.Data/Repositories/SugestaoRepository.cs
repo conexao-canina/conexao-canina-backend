@@ -1,6 +1,7 @@
 ﻿using ConexaoCaninaApp.Domain.Models;
 using ConexaoCaninaApp.Infra.Data.Context;
 using ConexaoCaninaApp.Infra.Data.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,6 +19,12 @@ namespace ConexaoCaninaApp.Infra.Data.Repositories
 			_context = context;
 		}
 
+		public async Task<List<Sugestao>> ObterSugestoesPorUsuarioAsync(int usuarioId)
+		{
+			return await _context.Sugestoes
+				.Where(s => s.UsuarioId == usuarioId)
+				.ToListAsync();
+		}
 		public async Task AdicionarAsync(Sugestao sugestao)
 		{
 			_context.Sugestoes.Add(sugestao);	

@@ -24,6 +24,28 @@ namespace ConexaoCaninaApp.Domain.Test.Services
 		}
 
 		[Fact]
+		public async Task ObterSugestoesPorUsuarioAsync_DeveRetornarSugestoesDoUsuario()
+		{
+			var usuarioId = 1;
+			var sugestoes = new List<Sugestao>
+			{
+				new Sugestao { SugestaoId = 1, Descricao = "Sugestão 1", DataEnvio = DateTime.Now, Status = "Em Análise", UsuarioId = usuarioId },
+				new Sugestao { SugestaoId = 2, Descricao = "Sugestão 2", DataEnvio = DateTime.Now, Status = "Aprovada", UsuarioId = usuarioId }
+			};
+
+			_mockSugestaoRepository.Setup(r => r.ObterSugestoesPorUsuarioAsync(usuarioId))
+				.ReturnsAsync(sugestoes);
+
+			var resultado = await _sugestaoService.ObterSugestoesPorUsuarioAsync(usuarioId);
+
+			Assert.NotNull(resultado);
+			Assert.Equal(2, resultado.Count);
+			Assert.Equal("Sugestão 1", resultado[0].Descricao);
+			Assert.Equal("Aprovada", resultado[1].Status);
+			_mockSugestaoRepository.Verify(r => r.ObterSugestoesPorUsuarioAsync(usuarioId), Times.Once);
+		}
+
+		[Fact]
 		public async Task EnviarSugestao_DeveAdicionarSugestaoComSucesso()
 		{
 			var sugestaoDto = new SugestaoDto { Descricao = "Sugestão de teste" };

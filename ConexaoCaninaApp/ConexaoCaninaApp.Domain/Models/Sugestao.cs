@@ -13,5 +13,8 @@ namespace ConexaoCaninaApp.Domain.Models
 		public DateTime DataEnvio { get; set; }
 		public string Status { get; set; } = "Em Análise";
 		public string Feedback { get; set; }
+
+		public int UsuarioId { get; set; }
+		public Usuario Usuario { get; set; }
 	}
 }
