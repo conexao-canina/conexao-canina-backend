@@ -59,7 +59,17 @@ namespace ConexaoCaninaApp.Infra.Data.Context
                 .HasForeignKey(h => h.CaoId)
                 .OnDelete(DeleteBehavior.Cascade);
 
-            base .OnModelCreating(modelBuilder);
+            modelBuilder.Entity<SolicitacaoCruzamento>()
+                .HasOne(s => s.Cao)
+				.WithMany()
+				.HasForeignKey(s => s.CaoId);
+
+            modelBuilder.Entity<SolicitacaoCruzamento>()
+                .HasOne(s => s.Usuario)
+				.WithMany()
+				.HasForeignKey(s => s.UsuarioId);
+
+			base .OnModelCreating(modelBuilder);
 
 
 
