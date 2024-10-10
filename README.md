@@ -125,7 +125,16 @@ adicionar a referencia do repositorio e coloque o pull request feito
 ### Notificação de Solicitações Rejeitadas (backend)
 ### Filtragem Automática de Solicitações com Base nos Requisitos (backend) 
 ### Interface de Usuário e Usabilidade (backend) 
-### Persistência e Atualização (backend) -> A fazer 
+### Persistência e Atualização (backend) 
+
+---
+
+## Sugestões de Melhorias
+### Acesso ao Formulário de Sugestões (backend)
+### Acompanhamento das Sugestões Enviadas (backend)
+### Feedback dos Administradores sobre Sugestões (backend)
+### Interface e Usabilidade (backend)
+### Notificações (backend)
 
 ---
 ## Dar Like em Perfis de Cães
