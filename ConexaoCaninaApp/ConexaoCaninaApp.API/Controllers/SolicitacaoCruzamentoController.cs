@@ -37,5 +37,19 @@ namespace ConexaoCaninaApp.API.Controllers
 				return BadRequest(ex.Message);
 			}
 		}
+
+		[HttpPut("{id}/rejeitar")]
+		public async Task<IActionResult> RejeitarSolicitacao(int id)
+		{
+			try
+			{
+				await _solicitacaoService.RejeitarSolicitacaoAsync(id);
+				return Ok("Solicitação de cruzamento rejeitada.");
+			}
+			catch (Exception ex)
+			{
+				return BadRequest(ex.Message);
+			}
+		}
 	}
 }

@@ -165,6 +165,27 @@ namespace ConexaoCaninaApp.Domain.Test.Services
 		}
 
 		[Fact]
+		public async Task RejeitarSolicitacao_DeveAtualizarStatusParaRejeitada()
+		{
+			var solicitacaoId = 1;
+			var solicitacao = new SolicitacaoCruzamento
+			{
+				SolicitacaoId = solicitacaoId,
+				UsuarioId = 1,
+				CaoId = 1,
+				Status = StatusSolicitacao.Pendente
+			};
+
+			_mockSolicitacaoRepository.Setup(r => r.ObterPorId(solicitacaoId)).ReturnsAsync(solicitacao);
+
+			await _solicitacaoService.RejeitarSolicitacaoAsync(solicitacaoId);
+
+			Assert.Equal(StatusSolicitacao.Rejeitada, solicitacao.Status);
+			_mockSolicitacaoRepository.Verify(r => r.Atualizar(solicitacao), Times.Once);
+		}
+
+
+		[Fact]
 		public async Task AceitarSolicitacao_SolicitacaoNaoEncontrada_DeveLancarExcecao()
 		{
 			var solicitacaoId = 1;
