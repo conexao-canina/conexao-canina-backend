@@ -1,5 +1,6 @@
 ﻿using ConexaoCaninaApp.Application.Dto;
 using ConexaoCaninaApp.Application.Interfaces;
+using ConexaoCaninaApp.Application.Services;
 using Microsoft.AspNetCore.Mvc;
 using System.Reflection.PortableExecutable;
 
@@ -10,10 +11,12 @@ namespace ConexaoCaninaApp.API.Controllers
 	public class CaoController : ControllerBase
 	{
 		private readonly ICaoService _caoService;
+		private readonly IUserContextService _userContextService;
 
-		public CaoController(ICaoService caoService)
+		public CaoController(ICaoService caoService, IUserContextService userContextService)
 		{
 			_caoService = caoService;
+			_userContextService = userContextService;
 		}
 
 
@@ -106,6 +109,8 @@ namespace ConexaoCaninaApp.API.Controllers
 			await _caoService.PublicarCao(id);
 			return Ok();
 		}
+
+
 		[HttpDelete("{id}")]
 		[ProducesResponseType(StatusCodes.Status200OK)]
 		[ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -124,5 +129,28 @@ namespace ConexaoCaninaApp.API.Controllers
 			await _caoService.ModerarPerfil(id, moderarPerfilDto);
 			return NoContent();
 		}
+
+
+
+		[HttpPost("{caoId}/like")]
+		public async Task<IActionResult> DarLike(int caoId)
+		{
+			var usuarioIdString = _userContextService.GetUserId();
+			var usuarioId = int.Parse(usuarioIdString);
+			await _caoService.DarLike(caoId, usuarioId);
+			return Ok("Like adicionado com sucesso.");
+		}
+
+
+		[HttpDelete("{caoId}/like")]
+		public async Task<IActionResult> RemoverLike(int caoId)
+		{
+			var usuarioIdString = _userContextService.GetUserId();
+			var usuarioId = int.Parse(usuarioIdString);
+			await _caoService.RemoverLike(caoId, usuarioId);
+			return Ok("Like removido");
+		}
+
+
 	}
 }

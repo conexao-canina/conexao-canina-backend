@@ -19,5 +19,8 @@ namespace ConexaoCaninaApp.Application.Interfaces
 		Task<bool> VerificarPerimissaoEdicao(int caoId, int usuarioId);
 		Task ExcluirCao(int caoId);
 		Task ModerarPerfil(int caoId, ModerarPerfilDto moderarPerfilDto);
+		Task DarLike(int caoId, int usuarioId);
+		Task RemoverLike(int caoId, int usuarioId);
+
 	}
 }

@@ -16,6 +16,7 @@ namespace ConexaoCaninaApp.Infra.Data.Context
         public ApplicationDbContext() { }
 
         public DbSet<Cao> Caes { get; set; }
+        public DbSet<Like> Likes { get; set; }
         public DbSet<Proprietario> Proprietarios { get; set; }
         public DbSet<Localizacao> Localizacoes { get; set; }
         public DbSet<Usuario> Usuarios { get; set; }
