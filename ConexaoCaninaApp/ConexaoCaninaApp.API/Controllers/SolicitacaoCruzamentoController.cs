@@ -46,7 +46,7 @@ namespace ConexaoCaninaApp.API.Controllers
 			return Ok("Requisitos definidos com sucesso");
 		}
 
-		[HttpPut("{caoId}/requisitos")]
+		[HttpPut("{caoId}/requisitos")] // serve para a task de editar e atualizar 
 		public async Task<IActionResult> EditarRequisitos(int caoId, [FromBody] RequisitosCruzamentoDto dto)
 		{
 			try
@@ -59,7 +59,7 @@ namespace ConexaoCaninaApp.API.Controllers
 				return BadRequest(ex.Message);
 			}
 		}
-
+		
 		[HttpPut("{id}/aceitar")]
 		public async Task<IActionResult> AceitarSolicitacao(int id)
 		{
