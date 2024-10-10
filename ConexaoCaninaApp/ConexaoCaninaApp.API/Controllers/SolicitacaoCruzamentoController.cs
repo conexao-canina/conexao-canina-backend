@@ -23,5 +23,19 @@ namespace ConexaoCaninaApp.API.Controllers
 
 			return Ok("Solicitação de cruzamento enviada com sucesso.");
 		}
+
+		[HttpPut("{id}/aceitar")]
+		public async Task<IActionResult> AceitarSolicitacao(int id)
+		{
+			try
+			{
+				await _solicitacaoService.AceitarSolicitacaoAsync(id);
+				return Ok("Solicitação de cruzamento aceita.");
+			}
+			catch (Exception ex)
+			{
+				return BadRequest(ex.Message);
+			}
+		}
 	}
 }

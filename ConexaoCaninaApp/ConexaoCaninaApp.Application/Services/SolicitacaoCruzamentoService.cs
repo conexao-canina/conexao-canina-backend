@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static ConexaoCaninaApp.Domain.Models.SolicitacaoCruzamento;
 
 namespace ConexaoCaninaApp.Application.Services
 {
@@ -49,6 +50,20 @@ namespace ConexaoCaninaApp.Application.Services
 
 			await _notificacaoService.EnviarNotificacaoSolicitacaoCruzamento(emailUsuario, nomeDoCao, solicitacaoDto.Mensagem);
 
+		}
+
+		public async Task AceitarSolicitacaoAsync(int solicitacaoId)
+		{
+			var solicitacao = await _solicitacaoRepository.ObterPorId(solicitacaoId);
+
+			if (solicitacao == null)
+			{
+				throw new Exception("Solicitação não encontrada");
+			}
+
+			solicitacao.Status = StatusSolicitacao.Aceita;
+
+			await _solicitacaoRepository.Atualizar(solicitacao);
 		}
 	}
 }
