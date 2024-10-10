@@ -119,5 +119,5 @@ adicionar a referencia do repositorio e coloque o pull request feito
 ---
 ## Dar Like em Perfis de Cães
 ### Implementar Funcionalidade de Dar Like (Backend)
-### Atualizar Modelos de Dados e Notificações (Backend) -> A fazer
+### Atualizar Modelos de Dados e Notificações (Backend)
 
