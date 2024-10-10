@@ -156,5 +156,32 @@ namespace ConexaoCaninaApp.Domain.Test.Services
 				await _requisitosCruzamentoService.EditarRequisitosCruzamento(caoId, requisitosDto);
 			});
 		}
+
+		[Fact]
+		public async Task EditarRequisitos_DeveAtualizarRequisitosCruzamento()
+		{
+			var caoId = 1;
+			var dto = new RequisitosCruzamentoDto
+			{
+				Temperamento = "Calmo",
+				Tamanho = "Médio",
+				CaracteristicasGeneticas = "Sem problemas genéticos"
+			};
+
+			var cao = new Cao
+			{
+				CaoId = caoId,
+				RequisitosCruzamento = new RequisitosCruzamento()
+			};
+
+			_mockCaoRepository.Setup(r => r.ObterPorId(caoId)).ReturnsAsync(cao);
+
+			await _requisitosCruzamentoService.EditarRequisitosCruzamento(caoId, dto);
+
+			Assert.Equal(dto.Temperamento, cao.RequisitosCruzamento.Temperamento);
+			Assert.Equal(dto.Tamanho, cao.RequisitosCruzamento.Tamanho);
+			Assert.Equal(dto.CaracteristicasGeneticas, cao.RequisitosCruzamento.CaracteristicasGeneticas);
+			_mockCaoRepository.Verify(r => r.Atualizar(cao), Times.Once);
+		}
 	}
 }
