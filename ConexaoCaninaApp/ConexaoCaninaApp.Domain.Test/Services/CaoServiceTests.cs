@@ -36,7 +36,10 @@ namespace ConexaoCaninaApp.Domain.Test.Services
                 _mockUserContextService.Object);
         }
 
-        [Fact]
+		#region Task I
+        
+
+		[Fact]
         public async Task ObterPorId_Deve_Retornar_Cao_Quando_Existe()
         {
             // ARRANGE
@@ -324,7 +327,13 @@ namespace ConexaoCaninaApp.Domain.Test.Services
             "A exclusão do perfil é permanente. Caso deseje retornar,será necessário criar um novo perfil."), Times.Once);
         }
 
-        [Fact]
+
+		#endregion
+
+		#region Task II
+
+
+		[Fact]
         public async Task ObterDetalhesCao_Deve_Retornar_Informacoes_Completas()
         {
             // ARRANGE 
@@ -391,8 +400,6 @@ namespace ConexaoCaninaApp.Domain.Test.Services
             Assert.Equal("Deus Imperador PHG", cao.Nome);
             Assert.Equal(9, cao.Idade);
 		}
-
-
 
         [Fact]
         public async Task AtualizarInformacoesBasicas_Deve_Lancar_Excecao_Se_Usuario_Nao_Tiver_Permissao()
@@ -491,6 +498,59 @@ namespace ConexaoCaninaApp.Domain.Test.Services
             Assert.Equal(StatusCao.Pendente, cao.Status);
             _mockNotificacaoService.Verify(n => n.EnviarNotificacaoParaAdministrador(cao, "Faltam fotos."), Times.Once);
 		}
+
+
+		[Fact]
+		public async Task AdicionarLike_DeveAdicionarLikeAoPerfilCao()
+		{
+			var caoId = 1;
+			var usuarioId = 1;
+
+			var cao = new Cao { CaoId = caoId, Likes = new List<Like>() };
+			_mockCaoRepository.Setup(repo => repo.ObterPorId(caoId)).ReturnsAsync(cao);
+
+
+			await _caoService.DarLike(caoId, usuarioId);
+
+
+			Assert.Contains(cao.Likes, l => l.UsuarioId == usuarioId);
+			_mockCaoRepository.Verify(repo => repo.Atualizar(cao), Times.Once);
+		}
+
+		[Fact]
+		public async Task RemoverLike_DeveRemoverLikeDoPerfilCao()
+		{
+			var caoId = 1;
+			var usuarioId = 1;
+			var like = new Like { UsuarioId = usuarioId };
+			var cao = new Cao { CaoId = caoId, Likes = new List<Like> { like } };
+
+			_mockCaoRepository.Setup(repo => repo.ObterPorId(caoId)).ReturnsAsync(cao);
+
+			
+			await _caoService.RemoverLike(caoId, usuarioId);
+
+
+			Assert.DoesNotContain(cao.Likes, l => l.UsuarioId == usuarioId);
+			_mockCaoRepository.Verify(repo => repo.Atualizar(cao), Times.Once);
+		}
+
+        [Fact]
+        public async Task AdicionarLike_DeveLancarExcecao_SeLikeJaExistir()
+        {
+			var caoId = 1;
+			var usuarioId = 1;
+			var like = new Like { UsuarioId = usuarioId };
+			var cao = new Cao { CaoId = caoId, Likes = new List<Like> { like } };
+
+            _mockCaoRepository.Setup(repo => repo.ObterPorId(caoId)).ReturnsAsync(cao);
+
+
+			await Assert.ThrowsAsync<InvalidOperationException>
+                (() => _caoService.DarLike(caoId, usuarioId));
+		}
+
+		#endregion
 	}
 }
 

@@ -29,6 +29,7 @@ namespace ConexaoCaninaApp.Infra.Data.Repositories
 			return await _context.Caes
 				.Include(c => c.Fotos)
 				.Include(c => c.Proprietario)
+				.Include(c => c.Likes)
 				.FirstOrDefaultAsync(c => c.CaoId == id);
 		}
 

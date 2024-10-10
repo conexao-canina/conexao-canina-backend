@@ -181,5 +181,50 @@ namespace ConexaoCaninaApp.Application.Services
 
 			await _caoRepository.Atualizar(cao);
 		}
+
+		public async Task DarLike(int caoId, int usuarioId)
+		{
+			var cao = await _caoRepository.ObterPorId(caoId);
+
+			if (cao == null)
+			{
+				throw new Exception("Cão não encontrado");
+			}
+
+			if (cao.Likes.Any(l => l.UsuarioId == usuarioId))
+			{
+				throw new InvalidOperationException("Este usuário já curtiu este perfil.");
+			}
+
+			if (!cao.Likes.Any(l => l.UsuarioId == usuarioId))
+			{
+				var like = new Like { CaoId = caoId, UsuarioId = usuarioId };
+				cao.Likes.Add(like);
+
+				await _caoRepository.Atualizar(cao);
+			}
+
+		}
+
+
+		public async Task RemoverLike(int caoId, int usuarioId)
+		{
+			var cao = await _caoRepository.ObterPorId(caoId);
+
+			if (cao == null)
+			{
+				throw new Exception("Cão não encontrado");
+			}
+
+			var like = cao.Likes.FirstOrDefault(l => l.UsuarioId == usuarioId);
+
+			if (like != null)
+			{
+				cao.Likes.Remove(like);
+
+
+				await _caoRepository.Atualizar(cao);
+			}
+		}
 	}
 }

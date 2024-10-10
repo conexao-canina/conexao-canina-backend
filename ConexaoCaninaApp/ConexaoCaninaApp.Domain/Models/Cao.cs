@@ -50,6 +50,7 @@ namespace ConexaoCaninaApp.Domain.Models
         public StatusCao Status { get; set; } = StatusCao.Pendente;
 
         public ICollection<Foto> Fotos { get; set; } // navegação para fotos
+        public ICollection<Like> Likes { get; set; } = new List<Like>();
 
 		// chave estrangeira
 		public int ProprietarioId { get; set; }
