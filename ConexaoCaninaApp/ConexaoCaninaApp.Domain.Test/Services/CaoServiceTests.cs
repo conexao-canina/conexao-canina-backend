@@ -537,7 +537,7 @@ namespace ConexaoCaninaApp.Domain.Test.Services
 			var cao = new Cao
 			{
 				CaoId = caoId,
-				Likes = new List<Like>(),
+				Likes = new List<Like> { like },
 				Proprietario = new Proprietario
 				{
 					Email = "dono@exemplo.com"
@@ -547,16 +547,15 @@ namespace ConexaoCaninaApp.Domain.Test.Services
 
 			_mockCaoRepository.Setup(repo => repo.ObterPorId(caoId)).ReturnsAsync(cao);
 
-			
 			await _caoService.RemoverLike(caoId, usuarioId);
 
-
 			Assert.DoesNotContain(cao.Likes, l => l.UsuarioId == usuarioId);
-			_mockNotificacaoService.Verify(n => n.EnviarNotificacaoDeLike(cao.Proprietario.Email, cao.Nome), Times.Once);
+			_mockNotificacaoService.Verify(n => n.EnviarNotificacaoDeUnlike(cao.Proprietario.Email, cao.Nome), Times.Once); // Verificar "Unlike"
 			_mockCaoRepository.Verify(repo => repo.Atualizar(cao), Times.Once);
 		}
 
-        [Fact]
+
+		[Fact]
         public async Task AdicionarLike_DeveLancarExcecao_SeLikeJaExistir()
         {
 			var caoId = 1;
