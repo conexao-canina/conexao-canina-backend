@@ -107,18 +107,10 @@ adicionar a referencia do repositorio e coloque o pull request feito
 ---
 ## Gerenciamento de Solicitações de Cruzamento e Perfis de Usuários
 ###  Implementar Notificação para Moderação de Perfis de Cães (Backend)
-###  Implementar Sistema de Denúncias e Gerenciamento de Solicitações (Backend) -> A fazer 
-
 ---
 ## Aceitar ou Rejeitar Solicitações de Cruzamento
 ### Implementar Aceitação de Solicitação de Cruzamento (Backend) 
 ### Implementar Rejeição de Solicitação de Cruzamento (Backend) 
-
----
-## Revisão de Perfis e Denúncias de Solicitações de Cruzamento
-### Implementar Notificação para Revisão de Perfis de Cães (Backend) -> A fazer
-### Implementar Sistema de Revisão de Denúncias (Backend) -> A fazer 
-
 ---
 ## Requisitos Específicos de Cruzamento
 ### Definir Requisitos Específicos para o Cruzamento (backend)
