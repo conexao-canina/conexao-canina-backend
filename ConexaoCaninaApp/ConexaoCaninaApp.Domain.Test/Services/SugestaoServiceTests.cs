@@ -4,11 +4,7 @@ using ConexaoCaninaApp.Application.Services;
 using ConexaoCaninaApp.Domain.Models;
 using ConexaoCaninaApp.Infra.Data.Interfaces;
 using Moq;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Diagnostics;
 using Xunit;
 
 namespace ConexaoCaninaApp.Domain.Test.Services
@@ -131,6 +127,58 @@ namespace ConexaoCaninaApp.Domain.Test.Services
 			var sugestaoRetornada = resultado.FirstOrDefault(s => s.SugestaoId == sugestaoId);
 			Assert.NotNull(sugestaoRetornada);
 			Assert.Equal(feedbackEsperado, sugestaoRetornada.Feedback);
+		}
+		[Fact]
+		public async Task EnviarSugestao_DeveSalvarSugestaoRapidamente()
+		{
+			// Arrange
+			var stopwatch = new Stopwatch();
+			var sugestaoDto = new SugestaoDto
+			{
+				Descricao = "Sugestão de teste",
+				UsuarioId = 1
+			};
+
+			// Act
+			stopwatch.Start();
+			await _sugestaoService.EnviarSugestaoAsync(sugestaoDto);
+			stopwatch.Stop();
+
+			// Assert
+			Assert.True(stopwatch.ElapsedMilliseconds < 500, "O tempo de salvamento é muito alto.");
+		}
+
+		[Fact]	
+		public async Task EnviarSugestao_DeveSalvarSugestaoCorretamente()
+		{
+			var sugestaoDto = new SugestaoDto
+			{
+				Descricao = "Esta é uma nova sugestão.",
+				UsuarioId = 1
+			};
+
+			await _sugestaoService.EnviarSugestaoAsync(sugestaoDto);
+			_mockSugestaoRepository.Verify(r => r.AdicionarAsync(It.IsAny<Sugestao>()), Times.Once);
+
+		}
+
+		[Fact]
+		public async Task ObterSugestoesPorUsuario_DeveRetornarSugestoesCorretamente()
+		{
+			var usuarioId = 1;
+			var sugestoes = new List<Sugestao>
+			{
+				new Sugestao {  SugestaoId = 1, Descricao = "Sugestão 1", UsuarioId = usuarioId, Status = "Em Análise" },
+				new Sugestao {  SugestaoId = 2, Descricao = "Sugestão 2", UsuarioId = usuarioId, Status = "Aprovada" }
+			};
+
+			_mockSugestaoRepository.Setup(r => r.ObterSugestoesPorUsuarioAsync(usuarioId)).ReturnsAsync(sugestoes);
+
+			var resultado = await _sugestaoService.ObterSugestoesPorUsuarioAsync(usuarioId);
+
+			Assert.NotNull(resultado);
+			Assert.Equal(2, resultado.Count);
+			Assert.Equal("Sugestão 1", resultado.First().Descricao);
 		}
 
 	}
