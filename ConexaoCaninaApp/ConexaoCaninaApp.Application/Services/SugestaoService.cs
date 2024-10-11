@@ -14,11 +14,14 @@ namespace ConexaoCaninaApp.Application.Services
 	{
 		private readonly ISugestaoRepository _sugestaoRepository;
 		private readonly IUserContextService _userContextService;
+		private readonly INotificacaoService _notificacaoService;
 
-		public SugestaoService(ISugestaoRepository sugestaoRepository, IUserContextService userContextService)
+		public SugestaoService(ISugestaoRepository sugestaoRepository, IUserContextService userContextService,
+			INotificacaoService notificacaoService)
 		{
 			_sugestaoRepository = sugestaoRepository;
 			_userContextService = userContextService;
+			_notificacaoService = notificacaoService;
 		}
 
 		public async Task<List<SugestaoDto>> ObterSugestoesPorUsuarioAsync(int usuarioId)
@@ -59,6 +62,11 @@ namespace ConexaoCaninaApp.Application.Services
 			sugestao.Feedback = feedback;
 
 			await _sugestaoRepository.AtualizarAsync(sugestao);
+			await _notificacaoService.EnviarNotificacaoParaSugestao(
+				sugestao.Usuario.Email,
+				"Feedback Recebido", 
+				$"Você recebeu feedback em sua sugestão: {feedback}");
+
 		}
 
 	}
