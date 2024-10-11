@@ -41,5 +41,19 @@ namespace ConexaoCaninaApp.API.Controllers
 			}
 			catch (Exception ex) { return BadRequest(ex); }
 		}
+
+		[HttpPost("{sugestaoId}/feedback")]
+		public async Task<IActionResult> EnviarFeedback(int sugestaoId, [FromBody] string feedback)
+		{
+			try
+			{
+				await _sugestaoService.EnviarFeedbackAsync(sugestaoId, feedback);
+				return Ok("Feedback enviado com sucesso.");
+			}
+			catch (Exception ex)
+			{
+				return BadRequest(ex.Message);
+			}
+		}
 	}
 }

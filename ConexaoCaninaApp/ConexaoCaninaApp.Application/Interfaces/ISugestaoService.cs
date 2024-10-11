@@ -11,5 +11,6 @@ namespace ConexaoCaninaApp.Application.Interfaces
 	{
 		Task EnviarSugestaoAsync(SugestaoDto sugestaoDto);
 		Task<List<SugestaoDto>> ObterSugestoesPorUsuarioAsync(int usuarioId);
+		Task EnviarFeedbackAsync(int sugestaoId, string feedback);
 	}
 }

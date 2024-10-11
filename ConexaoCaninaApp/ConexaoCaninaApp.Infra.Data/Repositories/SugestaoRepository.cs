@@ -19,6 +19,10 @@ namespace ConexaoCaninaApp.Infra.Data.Repositories
 			_context = context;
 		}
 
+		public async Task<Sugestao> ObterPorIdAsync(int sugestaoId)
+		{
+			return await _context.Sugestoes.FirstOrDefaultAsync(s => s.SugestaoId == sugestaoId);
+		}
 		public async Task<List<Sugestao>> ObterSugestoesPorUsuarioAsync(int usuarioId)
 		{
 			return await _context.Sugestoes
@@ -28,6 +32,11 @@ namespace ConexaoCaninaApp.Infra.Data.Repositories
 		public async Task AdicionarAsync(Sugestao sugestao)
 		{
 			_context.Sugestoes.Add(sugestao);	
+			await _context.SaveChangesAsync();
+		}
+		public async Task AtualizarAsync(Sugestao sugestao)
+		{
+			_context.Sugestoes.Update(sugestao);
 			await _context.SaveChangesAsync();
 		}
 	}
