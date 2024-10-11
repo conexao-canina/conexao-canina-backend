@@ -16,5 +16,7 @@ namespace ConexaoCaninaApp.Application.Interfaces
 		Task EnviarNotificacaoDeLike(string emailUsuario, string nomeDoCao);
 		Task EnviarNotificacaoDeUnlike(string emailUsuario, string nomeDoCao);
 		Task EnviarNotificacaoSolicitacaoRejeitada(string emailUsuario, string nomeDoCao, string requisitosNaoAtendidos);
+		Task EnviarNotificacaoParaSugestao(string emailUsuario, string titulo, string mensagem);
+
 	}
 }

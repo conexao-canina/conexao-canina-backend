@@ -14,14 +14,21 @@ namespace ConexaoCaninaApp.Domain.Test.Services
 		private readonly Mock<ISugestaoRepository> _mockSugestaoRepository;
 		private readonly SugestaoService _sugestaoService;
 		private readonly Mock<IUserContextService> _mockUserContextService;
+		private readonly Mock<INotificacaoService> _mockNotificacaoService;
+
 
 
 		public SugestaoServiceTests()
 		{
 			_mockSugestaoRepository = new Mock<ISugestaoRepository>();
 			_mockUserContextService = new Mock<IUserContextService>();
+			_mockNotificacaoService = new Mock<INotificacaoService>();
 
-			_sugestaoService = new SugestaoService(_mockSugestaoRepository.Object, _mockUserContextService.Object);
+
+			_sugestaoService = new SugestaoService(
+				_mockSugestaoRepository.Object, 
+				_mockUserContextService.Object,
+				_mockNotificacaoService.Object);
 		}
 
 		[Fact]
@@ -67,7 +74,12 @@ namespace ConexaoCaninaApp.Domain.Test.Services
 				SugestaoId = sugestaoId,
 				Descricao = "Sugestão de exemplo",
 				Status = "Em Análise",
-				Feedback = null
+				Feedback = null,
+				Usuario = new Usuario
+				{
+					Email = "usuario@teste.com"
+				}
+
 			};
 
 			_mockUserContextService.Setup(c => c.UsuarioEhAdministrador()).Returns(true);
@@ -179,6 +191,26 @@ namespace ConexaoCaninaApp.Domain.Test.Services
 			Assert.NotNull(resultado);
 			Assert.Equal(2, resultado.Count);
 			Assert.Equal("Sugestão 1", resultado.First().Descricao);
+		}
+
+		[Fact]
+		public async Task EnviarFeedback_DeveDispararNotificacao()
+		{
+			var sugestaoId = 1;
+			var feedback = "Obrigado pela sugestão!";
+			var sugestao = new Sugestao
+			{ SugestaoId = sugestaoId, Usuario = new Usuario { Email = "user@example.com" } };
+
+			_mockSugestaoRepository.Setup(r => r.ObterPorIdAsync(sugestaoId)).ReturnsAsync(sugestao);
+			_mockUserContextService.Setup(c => c.UsuarioEhAdministrador()).Returns(true);
+
+			await _sugestaoService.EnviarFeedbackAsync(sugestaoId, feedback);
+
+			_mockNotificacaoService.Verify(n => n.EnviarNotificacaoParaSugestao(
+				sugestao.Usuario.Email,
+				"Feedback Recebido",
+				 $"Você recebeu feedback em sua sugestão: {feedback}"), Times.Once);
+
 		}
 
 	}
