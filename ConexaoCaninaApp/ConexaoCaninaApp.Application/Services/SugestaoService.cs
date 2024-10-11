@@ -13,10 +13,12 @@ namespace ConexaoCaninaApp.Application.Services
 	public class SugestaoService : ISugestaoService
 	{
 		private readonly ISugestaoRepository _sugestaoRepository;
+		private readonly IUserContextService _userContextService;
 
-		public SugestaoService(ISugestaoRepository sugestaoRepository)
+		public SugestaoService(ISugestaoRepository sugestaoRepository, IUserContextService userContextService)
 		{
 			_sugestaoRepository = sugestaoRepository;
+			_userContextService = userContextService;
 		}
 
 		public async Task<List<SugestaoDto>> ObterSugestoesPorUsuarioAsync(int usuarioId)
@@ -27,6 +29,7 @@ namespace ConexaoCaninaApp.Application.Services
 				SugestaoId = s.SugestaoId,
 				Descricao = s.Descricao,
 				DataEnvio = s.DataEnvio,
+				Feedback = s.Feedback,
 				Status = s.Status
 			}).ToList();
 
@@ -44,5 +47,19 @@ namespace ConexaoCaninaApp.Application.Services
 
 			await _sugestaoRepository.AdicionarAsync(sugestao);
 		}
+
+		public async Task EnviarFeedbackAsync(int sugestaoId, string feedback)
+		{
+			if (!_userContextService.UsuarioEhAdministrador())
+				throw new UnauthorizedAccessException("Somente administradores podem enviar feedback.");
+
+			var sugestao = await _sugestaoRepository.ObterPorIdAsync(sugestaoId);
+
+			if (sugestao == null) throw new Exception("Sugestão não encontrada.");
+			sugestao.Feedback = feedback;
+
+			await _sugestaoRepository.AtualizarAsync(sugestao);
+		}
+
 	}
 }

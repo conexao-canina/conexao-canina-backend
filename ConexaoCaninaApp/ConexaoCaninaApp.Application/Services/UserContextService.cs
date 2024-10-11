@@ -22,5 +22,10 @@ namespace ConexaoCaninaApp.Application.Services
 		{
 			return _httpContextAccessor.HttpContext?.User?.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 		}
+		public bool UsuarioEhAdministrador()
+		{
+			var roleClaim = _httpContextAccessor.HttpContext?.User.FindFirst(ClaimTypes.Role)?.Value;
+			return roleClaim == "Administrador";
+		}
 	}
 }

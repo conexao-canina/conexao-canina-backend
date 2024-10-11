@@ -9,5 +9,6 @@ namespace ConexaoCaninaApp.Application.Interfaces
 	public interface IUserContextService
 	{
 		string GetUserId();
+		bool UsuarioEhAdministrador();
 	}
 }
