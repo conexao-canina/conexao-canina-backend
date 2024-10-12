@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,6 +15,7 @@ namespace ConexaoCaninaApp.Domain.Models
 			Aceita,
 			Rejeitada
 		}
+		[Key]
 		public int SolicitacaoId { get; set; }
 		public int UsuarioId { get; set; }
 		public Usuario Usuario { get; set; }
