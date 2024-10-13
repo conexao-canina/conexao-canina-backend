@@ -1,10 +1,5 @@
 # 🐾 Conexão Canina - Backend
 
-#  🏅 Desenvolvedor: Supremo Deus Imperador PHG 🏅
-![image](https://github.com/user-attachments/assets/0ec15b10-9627-4c01-b1e4-2c00d451ed3a)
-
-# 🛠️ Conexão Canina - Backend
-
 ### 🚨 **Atenção:** 
 - Não apagar a branch `dev construção dominio` 🛑
 - A Wiki está em construção 📝
