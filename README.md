@@ -1,3 +1,5 @@
+<img src="https://github.com/joaoveasey/projeto-fatec-front-end/assets/133874619/71769ebd-b1ad-4193-a70f-6f7f04efa5cf" width="100" height="100" alt="Texto do seu parágrafo (1)">
+
 # 🐾 Conexão Canina - Backend
 
 ### 🚨 **Atenção:** 
