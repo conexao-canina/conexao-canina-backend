@@ -30,7 +30,8 @@ namespace ConexaoCaninaApp.API.Controllers
 		public async Task<IActionResult> EditarAlbum(int albumId, [FromBody] AlbumDto albumDto)
 		{
 			await _albumService.EditarAlbumAsync(albumId, albumDto);
-			return NoContent();
+
+			return Ok("Álbum atualizado com sucesso");
 		}
 
 		[HttpGet("{albumId}/verificar-acesso")]
@@ -40,7 +41,7 @@ namespace ConexaoCaninaApp.API.Controllers
 
 			if (!possuiAcesso)
 			{
-				return Forbid("Permissao para acessar album negada");
+				return StatusCode(403, "Permissão para acessar álbum negada");
 			}
 
 			return Ok("Acesso Permitido");
