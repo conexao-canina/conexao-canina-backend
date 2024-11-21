@@ -6,11 +6,7 @@ using System.Threading.Tasks;
 
 namespace ConexaoCaninaApp.Application.Dto
 {
-	public class LikeDto
+	public class CaoDetalhesDTO
 	{
-		public int CaoId { get; set; }
-		public int UsuarioId { get; set; }
-		public DateTime DataLike { get; set; }
-		public bool IsLike { get; set; }
 	}
 }
