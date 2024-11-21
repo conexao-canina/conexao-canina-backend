@@ -4,13 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ConexaoCaninaApp.Application.Dto
+namespace ConexaoCaninaApp.Application.ViewModel
 {
-	public class FotoDTO
+	public class PhotoViewModel
 	{
-		public Guid FotoId { get; set; }
 		public string CaminhoArquivo { get; set; }
 		public string Descricao { get; set; }
-
 	}
 }
