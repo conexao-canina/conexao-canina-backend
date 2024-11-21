@@ -1,36 +1,61 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace ConexaoCaninaApp.Domain.Models
 {
-    public enum Role
-    {
-        Usuario,
-        Proprietario,
-        Administrador
-    }
+	public class Usuario
+	{
+		private Usuario() { }
 
-    public class Usuario
-    {
-        public int UsuarioId { get; set; }
+		public Usuario(string nome, string email, 
+			string senha, bool isAdmin,
+			string telefone)
+		{
+			UsuarioId = Guid.NewGuid();
+			Nome = nome;
+			Senha = senha;
+			Email = email;
+			Telefone = telefone;
+			IsAdmin = isAdmin;
 
-        [Required(ErrorMessage = "O nome do usuário é obrigatório.")]
-        public string? Nome { get; set; }
+		}
 
-        [Required(ErrorMessage = "O email é obrigatório.")]
-        [EmailAddress(ErrorMessage = "O email informado não é válido.")]
-        public string? Email { get; set; }
+		public Guid UsuarioId { get; set; }
+		public string Nome { get; set; }
+		public string Email { get; set; }
+		public string Senha { get; set; }
+		public bool IsAdmin { get; set; }
+		public string Telefone { get; set; }	
+		public ICollection<Cao> Caes { get; set; } = new List<Cao>();
+		public ICollection<Favorito> Favoritos { get; set; } = new List<Favorito>();
+		public ICollection<Sugestao> Sugestoes { get; set;} = new List<Sugestao>();
 
-        [Required(ErrorMessage = "A senha é obrigatória.")]
-        [StringLength(50, MinimumLength = 6, ErrorMessage = "A senha deve ter no mínimo 6 caracteres.")]
-        public string? Senha { get; set; }
+		public void AddCao(Cao cao)
+		{
+			Caes.Add(cao);
+		}
 
-        // enum para diferenciar as permissões
-        [Required(ErrorMessage = "O tipo de usuário é obrigatório.")]
-        public Role Role { get; set; }
-    }
+		public void RemoveCao(Cao cao)
+		{
+			Caes.Remove(cao);
+		}
+
+		public void AddFavorito(Favorito like)
+		{
+			Favoritos.Add(like);
+		}
+
+		public void RemoveFavorito(Favorito like)
+		{
+			Favoritos.Remove(like);
+		}
+
+		public void AddSugestoes(Sugestao sugestao)
+		{
+			Sugestoes.Add(sugestao);
+		}
+	}
 }

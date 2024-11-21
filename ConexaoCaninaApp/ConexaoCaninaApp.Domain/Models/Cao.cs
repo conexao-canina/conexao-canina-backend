@@ -8,11 +8,16 @@ using System.Threading.Tasks;
 namespace ConexaoCaninaApp.Domain.Models
 {
 
+    public enum GeneroCao
+    {
+        Masculino,
+        Feminino
+    }
+
     public enum StatusCao
     {
         Pendente,
-        Aprovado,
-        Publicado
+        Aprovado        
     }
 
     public enum TamanhoCao
@@ -24,42 +29,49 @@ namespace ConexaoCaninaApp.Domain.Models
 
     public class Cao
     {
-        public int CaoId { get; set; }
+        private Cao() { }
 
-        [Required(ErrorMessage = "O nome do cão é obrigatório.")]
-        [StringLength(30,ErrorMessage = "O nome do cão deve ter no máximo 30 caracteres.")]
-        public string? Nome { get; set; }
+        public Cao(string cidade, string estado, string nome,
+            string description, string raca, int idade,
+            TamanhoCao tamanho, GeneroCao genero, string caracteristicasUnicas,
+            List<Foto> fotos)
+        {
+            CaoId = Guid.NewGuid();
+            Cidade = cidade;
+            Estado = estado;
+            Nome = nome;
+            Descricao = description;
+            Raca = raca;
+            Idade = idade;
+            Tamanho = tamanho;
+            Genero = genero;
+            CaracteristicasUnicas = caracteristicasUnicas;
+            Fotos = fotos;
+        }
 
-        [StringLength(500, ErrorMessage = "A descrição do cão deve ter no máximo 500 caracteres.")]
-        public string? Descricao { get; set; }
-
-        [Range(1, int.MaxValue, ErrorMessage = "A idade do cão deve ser maior que 0.")]
+        public Guid CaoId { get; set; }
+        public string Cidade { get; set; }
+        public string Estado { get; set; }
+        public string Nome { get; set; }
+        public string Descricao { get; set; }   
         public int Idade { get; set; }
-
-        [Required(ErrorMessage = "A raça do cão é obrigatória.")]
-        public string? Raca { get; set; }
-
-        [Required(ErrorMessage = "O gênero do cão é obrigatório.")]
-        public int Genero { get; set; } // 1-M | 2-F
-
-        [Required(ErrorMessage = "O tamanho do cão é obrigatório")]
+        public string Raca { get; set; }
+        public string CaracteristicasUnicas { get; set; }
         public TamanhoCao Tamanho { get; set; }
-
-        public string? CaracteristicasUnicas { get; set; }
-
+        public GeneroCao Genero { get; set; }
         public StatusCao Status { get; set; } = StatusCao.Pendente;
+        public ICollection<Foto> Fotos { get; set; } = new List<Foto>();
+        public ICollection<HistoricoDeSaude> HistoricosDeSaude { get; set; } = new List<HistoricoDeSaude>();    
+        
+        public void AddFoto(Foto foto)
+        {
+            Fotos.Add(foto);
+        }
 
-        public ICollection<Foto> Fotos { get; set; } // navegação para fotos
-        public ICollection<Like> Likes { get; set; } = new List<Like>();
+        public void AddHistoricoDeSaude(HistoricoDeSaude historico)
+        {
+            HistoricosDeSaude.Add(historico);
+        }
 
-		// chave estrangeira
-		public int ProprietarioId { get; set; }
-
-        // propriedade de navegação
-        public Proprietario? Proprietario { get; set; }
-		public RequisitosCruzamento RequisitosCruzamento { get; set; }
-
-
-		public ICollection<HistoricoSaude> HistoricosDeSaude { get; set; }
-    }
+	}
 }
