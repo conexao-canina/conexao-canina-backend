@@ -6,10 +6,8 @@ using System.Threading.Tasks;
 
 namespace ConexaoCaninaApp.Application.Dto
 {
-	public class EditarCaoComModerarPerfilDto
+	public class AdicionarCaoDTO
 	{
-		public EditarCaoDto EditarCaoDto { get; set; }
-		public ModerarPerfilDto ModerarPerfilDto { get; set; }
 
 	}
 }

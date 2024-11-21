@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ConexaoCaninaApp.Application.Dto
+namespace ConexaoCaninaApp.Domain.Models
 {
-	internal class FotoDTO
+	internal class HistoricoDeSaude
 	{
 	}
 }
