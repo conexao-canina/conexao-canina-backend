@@ -6,7 +6,20 @@ using System.Threading.Tasks;
 
 namespace ConexaoCaninaApp.Domain.Models
 {
-	internal class Favorito
+	public class Favorito
 	{
+		private Favorito() { }
+
+		public Favorito(Guid caoId, DateTime data)
+		{
+			FavoritoId = Guid.NewGuid();
+			_caoId = caoId;
+			Data = data;
+		}
+
+		public Guid FavoritoId { get; set; }
+		public Cao Cao { get; set; }
+		public DateTime Data { get; set; } = DateTime.Now;
+		private Guid _caoId;
 	}
 }

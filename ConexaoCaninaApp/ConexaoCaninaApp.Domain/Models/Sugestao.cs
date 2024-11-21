@@ -6,15 +6,29 @@ using System.Threading.Tasks;
 
 namespace ConexaoCaninaApp.Domain.Models
 {
+	public enum SugestaoStatus
+	{
+		Analise,
+		Aprovada,
+		Rejeitada
+	}
+
 	public class Sugestao
 	{
-		public int SugestaoId { get; set; }
-		public string Descricao { get; set; }
-		public DateTime DataEnvio { get; set; }
-		public string Status { get; set; } = "Em Análise";
-		public string Feedback { get; set; }
+		private Sugestao() { }
 
-		public int UsuarioId { get; set; }
-		public Usuario Usuario { get; set; }
+		public Sugestao(string descricao, string feedBack)
+		{
+			SugestaoId = Guid.NewGuid();	
+			DataEnvio = DateTime.Now;
+			FeedBack = feedBack;
+		}
+
+		public Guid SugestaoId { get; set; }
+		public string Descricao { get; set; }
+		public string FeedBack { get; set; }
+		public SugestaoStatus Status { get; set; }
+		public DateTime DataEnvio { get; set; }
+	
 	}
 }
