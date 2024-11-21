@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using ConexaoCaninaApp.Application.Services;
 
 namespace ConexaoCaninaApp.API.Controllers
 {
