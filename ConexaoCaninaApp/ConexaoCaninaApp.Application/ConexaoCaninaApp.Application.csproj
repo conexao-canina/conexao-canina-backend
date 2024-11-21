@@ -18,9 +18,4 @@
     <ProjectReference Include="..\ConexaoCaninaApp.Infra.Data\ConexaoCaninaApp.Infra.Data.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="ViewModel\" />
-    <Folder Include="Requests\" />
-  </ItemGroup>
-
 </Project>

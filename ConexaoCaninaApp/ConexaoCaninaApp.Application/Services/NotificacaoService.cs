@@ -29,14 +29,19 @@ namespace ConexaoCaninaApp.Application.Services
 			await EnviarEmailAsync(emailAdministrador, assunto, mensagem);
 		}
 
-		public async Task EnviarNotificacaoParaUsuario(Cao cao)
-		{
-			var emailUsuario = cao.Proprietario.Email;
-			var assunto = "O Perfil do seu cachorro foi aprovado!";
-			var mensagem = $"O perfil do seu cão {cao.Nome} foi aprovado" +
-				$" e está agora visível na plataforma.";
+		//public async Task EnviarNotificacaoParaUsuario(Cao cao)
+		//{
+		//	var emailUsuario = cao.Proprietario.Email;
+		//	var assunto = "O Perfil do seu cachorro foi aprovado!";
+		//	var mensagem = $"O perfil do seu cão {cao.Nome} foi aprovado" +
+		//		$" e está agora visível na plataforma.";
 
-			await EnviarEmailAsync(emailUsuario, assunto, mensagem);
+		//	await EnviarEmailAsync(emailUsuario, assunto, mensagem);
+		//}
+
+		public Task EnviarNotificacaoParaUsuario(Cao cao)
+		{
+			throw new NotImplementedException();
 		}
 
 		public async Task EnviarNotificacaoDeExclusaoParaUsuario(string emailUsuario, string nomeDoCao, string mensagem)
