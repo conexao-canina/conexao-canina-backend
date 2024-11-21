@@ -22,4 +22,9 @@
     <ProjectReference Include="..\ConexaoCaninaApp.Domain\ConexaoCaninaApp.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Context\EntityConfig\" />
+    <Folder Include="Migrations\" />
+  </ItemGroup>
+
 </Project>

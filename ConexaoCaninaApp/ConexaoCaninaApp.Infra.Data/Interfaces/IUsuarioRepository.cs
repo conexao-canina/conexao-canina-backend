@@ -7,10 +7,8 @@ using System.Threading.Tasks;
 
 namespace ConexaoCaninaApp.Infra.Data.Interfaces
 {
-	public interface ISolicitacaoCruzamentoRepository
+	public interface IUsuarioRepository : IRepository<Usuario, Guid>
 	{
-		Task Adicionar(SolicitacaoCruzamento solicitacao);
-		Task<SolicitacaoCruzamento> ObterPorId(int id);
-		Task Atualizar(SolicitacaoCruzamento solicitacao);
+
 	}
 }

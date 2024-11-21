@@ -1,7 +1,6 @@
 ﻿using ConexaoCaninaApp.Domain.Models;
 using ConexaoCaninaApp.Infra.Data.Context;
 using ConexaoCaninaApp.Infra.Data.Interfaces;
-using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,11 +9,8 @@ using System.Threading.Tasks;
 
 namespace ConexaoCaninaApp.Infra.Data.Repositories
 {
-	public class CaoRepository : Repository<Cao, Guid>, ICaoRepository
+	public class UsuarioRepository : Repository<Usuario, Guid>, IUsuarioRepository
 	{
-		public CaoRepository(ApplicationDbContext context) : base(context)
-		{
-
-		}
+		public UsuarioRepository(ApplicationDbContext context) : base(context) { }
 	}
 }

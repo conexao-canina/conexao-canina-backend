@@ -15,19 +15,9 @@ namespace ConexaoCaninaApp.Infra.IoC
 	{
 		public static IServiceCollection AddProjectServices(this IServiceCollection services)
 		{
-			services.AddScoped<ICaoService, CaoService>();
-			services.AddScoped<ICaoRepository, CaoRepository>();
+			
 			services.AddScoped<INotificacaoService, NotificacaoService>();
-			services.AddScoped<IFotoService, FotoService>();
-			services.AddScoped<IArmazenamentoService, ArmazenamentoLocalService>();
-			services.AddScoped<IFotoRepository, FotoRepository>();
-			services.AddScoped<IAlbumRepository, AlbumRepository>();
-			services.AddScoped<IAlbumService, AlbumService>();
-			services.AddScoped<ISolicitacaoCruzamentoService, SolicitacaoCruzamentoService>();
-			services.AddScoped<ISolicitacaoCruzamentoService, SolicitacaoCruzamentoService>();
-			services.AddScoped<ISugestaoService, SugestaoService>();
-			services.AddScoped<ISugestaoRepository, SugestaoRepository>();
-
+			
 			return services;
 		}
 	}

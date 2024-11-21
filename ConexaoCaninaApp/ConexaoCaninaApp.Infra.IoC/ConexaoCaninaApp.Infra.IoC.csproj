@@ -15,7 +15,6 @@
   <ItemGroup>
     <ProjectReference Include="..\ConexaoCaninaApp.API\ConexaoCaninaApp.API.csproj" />
     <ProjectReference Include="..\ConexaoCaninaApp.Application\ConexaoCaninaApp.Application.csproj" />
-    <ProjectReference Include="..\ConexaoCaninaApp.Domain.Test\ConexaoCaninaApp.Domain.Test.csproj" />
     <ProjectReference Include="..\ConexaoCaninaApp.Domain\ConexaoCaninaApp.Domain.csproj" />
   </ItemGroup>
 
