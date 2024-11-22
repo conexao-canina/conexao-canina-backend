@@ -10,16 +10,21 @@ namespace ConexaoCaninaApp.Application.Requests
 {
 	public class AdicionarCaoRequest
 	{
+		public string? Nome { get; set; }
+		public string? Raca { get; set; }
 		public string Cidade { get; set; }
 		public string Estado { get; set; }
-		public string? Nome { get; set; }
 		public string? Descricao { get; set; }
-		public string? Raca { get; set; }
-		public string? CaracteristicasUnicas { get; set; }
-		public int Idade { get; set; }
 		public TamanhoCao Tamanho { get; set; }
 		public GeneroCao Genero { get; set; }
+		public int Idade { get; set; }
+		public string? CaracteristicasUnicas { get; set; }
 		public ICollection<FotoDTO> Fotos { get; set; }
-		public Guid UsuarioId { get; set; }
+	}
+
+	public class FotoRequest
+	{
+		public string CaminhoArquivo { get; set; }
+		public string Descricao { get; set; }
 	}
 }

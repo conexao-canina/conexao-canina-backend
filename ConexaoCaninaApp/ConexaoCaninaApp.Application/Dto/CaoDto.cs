@@ -9,6 +9,7 @@ namespace ConexaoCaninaApp.Application.Dto
 {
 	public class CaoDTO
 	{
+		public Guid CaoId { get; set; }
 		public string Nome {  get; set; }
 		public string Raca { get; set; }
 		public int Idade { get; set; }
@@ -19,6 +20,6 @@ namespace ConexaoCaninaApp.Application.Dto
 		public string Cidade {  get; set; }
 		public string Estado { get; set; }
 		public List<FotoDTO> Fotos { get; set; }
-		public ICollection<HistoricoDeSaude> HistoricoDeSaudes { get; set; }
+		public IEnumerable<HistoricoDeSaude> HistoricoDeSaudes { get; set; }
 	}
 }

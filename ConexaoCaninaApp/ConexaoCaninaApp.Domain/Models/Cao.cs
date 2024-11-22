@@ -17,6 +17,7 @@ namespace ConexaoCaninaApp.Domain.Models
     public enum StatusCao
     {
         Pendente,
+        Rejeitado,
         Aprovado        
     }
 
@@ -62,6 +63,11 @@ namespace ConexaoCaninaApp.Domain.Models
         public StatusCao Status { get; set; } = StatusCao.Pendente;
         public ICollection<Foto> Fotos { get; set; } = new List<Foto>();
         public ICollection<HistoricoDeSaude> HistoricosDeSaude { get; set; } = new List<HistoricoDeSaude>();    
+
+        public void AlterarIdade(int idade)
+        {
+            Idade = idade;
+        }
         
         public void AddFoto(Foto foto)
         {
@@ -71,6 +77,11 @@ namespace ConexaoCaninaApp.Domain.Models
         public void AddHistoricoDeSaude(HistoricoDeSaude historico)
         {
             HistoricosDeSaude.Add(historico);
+        }
+
+        public void Aprovar()
+        {
+            Status = StatusCao.Aprovado;
         }
 
 	}
