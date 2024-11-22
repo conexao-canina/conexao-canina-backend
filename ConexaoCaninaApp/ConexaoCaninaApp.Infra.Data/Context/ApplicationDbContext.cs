@@ -20,8 +20,7 @@ namespace ConexaoCaninaApp.Infra.Data.Context
 		public DbSet<Usuario> Proprietarios { get; set; }
 		public DbSet<Usuario> Usuarios { get; set; }
         public DbSet<Foto> Fotos { get; set; }
-        public DbSet<HistoricoDeSaude> HistoricosDeSaude { get; set; }
-        
+        public DbSet<HistoricoDeSaude> HistoricosDeSaude { get; set; }      
         public DbSet<Sugestao> Sugestoes { get; set; }
 
 

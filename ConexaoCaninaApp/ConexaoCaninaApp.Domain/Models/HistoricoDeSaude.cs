@@ -24,10 +24,10 @@ namespace ConexaoCaninaApp.Domain.Models
 		}
 
 		public Guid HistoricoSaudeId { get; set; }
-		public DateTime DataExame { get; set; }
 		public string Exame { get; set; }
 		public string Vacina { get; set; }
 		public string CondicoesDeSaude { get; set; }
 		public bool ConsentimentoDono { get; set; }
+		public DateTime DataExame { get; set; }
 	}
 }

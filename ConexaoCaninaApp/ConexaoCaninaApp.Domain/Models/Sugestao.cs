@@ -26,9 +26,9 @@ namespace ConexaoCaninaApp.Domain.Models
 
 		public Guid SugestaoId { get; set; }
 		public string Descricao { get; set; }
-		public string FeedBack { get; set; }
-		public SugestaoStatus Status { get; set; }
 		public DateTime DataEnvio { get; set; }
+		public SugestaoStatus Status { get; set; }
+		public string FeedBack { get; set; }
 	
 	}
 }
