@@ -10,25 +10,22 @@ namespace ConexaoCaninaApp.Domain.Models
 	{
 		private Usuario() { }
 
-		public Usuario(string nome, string email, 
-			string senha, bool isAdmin,
-			string telefone)
+		public Usuario(string nome, string email, string senha, string telefone)
 		{
 			UsuarioId = Guid.NewGuid();
 			Nome = nome;
 			Senha = senha;
 			Email = email;
 			Telefone = telefone;
-			IsAdmin = isAdmin;
 
 		}
 
 		public Guid UsuarioId { get; set; }
 		public string Nome { get; set; }
 		public string Email { get; set; }
+		public string Telefone { get; set; }	
 		public string Senha { get; set; }
 		public bool IsAdmin { get; set; }
-		public string Telefone { get; set; }	
 		public ICollection<Cao> Caes { get; set; } = new List<Cao>();
 		public ICollection<Favorito> Favoritos { get; set; } = new List<Favorito>();
 		public ICollection<Sugestao> Sugestoes { get; set;} = new List<Sugestao>();
@@ -43,11 +40,11 @@ namespace ConexaoCaninaApp.Domain.Models
 			Caes.Remove(cao);
 		}
 
-		public void AddFavorito(Favorito like)
+		public void AddFavorito(Cao cao)
 		{
+			var like = new Favorito(cao.CaoId);
 			Favoritos.Add(like);
 		}
-
 		public void RemoveFavorito(Favorito like)
 		{
 			Favoritos.Remove(like);

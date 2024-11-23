@@ -1,4 +1,5 @@
 ﻿using ConexaoCaninaApp.Application.Dto;
+using ConexaoCaninaApp.Domain.Models;
 using ConexaoCaninaApp.Infra.Data.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -10,7 +11,10 @@ namespace ConexaoCaninaApp.Application.Services
 {
 	public interface ICaoService
 	{
-		IEnumerable<CaoDTO> GetAll();	
+		IEnumerable<CaoDTO> GetAll();
+		bool AlterarIdade(Guid id, int idade);
+		CaoDTO GetById(Guid id);
+		bool AprovarCao(Guid id);
 	}
 
 	public class CaoService : ICaoService
@@ -22,6 +26,26 @@ namespace ConexaoCaninaApp.Application.Services
 			_caoRepository = caoRepository;
 		}
 
+		public bool AlterarIdade(Guid id, int idade)
+		{
+			var cao = _caoRepository.GetById(id);
+			if (cao == null) return false;
+
+			cao.AlterarIdade(idade);
+			_caoRepository.SaveChanges();
+			return true;
+		}
+
+		public bool AprovarCao(Guid id)
+		{
+			var cao = _caoRepository.GetById(id);
+			if (cao == null) return false;
+
+			cao.Aprovar();
+			_caoRepository.SaveChanges();
+			return true;
+		}
+
 		public IEnumerable<CaoDTO> GetAll()
 		{
 			var caos = _caoRepository.GetAll();
@@ -29,6 +53,7 @@ namespace ConexaoCaninaApp.Application.Services
 
 			return caos.Select(x => new CaoDTO
 			{
+				CaoId = x.CaoId,
 				CaracteristicasUnicas = x.CaracteristicasUnicas,
 				Idade = x.Idade,
 				Nome = x.Nome,
@@ -45,6 +70,43 @@ namespace ConexaoCaninaApp.Application.Services
 				Genero = x.Genero,
 				Tamanho = x.Tamanho,
 			});
+		}
+
+		public CaoDTO GetById(Guid id)
+		{
+			var cao = _caoRepository.GetById(id);
+			if (cao == null) return null;
+
+			return new CaoDTO
+			{
+				CaoId = cao.CaoId,
+				CaracteristicasUnicas = cao.CaracteristicasUnicas,
+				Idade = cao.Idade,
+				Nome = cao.Nome,
+				Raca = cao.Raca,
+				Cidade = cao.Cidade,
+				Descricao = cao.Descricao,
+				Estado = cao.Estado,
+				Fotos = cao.Fotos.Select(x => new FotoDTO
+				{
+					FotoId = x.FotoId,
+					CaminhoArquivo = x.CaminhoArquivo,
+					Descricao = x.Descricao
+				}
+				).ToList(),
+				Genero = cao.Genero,
+				Tamanho = cao.Tamanho,
+				HistoricosDeSaude = cao.HistoricosDeSaude.Select
+				(x => new HistoricoDeSaudeDto
+				{
+					CondicoesDeSaude = x.CondicoesDeSaude,
+					ConsentimentoDono = x.ConsentimentoDono,
+					DateExame = x.DataExame,
+					HistoricoSaudeId = x.HistoricoSaudeId,
+					Vacina = x.Vacina
+				})
+				
+			};
 		}
 	}
 }
