@@ -103,8 +103,27 @@ namespace ConexaoCaninaApp.API.Controllers
 		}
 
 		// Excluir Usuario
+		[HttpDelete]
+		public async Task<IActionResult> RemoverUsuario(Guid id)
+		{
+			var result = _usuarioService.RemoveUsuario(id);
+			if(!result) 
+				return BadRequest();
+
+			return Ok();
+		}
 
 		// Patch para editar senha
+		[HttpPatch]
+		public async Task<IActionResult> AlterarSenha(Guid id, string password)
+		{
+			var result = _usuarioService.AlteraSenha(id, password);
+			if(!result) 
+				return BadRequest();
+
+			return Ok();
+		}
+		
 
 		// Adicionar Sugestoes
 
