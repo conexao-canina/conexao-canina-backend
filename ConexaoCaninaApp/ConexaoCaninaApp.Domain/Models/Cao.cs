@@ -84,5 +84,9 @@ namespace ConexaoCaninaApp.Domain.Models
             Status = StatusCao.Aprovado;
         }
 
+        public void Reprovar()
+        {
+            Status = StatusCao.Rejeitado;
+        }
 	}
 }

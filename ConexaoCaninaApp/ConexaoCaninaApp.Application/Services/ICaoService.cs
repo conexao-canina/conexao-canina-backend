@@ -15,6 +15,7 @@ namespace ConexaoCaninaApp.Application.Services
 		bool AlterarIdade(Guid id, int idade);
 		CaoDTO GetById(Guid id);
 		bool AprovarCao(Guid id);
+		bool ReprovarCao(Guid id);
 	}
 
 	public class CaoService : ICaoService
@@ -108,5 +109,17 @@ namespace ConexaoCaninaApp.Application.Services
 				
 			};
 		}
-	}
+
+        public bool ReprovarCao(Guid id)
+        {
+            var cao = _caoRepository.GetById(id);
+
+            if (cao == null) 
+				return false;
+
+            cao.Reprovar();
+            _caoRepository.SaveChanges();
+            return true;
+        }
+    }
 }
