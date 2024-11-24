@@ -106,5 +106,12 @@ namespace ConexaoCaninaApp.API.Controllers
 		}
 
 		// Rejeitar Status de Cao -> Rejeitado
+		[HttpPost]
+		[Route("{id}/reprovar")]
+		public async Task<IActionResult> ReprovarCao(Guid id)
+		{
+			var result = _caoService.ReprovarCao(id);
+			return Ok();
+		}
 	}
 }
