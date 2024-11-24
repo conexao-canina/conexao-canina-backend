@@ -15,7 +15,8 @@ namespace ConexaoCaninaApp.Application.Services
 		bool RemoveCao(Guid userId, Guid caoId);
 		bool RemoveUsuario(Guid userId);
 		bool AddFavoritos(Guid userId, Guid caoId);
-		bool Create(CriarUsuarioDTO request);
+		bool RemoveFavoritos(Guid userId, Guid caoId);
+        bool Create(CriarUsuarioDTO request);
 		bool AlteraSenha(Guid userId, string password);
 		UserDTO GetByLoggedUser(string email);
 	}
@@ -169,7 +170,22 @@ namespace ConexaoCaninaApp.Application.Services
 			return true;
 		}
 
-		public bool RemoveUsuario(Guid userId)
+        public bool RemoveFavoritos(Guid userId, Guid caoId)
+        {
+            var user = _usuarioRepository.GetById(userId);
+            if (user == null) 
+				return false;
+
+            var cao = _caoRepository.GetById(caoId);
+            if (cao == null) 
+				return false;
+
+            user.RemoveFavorito(cao);
+            _usuarioRepository.SaveChanges();
+            return true;
+        }
+
+        public bool RemoveUsuario(Guid userId)
 		{
 			var user = _usuarioRepository.GetById(userId);
 			if (user == null)

@@ -177,13 +177,23 @@ namespace ConexaoCaninaApp.API.Controllers
 		}
 
 		// Remover cao dos favoritos
+		[HttpDelete]
+		[Route("{userId}/removerFavoritos/{caoId}")]
+        public async Task<IActionResult> RemoverFavoritos(Guid userId, Guid caoId)
+        {
+            var result = _usuarioService.RemoveFavoritos(userId, caoId);
+            if (!result) 
+				return BadRequest();
 
-		// Adicionar Foto
+            return Ok();
+        }
 
-		// Remover Foto
+        // Adicionar Foto
 
-		// Adicionar Historico de Saude
+        // Remover Foto
 
-		// Remover Historico de saude
-	}
+        // Adicionar Historico de Saude
+
+        // Remover Historico de saude
+    }
 }
