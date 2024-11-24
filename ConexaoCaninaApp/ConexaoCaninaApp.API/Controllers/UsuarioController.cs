@@ -40,7 +40,7 @@ namespace ConexaoCaninaApp.API.Controllers
 					FavoritoId = x.FavoritoId,
 					Cao = new CaoDetalhesViewModel
 					{
-						Age= x.Cao.Idade,
+						Age = x.Cao.Idade,
 						Breed = x.Cao.Raca,
 						City = x.Cao.Cidade,
 						Description = x.Cao.Descricao,
@@ -107,7 +107,7 @@ namespace ConexaoCaninaApp.API.Controllers
 		public async Task<IActionResult> RemoverUsuario(Guid id)
 		{
 			var result = _usuarioService.RemoveUsuario(id);
-			if(!result) 
+			if (!result)
 				return BadRequest();
 
 			return Ok();
@@ -118,14 +118,31 @@ namespace ConexaoCaninaApp.API.Controllers
 		public async Task<IActionResult> AlterarSenha(Guid id, string password)
 		{
 			var result = _usuarioService.AlteraSenha(id, password);
-			if(!result) 
+			if (!result)
 				return BadRequest();
 
 			return Ok();
 		}
-		
+
 
 		// Adicionar Sugestoes
+		[HttpPost]
+		[Route("{userId}/adicionarSugestao")]
+		public async Task<IActionResult> AdicionarSugestao(Guid userId, [FromBody] SugestaoDTO request)
+		{
+			if (request == null)
+				return BadRequest();
+
+			var result = _usuarioService.AddSugestao(userId, new SugestaoDTO
+			{
+				Descricao = request.Descricao,
+			});
+
+			if (!result)
+				return BadRequest();
+
+			return Ok();
+		}
 
 		// Adicionar Cao
 		[HttpPost]
@@ -179,21 +196,70 @@ namespace ConexaoCaninaApp.API.Controllers
 		// Remover cao dos favoritos
 		[HttpDelete]
 		[Route("{userId}/removerFavoritos/{caoId}")]
-        public async Task<IActionResult> RemoverFavoritos(Guid userId, Guid caoId)
-        {
-            var result = _usuarioService.RemoveFavoritos(userId, caoId);
-            if (!result) 
+		public async Task<IActionResult> RemoverFavoritos(Guid userId, Guid caoId)
+		{
+			var result = _usuarioService.RemoveFavoritos(userId, caoId);
+			if (!result)
 				return BadRequest();
+
+			return Ok();
+		}
+
+		// Adicionar Foto
+		[HttpPost]
+		[Route("{userId}/adicionarFoto/{caoId}")]
+		public async Task<IActionResult> AdicionarFoto(Guid userId, Guid caoId, [FromBody] FotoDTO foto)
+		{
+			if (foto == null)
+				return BadRequest();
+
+			var result = _usuarioService.AddFoto(userId, caoId, foto);
+
+			if (!result)
+				return BadRequest();
+
+			return Ok();
+		}
+
+		// Remover Foto
+		[HttpPost]
+		[Route("{userId}/removerFoto/{caoId}/{fotoId}")]
+		public async Task<IActionResult> RemoverFoto(Guid userId, Guid caoId, Guid fotoId)
+		{
+			var result = _usuarioService.RemoveFoto(userId, caoId, fotoId);
+			if (!result)
+				return BadRequest();
+
+			return Ok();
+		}
+
+		// Adicionar Historico de Saude
+		[HttpPost]
+		[Route("{userId}/adicionarHistoricoDeSaude/{caoId}")]
+		public async Task<IActionResult> AdicionarHistoricoDeSaude(Guid userId, Guid caoId, [FromBody] HistoricoDeSaudeDto historico)
+		{
+            if (historico == null)
+                return BadRequest();
+
+            var result = _usuarioService.AddHistoricoDeSaude(userId, caoId, historico);
+
+            if (!result)
+                return BadRequest();
 
             return Ok();
         }
 
-        // Adicionar Foto
+		// Remover Historico de saude
+		[HttpDelete]
+        [Route("{userId}/removerHistoricoDeSaude/{caoId}/{historicoId}")]
+        public async Task<IActionResult> RemoverHistoricoDeSaude(Guid userId, Guid caoId, Guid historicoId)
+        {
+            var result = _usuarioService.RemoveHistoricoDeSaude(userId, caoId, historicoId);
 
-        // Remover Foto
+            if (!result)
+                return BadRequest();
 
-        // Adicionar Historico de Saude
-
-        // Remover Historico de saude
+            return Ok();
+        }
     }
 }

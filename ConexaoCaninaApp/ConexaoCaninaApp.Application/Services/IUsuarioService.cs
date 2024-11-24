@@ -16,9 +16,14 @@ namespace ConexaoCaninaApp.Application.Services
 		bool RemoveUsuario(Guid userId);
 		bool AddFavoritos(Guid userId, Guid caoId);
 		bool RemoveFavoritos(Guid userId, Guid caoId);
+		bool AddFoto(Guid userId, Guid caoId, FotoDTO request);
+        bool RemoveFoto(Guid userId, Guid caoId, Guid fotoId);
+        bool AddSugestao(Guid userId, SugestaoDTO request);
+        bool AddHistoricoDeSaude(Guid userId, Guid caoId, HistoricoDeSaudeDto request);
+        bool RemoveHistoricoDeSaude(Guid userId, Guid caoId, Guid historicoId);
         bool Create(CriarUsuarioDTO request);
 		bool AlteraSenha(Guid userId, string password);
-		UserDTO GetByLoggedUser(string email);
+        UserDTO GetByLoggedUser(string email);
 	}
 
 	public class UsuarioService : IUsuarioService
@@ -61,6 +66,51 @@ namespace ConexaoCaninaApp.Application.Services
 			_usuarioRepository.SaveChanges();
 			return true;
 		}
+
+        public bool AddFoto(Guid userId, Guid caoId, FotoDTO request)
+        {
+            var user = _usuarioRepository.GetById(userId);
+			var cao = _caoRepository.GetById(caoId);
+
+			if (cao == null || user == null)
+                return false;
+
+            var foto = new Foto(request.CaminhoArquivo, request.Descricao);
+            cao.AddFoto(foto);
+			_usuarioRepository.SaveChanges();
+			_caoRepository.SaveChanges();
+            return true;
+        }
+
+        public bool AddHistoricoDeSaude(Guid userId, Guid caoId, HistoricoDeSaudeDto request)
+        {
+			var user = _usuarioRepository.GetById(userId);
+            var cao = _caoRepository.GetById(caoId);
+
+            if (cao == null || user == null)
+                return false;
+
+            var historico = new HistoricoDeSaude(request.CondicoesDeSaude, request.Exame, request.Vacina, request.ConsentimentoDono, request.DateExame);
+
+            cao.AddHistoricoDeSaude(historico);
+            _caoRepository.SaveChanges();
+            return true;
+        }
+
+        public bool AddSugestao(Guid userId, SugestaoDTO request)
+        {
+            var user = _usuarioRepository.GetById(userId);
+
+            if (user == null) 
+				return false;
+
+            var sugestao = new Sugestao(request.Descricao, request.DataEnvio = DateTime.Now, request.Descricao);
+
+            user.AddSugestoes(sugestao);
+            _usuarioRepository.SaveChanges();
+
+            return true;
+        }
 
         public bool AlteraSenha(Guid userId, string password)
         {
@@ -182,6 +232,36 @@ namespace ConexaoCaninaApp.Application.Services
 
             user.RemoveFavorito(cao);
             _usuarioRepository.SaveChanges();
+            return true;
+        }
+
+        public bool RemoveFoto(Guid userId, Guid caoId, Guid fotoId)
+        {
+			var user = _usuarioRepository.GetById(userId);
+            var cao = _caoRepository.GetById(caoId);
+			var foto = cao.Fotos.FirstOrDefault(x => x.FotoId == fotoId);
+
+            if (foto == null || user == null || cao == null)
+                return false;
+
+            cao.Fotos.Remove(foto);
+            _caoRepository.SaveChanges();
+
+            return true;
+        }
+
+        public bool RemoveHistoricoDeSaude(Guid userId, Guid caoId, Guid historicoId)
+        {
+            var user = _usuarioRepository.GetById(userId);
+            var cao = _caoRepository.GetById(caoId);
+			var historico = cao.HistoricosDeSaude.FirstOrDefault(x => x.HistoricoSaudeId == historicoId);
+
+            if (historico == null || user == null || cao == null)
+                return false;
+
+            cao.HistoricosDeSaude.Remove(historico);
+            _caoRepository.SaveChanges();
+
             return true;
         }
 
