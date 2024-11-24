@@ -17,7 +17,7 @@ namespace ConexaoCaninaApp.Domain.Models
 	{
 		private Sugestao() { }
 
-		public Sugestao(string descricao, string feedBack)
+		public Sugestao(string descricao, DateTime dateTime ,string feedBack)
 		{
 			SugestaoId = Guid.NewGuid();	
 			DataEnvio = DateTime.Now;

@@ -45,10 +45,11 @@ namespace ConexaoCaninaApp.Domain.Models
 			var like = new Favorito(cao.CaoId);
 			Favoritos.Add(like);
 		}
-		public void RemoveFavorito(Favorito like)
+		public void RemoveFavorito(Cao cao)
 		{
-			Favoritos.Remove(like);
-		}
+			var like = Favoritos.FirstOrDefault(x => x.Cao.CaoId == cao.CaoId);
+            Favoritos.Remove(like);
+        }
 
 		public void AddSugestoes(Sugestao sugestao)
 		{
