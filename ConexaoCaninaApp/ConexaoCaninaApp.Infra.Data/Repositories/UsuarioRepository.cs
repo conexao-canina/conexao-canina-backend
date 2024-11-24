@@ -12,5 +12,10 @@ namespace ConexaoCaninaApp.Infra.Data.Repositories
 	public class UsuarioRepository : Repository<Usuario, Guid>, IUsuarioRepository
 	{
 		public UsuarioRepository(ApplicationDbContext context) : base(context) { }
-	}
+
+        public Usuario GetByEmail(string email)
+        {
+            throw new NotImplementedException();
+        }
+    }
 }
