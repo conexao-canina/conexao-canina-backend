@@ -6,7 +6,7 @@ using ConexaoCaninaApp.Application.Dto;
 
 namespace ConexaoCaninaApp.API.Controllers
 {
-	[Route("api[controller]")]
+	[Route("api/[controller]")]
 	[ApiController]
 	public class UsuarioController : ControllerBase
 	{

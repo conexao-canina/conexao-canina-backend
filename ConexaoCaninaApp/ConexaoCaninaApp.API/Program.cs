@@ -10,16 +10,16 @@ using Microsoft.Extensions.Options;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
-
-
-
-
-
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddAuthorization();
+
+// injeção de dependencia
+builder.Services.AddScoped<ICaoService, CaoService>();
+builder.Services.AddScoped<ICaoRepository, CaoRepository>();
+builder.Services.AddScoped<IUsuarioService, UsuarioService>();
+builder.Services.AddScoped<IUsuarioRepository, UsuarioRepository>();
 
 // configuração do EF com SQL Server
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
