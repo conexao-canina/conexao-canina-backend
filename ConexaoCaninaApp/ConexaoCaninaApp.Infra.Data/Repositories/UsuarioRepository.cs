@@ -1,6 +1,7 @@
 ﻿using ConexaoCaninaApp.Domain.Models;
 using ConexaoCaninaApp.Infra.Data.Context;
 using ConexaoCaninaApp.Infra.Data.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,7 +16,7 @@ namespace ConexaoCaninaApp.Infra.Data.Repositories
 
         public Usuario GetByEmail(string email)
         {
-            throw new NotImplementedException();
+            return _entity.FirstOrDefault(e => e.Email == email);
         }
     }
 }

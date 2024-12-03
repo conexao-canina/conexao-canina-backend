@@ -19,7 +19,7 @@ namespace ConexaoCaninaApp.Application.Requests
 		public GeneroCao Genero { get; set; }
 		public int Idade { get; set; }
 		public string? CaracteristicasUnicas { get; set; }
-		public ICollection<FotoDTO> Fotos { get; set; }
+		public ICollection<FotoRequest> Fotos { get; set; }
 	}
 
 	public class FotoRequest
