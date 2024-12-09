@@ -17,8 +17,18 @@ namespace ConexaoCaninaApp.API.Controllers
 			_usuarioService = usuarioService;
 		}
 
-		// Get para usuario logado, com favoritos, todos cachorros e sugestoes
 		[HttpGet]
+		public async Task<IActionResult> GetAllUsers([FromServices] IUsuarioService usuarioService)
+        {
+            var users = _usuarioService.GetAllUsers();
+            if (users == null) 
+				return NoContent();
+
+            return Ok(users);
+        }
+
+        // Get para usuario logado, com favoritos, todos cachorros e sugestoes
+        [HttpGet]
 		[Route("loggedUser/{email}")]
 		public async Task<IActionResult> GetByLoggedUser(string email)
 		{
@@ -87,7 +97,8 @@ namespace ConexaoCaninaApp.API.Controllers
 		[HttpPost]
 		public async Task<IActionResult> CriarUsuario([FromBody] CriarUsuarioRequest request)
 		{
-			if (request == null) return BadRequest();
+			if (request == null) 
+				return BadRequest();
 
 			var result = _usuarioService.Create(new CriarUsuarioDTO
 			{

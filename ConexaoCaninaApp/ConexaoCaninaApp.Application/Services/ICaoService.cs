@@ -16,7 +16,8 @@ namespace ConexaoCaninaApp.Application.Services
 		CaoDTO GetById(Guid id);
 		bool AprovarCao(Guid id);
 		bool ReprovarCao(Guid id);
-	}
+		CaoDTO CriarCao(CaoDTO cao);
+    }
 
 	public class CaoService : ICaoService
 	{
@@ -47,7 +48,32 @@ namespace ConexaoCaninaApp.Application.Services
 			return true;
 		}
 
-		public IEnumerable<CaoDTO> GetAll()
+		public CaoDTO CriarCao(CaoDTO cao)
+		{
+			var caoDTO = new CaoDTO();
+            caoDTO.Nome = cao.Nome;
+            caoDTO.Raca = cao.Raca;
+            caoDTO.Idade = cao.Idade;
+            caoDTO.Descricao = cao.Descricao;
+            caoDTO.Genero = cao.Genero;
+            caoDTO.Tamanho = cao.Tamanho;
+            caoDTO.CaracteristicasUnicas = cao.CaracteristicasUnicas;
+            caoDTO.Cidade = cao.Cidade;
+            caoDTO.Estado = cao.Estado;
+            caoDTO.Fotos = cao.Fotos;
+            caoDTO.HistoricosDeSaude = cao.HistoricosDeSaude;
+			caoDTO.UserId = cao.UserId;
+
+            var caoModel = new Cao
+				(caoDTO.Cidade, caoDTO.Estado, caoDTO.Nome, caoDTO.Descricao, caoDTO.Raca, caoDTO.Idade, caoDTO.Tamanho, caoDTO.Genero, caoDTO.CaracteristicasUnicas, 
+					caoDTO.Fotos.Select(x => new Foto(x.CaminhoArquivo, x.Descricao)).ToList());
+
+            _caoRepository.Add(caoModel);
+            _caoRepository.SaveChanges();
+            return caoDTO;
+        }
+
+        public IEnumerable<CaoDTO> GetAll()
 		{
 			var caos = _caoRepository.GetAll();
 			if (caos == null) return null;

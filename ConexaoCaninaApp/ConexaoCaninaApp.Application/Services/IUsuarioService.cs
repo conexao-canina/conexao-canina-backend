@@ -11,6 +11,7 @@ namespace ConexaoCaninaApp.Application.Services
 {
 	public interface IUsuarioService
 	{
+		List<UserDTO> GetAllUsers();
 		bool AddCao(Guid userId, AdicionarCaoDTO request);
 		bool RemoveCao(Guid userId, Guid caoId);
 		bool RemoveUsuario(Guid userId);
@@ -35,6 +36,74 @@ namespace ConexaoCaninaApp.Application.Services
 		{
 			_usuarioRepository = usuarioRepository ?? throw new ArgumentNullException(nameof(usuarioRepository));
 			_caoRepository = caoRepository ?? throw new ArgumentNullException(nameof(caoRepository));
+		}
+
+		public List<UserDTO> GetAllUsers()
+		{
+			var users = _usuarioRepository.GetAll();
+			if (users == null)
+				return null;
+
+			return users.Select(user => new UserDTO
+			{
+				UsuarioId = user.UsuarioId,
+				Email = user.Email,
+				Nome = user.Nome,
+				Telefone = user.Telefone,
+				IsAdmin = user.IsAdmin,
+				Favoritos = user.Favoritos.Select(x => new FavoritoDTO()
+				{
+					Cao = new CaoDTO
+					{
+						CaoId = x.Cao.CaoId,
+						CaracteristicasUnicas = x.Cao.CaracteristicasUnicas,
+						Cidade = x.Cao.Cidade,
+						Estado = x.Cao.Estado,
+						Fotos = x.Cao.Fotos.Select(f => new FotoDTO
+						{
+							CaminhoArquivo = f.CaminhoArquivo,
+							Descricao = f.Descricao
+						}).ToList(),
+						Genero = x.Cao.Genero,
+						Idade = x.Cao.Idade,
+						Nome = x.Cao.Nome,
+						Raca = x.Cao.Raca,
+						Tamanho = x.Cao.Tamanho
+					}
+				}).ToList(),
+				Caes = user.Caes.Select(x => new CaoDTO
+				{
+					CaoId = x.CaoId,
+					CaracteristicasUnicas = x.CaracteristicasUnicas,
+					Cidade = x.Cidade,
+					Descricao = x.Estado,
+					Fotos = x.Fotos.Select(f => new FotoDTO
+					{
+						CaminhoArquivo = f.CaminhoArquivo,
+						Descricao = f.Descricao
+					}).ToList(),
+					Genero = x.Genero,
+					Idade = x.Idade,
+					Nome = x.Nome,
+					HistoricosDeSaude = x.HistoricosDeSaude.Select(h => new HistoricoDeSaudeDto
+					{
+						CondicoesDeSaude = h.CondicoesDeSaude,
+						ConsentimentoDono = h.ConsentimentoDono,
+						DateExame = h.DataExame,
+						Exame = h.Exame,
+						HistoricoSaudeId = h.HistoricoSaudeId,
+						Vacina = h.Vacina
+					}).ToList(),
+				}).ToList(),
+				Sugestoes = user.Sugestoes.Select(x => new SugestaoDTO
+				{
+					DataEnvio = x.DataEnvio,
+					Descricao = x.Descricao,
+					SugestaoId = x.SugestaoId,
+					FeedBack = x.FeedBack,
+					Status = x.Status,
+				}).ToList()
+			}).ToList();
 		}
 
 		public bool AddCao(Guid userId,AdicionarCaoDTO request)
