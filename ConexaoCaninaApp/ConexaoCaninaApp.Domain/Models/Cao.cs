@@ -35,7 +35,7 @@ namespace ConexaoCaninaApp.Domain.Models
         public Cao(string cidade, string estado, string nome,
             string description, string raca, int idade,
             TamanhoCao tamanho, GeneroCao genero, string caracteristicasUnicas,
-            List<Foto> fotos)
+            List<Foto> fotos, string caminhoFoto)
         {
             CaoId = Guid.NewGuid();
             Cidade = cidade;
@@ -48,6 +48,7 @@ namespace ConexaoCaninaApp.Domain.Models
             Genero = genero;
             CaracteristicasUnicas = caracteristicasUnicas;
             Fotos = fotos;
+            CaminhoFoto = caminhoFoto;
         }
 
         public Guid CaoId { get; set; }
@@ -62,6 +63,7 @@ namespace ConexaoCaninaApp.Domain.Models
         public GeneroCao Genero { get; set; }
         public StatusCao Status { get; set; } = StatusCao.Pendente;
         public ICollection<Foto> Fotos { get; set; } = new List<Foto>();
+        public string CaminhoFoto { get; set; }
         public ICollection<HistoricoDeSaude> HistoricosDeSaude { get; set; } = new List<HistoricoDeSaude>();    
 
         public void AlterarIdade(int idade)

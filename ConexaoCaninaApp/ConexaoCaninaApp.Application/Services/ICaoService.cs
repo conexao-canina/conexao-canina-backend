@@ -63,10 +63,11 @@ namespace ConexaoCaninaApp.Application.Services
             caoDTO.Fotos = cao.Fotos;
             caoDTO.HistoricosDeSaude = cao.HistoricosDeSaude;
 			caoDTO.UserId = cao.UserId;
+			caoDTO.CaminhoFoto = cao.CaminhoFoto;
 
             var caoModel = new Cao
 				(caoDTO.Cidade, caoDTO.Estado, caoDTO.Nome, caoDTO.Descricao, caoDTO.Raca, caoDTO.Idade, caoDTO.Tamanho, caoDTO.Genero, caoDTO.CaracteristicasUnicas, 
-					caoDTO.Fotos.Select(x => new Foto(x.CaminhoArquivo, x.Descricao)).ToList());
+					caoDTO.Fotos.Select(x => new Foto(x.CaminhoArquivo, x.Descricao)).ToList(), caoDTO.CaminhoFoto);
 
             _caoRepository.Add(caoModel);
             _caoRepository.SaveChanges();
@@ -94,6 +95,7 @@ namespace ConexaoCaninaApp.Application.Services
 					CaminhoArquivo = x.CaminhoArquivo,
 					Descricao = x.Descricao
 				}).ToList(),
+				CaminhoFoto = x.CaminhoFoto,
 				Genero = x.Genero,
 				Tamanho = x.Tamanho,
 			});

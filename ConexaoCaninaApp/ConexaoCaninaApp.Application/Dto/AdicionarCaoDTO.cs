@@ -19,5 +19,6 @@ namespace ConexaoCaninaApp.Application.Dto
 		public GeneroCao Genero { get; set; }
 		public string? CaracteristicasUnicas { get; set; }
 		public ICollection<FotoDTO> Fotos { get; set; }		
+		public string? CaminhoFoto { get; set; }
 	}
 }

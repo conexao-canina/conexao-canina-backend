@@ -18,6 +18,7 @@ namespace ConexaoCaninaApp.Application.ViewModel
 		public string UniqueCharacteristics { get; set; }
 		public string City { get; set; }
 		public string State { get; set; }
+		public string CaminhoFoto { get; set; }	
 		public List<PhotoViewModel> Photos { get; set; }
 	}
 }

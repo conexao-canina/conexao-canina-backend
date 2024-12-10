@@ -44,6 +44,7 @@ namespace ConexaoCaninaApp.API.Controllers
 				}).ToList(),
 				Size = x.Tamanho.ToString(),
 				State = x.Estado,
+				CaminhoFoto = x.CaminhoFoto,
 				UniqueCharacteristics = x.CaracteristicasUnicas,
 			}));
 		}
@@ -67,6 +68,7 @@ namespace ConexaoCaninaApp.API.Controllers
 				Cidade = request.Cidade,
 				Estado = request.Estado,
 				Fotos = request.Fotos,
+				CaminhoFoto = request.CaminhoFoto,
 				HistoricosDeSaude = request.HistoricosDeSaude,				
 			});
 			return Ok();

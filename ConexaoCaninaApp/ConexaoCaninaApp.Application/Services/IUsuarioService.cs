@@ -116,7 +116,8 @@ namespace ConexaoCaninaApp.Application.Services
 				request.CaracteristicasUnicas,
 				request.Fotos.Select(
 					x => new Foto(
-						x.CaminhoArquivo, x.Descricao)).ToList());
+						x.CaminhoArquivo, x.Descricao)).ToList(),
+				request.CaminhoFoto);
 			user.AddCao(cao);
 			_usuarioRepository.SaveChanges();
 
