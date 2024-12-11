@@ -178,6 +178,7 @@ namespace ConexaoCaninaApp.API.Controllers
 				Nome = request.Nome,
 				Raca = request.Raca,
 				Tamanho = request.Tamanho,
+				CaminhoFoto = "./image",
 			});
 
 			if (!result) return BadRequest();
